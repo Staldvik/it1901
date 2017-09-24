@@ -22,3 +22,9 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.artistDiv {
+  border: 5px solid #0E2294;
+  max-width: 40%;
+  display: inline-block;
+}

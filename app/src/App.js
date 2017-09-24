@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Artist from './Artist/Artist'
 
 class App extends Component {
   render() {
@@ -14,6 +15,9 @@ class App extends Component {
           Hello World
           Hello Hello
         </p>
+        <Artist name="Kygo" age={26} info="Kyrre Gørvell-Dahll, bedre kjent under artistnavnet Kygo, er en EDM-musiker fra Fana i Bergen i Hordaland. 
+        Han ble kjent gjennom nettstedene YouTube og SoundCloud, der han publiserer sin musikk som samlet har over 400 millioner treff." popularity={10} albumSales={400} earlierConcerts={["test1", "test2"]}
+        />
       </div>
     );
   }
