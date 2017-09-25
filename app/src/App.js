@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Artist from './components/artist/Artist'
 import Concert from './components/concert/Concert'
-
+import Scene from './components/scene/Scene'
 class App extends Component {
   constructor(){
     super();
@@ -17,7 +17,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Arrangørsoftware for  {this.state.prosjekt}</h2>
+          <h2>Arrangørsoftware for {this.state.prosjekt}</h2>
         </div>
         <p className="App-intro">
           Hver div er en component
@@ -27,8 +27,9 @@ class App extends Component {
         Han ble kjent gjennom nettstedene YouTube og SoundCloud, der han publiserer sin musikk som samlet har over 400 millioner treff." popularity={10} albumSales={400} cost={50000} earlierConcerts={["test1", "test2"]}
         />
         
-        <Concert price={300} sales={150}
-        />
+        <Concert price={300} sales={150} genre="Rock" />
+
+        <Scene name="Dødens Dal" capacity={1000} cost={7500} />
         
       </div>
     );
