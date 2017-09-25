@@ -13,7 +13,7 @@ export default class Artist extends Component {
             earlierConcerts: props.earlierConcerts,
             concertNeeds: props.concertNeeds,
             approved: false,
-            booked: false,    
+            booked: false,
         }
     }
 
