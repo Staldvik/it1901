@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Artist from './components/artist/Artist'
 import Concert from './components/concert/Concert'
+import Technician from './components/technician/Technician'
 
 class App extends Component {
   constructor(){
@@ -22,14 +23,17 @@ class App extends Component {
         <p className="App-intro">
           Hver div er en component
         </p>
-        
-        <Artist name="Kygo" age={26} info="Kyrre Gørvell-Dahll, bedre kjent under artistnavnet Kygo, er en EDM-musiker fra Fana i Bergen i Hordaland. 
+
+        <Artist name="Kygo" age={26} info="Kyrre Gørvell-Dahll, bedre kjent under artistnavnet Kygo, er en EDM-musiker fra Fana i Bergen i Hordaland.
         Han ble kjent gjennom nettstedene YouTube og SoundCloud, der han publiserer sin musikk som samlet har over 400 millioner treff." popularity={10} albumSales={400} cost={50000} earlierConcerts={["test1", "test2"]}
         />
-        
+
         <Concert price={300} sales={150}
         />
-        
+
+        <Technician name="Tekniker1"
+        />
+
       </div>
     );
   }
