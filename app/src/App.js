@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './uka.png';
 import './App.css';
 import Artist from './components/artist/Artist'
 import Concert from './components/concert/Concert'
 import Scene from './components/scene/Scene'
+
+// Prøver å lage navbar
+import NavComponent from './components/navbar/navbar';
+
 class App extends Component {
   constructor(){
     super();
@@ -18,6 +22,7 @@ class App extends Component {
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Arrangørsoftware for {this.state.prosjekt}</h2>
+          <NavComponent />
         </div>
         <p className="App-intro">
           Hver div er en component
