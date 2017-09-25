@@ -24,7 +24,7 @@ class App extends Component {
         </p>
         
         <Artist name="Kygo" age={26} info="Kyrre Gørvell-Dahll, bedre kjent under artistnavnet Kygo, er en EDM-musiker fra Fana i Bergen i Hordaland. 
-        Han ble kjent gjennom nettstedene YouTube og SoundCloud, der han publiserer sin musikk som samlet har over 400 millioner treff." popularity={10} albumSales={400} earlierConcerts={["test1", "test2"]}
+        Han ble kjent gjennom nettstedene YouTube og SoundCloud, der han publiserer sin musikk som samlet har over 400 millioner treff." popularity={10} albumSales={400} cost={50000} earlierConcerts={["test1", "test2"]}
         />
         
         <Concert price={300} sales={150}

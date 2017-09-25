@@ -1,5 +1,6 @@
 import React, {Component } from 'react'
 import Artist from "../artist/Artist"
+import './concert.css';
 
 export default class Concert extends Component {
     constructor(props) {
