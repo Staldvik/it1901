@@ -12,7 +12,7 @@ export default class Artist extends Component {
             popularity: props.popularity,
             albumSales: props.albumSales,
             earlierConcerts: props.earlierConcerts,
-            concertNeeds: props.concertNeeds, //kanskje cost hentes herifra. Også ting som antall mikrofoner. 
+            concertNeeds: props.concertNeeds, //kanskje cost hentes herifra. Også ting som antall mikrofoner og instrumenter
             cost: props.cost,
             approved: false,
             booked: false,    
