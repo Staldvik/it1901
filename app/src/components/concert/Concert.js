@@ -1,5 +1,5 @@
 import React, {Component } from 'react'
-import Artist from "../components/artist/Artist"
+import Artist from "../artist/Artist"
 
 export default class Concert extends Component {
     constructor(props) {
