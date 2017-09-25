@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Artist from './Artist/Artist'
-import Concert from './Concert/Concert'
+import Artist from './components/artist/Artist'
+import Concert from './components/concert/Concert'
 
 class App extends Component {
   constructor(){
