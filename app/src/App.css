@@ -28,3 +28,9 @@
   max-width: 40%;
   display: inline-block;
 }
+
+.concertDiv {
+  border: 5px solid red;
+  max-width: 40%;
+  display: inline-block;
+}
