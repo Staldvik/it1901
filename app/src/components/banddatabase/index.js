@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import NavComponent from '../navbar/navbar'
-import { logo } from '../../uka.png'
+import logo from '../../uka.png'
 
 import './style.css';
 
-export default class About extends Component {
+export default class BandDatabase extends Component {
   // static propTypes = {}
   // static defaultProps = {}
   // state = {}
@@ -18,7 +18,7 @@ export default class About extends Component {
           <NavComponent />
         </div>
         <h1>
-          About
+          Band Database
         </h1>
         <p> This is just to test React-Router </p>
       </div>
