@@ -12,7 +12,7 @@ export default class NavComponent extends Component {
                     <Link to='/bandbooking'>Band Booking</Link>
                     <Link to='/previousbands'>Previous Bands</Link>
                     <Link to='/banddatabase'>Band Database</Link>
-                    <Link to='/calculator'>Band Booking</Link>
+                    <Link to='/calculator'>Profit Calculator</Link>
                     <Link to='/calendar'>Booking Calendar</Link>
                 </div>
             </nav>
