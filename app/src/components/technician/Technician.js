@@ -1,5 +1,5 @@
 import React, {Component } from 'react'
-//import './technician.css';
+import './technician.css';
 
 export default class Technician extends Component {
 
@@ -12,7 +12,7 @@ export default class Technician extends Component {
 
     render() {
         return (
-            <div className = "techicianDiv">
+            <div className = "technicianDiv">
                 <h1> {this.state.name} </h1>
                 //          <p> Concerts: </p>
             </div>
