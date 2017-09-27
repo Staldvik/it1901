@@ -9,7 +9,7 @@ export default class Concert extends Component {
             sales: props.sales,
             capacity: props.capacity //skal komme fra Scene component
             //Må også ha en Artist component og en liste med Tekniker components
-             
+
         }
     }
 
@@ -30,7 +30,7 @@ export default class Concert extends Component {
             return "true";
         }
         return "false"
-        
+
     }
 
 
