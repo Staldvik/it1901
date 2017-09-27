@@ -35,7 +35,7 @@ class App extends Component {
 
         <Concert price={300} sales={150} genre="Rock" />
 
-        <Technician name="Tekniker1" concerts={["test1", "test2", "test3"]} />
+        <Technician name="Tekniker1" concerts={[<Concert price={300} sales={150} genre="Rock" />]} />
 
         <Scene name="Dødens Dal" capacity={1000} cost={7500} />
 
