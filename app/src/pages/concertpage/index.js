@@ -15,13 +15,20 @@ export default class ConcertPage extends Component {
     super();
 
     this.state = {
-      concerts: [
-        {},
-        {}
-      ]
+      concerts: []
     }
 
-    var ref = db.ref();
+    const concertRef = db.child('concerts');
+  }
+
+  componentWillMount() {
+    db.on('child_added', snap => {
+      this.state.concerts.push({
+        name: snap.val().name,
+        price: snap.val().price,
+        sales: snap.val().sales
+      })
+    })
   }
 
   gotData(data) {
@@ -34,7 +41,7 @@ export default class ConcertPage extends Component {
       genre: genre,
       price: price
     }
-    this.ref.push(data);
+    db.child('concerts').push(data);
   }
 
   render() {
