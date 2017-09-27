@@ -2,11 +2,12 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import App from './App';
-import BandBooking from './components/bandbooking';
-import PreviousBands from './components/previousbands';
-import BandDatabase from './components/banddatabase';
-import ProfitCalculator from './components/profitcalculator';
-import BookingCalendar from './components/bookingcalendar';
+import BandBooking from './pages/bandbooking';
+import PreviousBands from './pages/previousbands';
+import BandDatabase from './pages/banddatabase';
+import ProfitCalculator from './pages/profitcalculator';
+import BookingCalendar from './pages/bookingcalendar';
+import ConcertPage from './pages/concertpage';
 
 const Routes = () => (
     <Switch>
@@ -16,6 +17,7 @@ const Routes = () => (
         <Route path="/banddatabase" component={BandDatabase}/>
         <Route path="/calculator" component={ProfitCalculator}/>
         <Route path="/calendar" component={BookingCalendar}/>
+        <Route path="/concerts" component={ConcertPage}/>
     </Switch>
 );
 

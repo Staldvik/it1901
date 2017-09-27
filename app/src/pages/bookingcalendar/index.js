@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import NavComponent from '../navbar/navbar'
+import NavComponent from '../../components/navbar/navbar'
 import logo from '../../uka.png'
 
 import './style.css';
 
-export default class ProfitCalculator extends Component {
+export default class BookingCalendar extends Component {
   // static propTypes = {}
   // static defaultProps = {}
   // state = {}
@@ -18,7 +18,7 @@ export default class ProfitCalculator extends Component {
           <NavComponent />
         </div>
         <h1>
-          Proft Calculator
+          Booking Calendar
         </h1>
         <p> This is just to test React-Router </p>
       </div>
