@@ -16,6 +16,7 @@ export default class ConcertPage extends Component {
 
     this.state = {
       concerts: [
+        {},
         {}
       ]
     }
