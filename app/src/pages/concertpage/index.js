@@ -15,14 +15,25 @@ export default class ConcertPage extends Component {
     super();
 
     this.state = {
-      concerts: []
+      concerts: [
+        {}
+      ]
     }
 
-    var test = db.ref().child('festival');
+    var ref = db.ref();
   }
 
   gotData(data) {
-    console.log(data.val())
+
+  }
+
+  pushData(name, genre, price) {
+    var data = {
+      name: name,
+      genre: genre,
+      price: price
+    }
+    this.ref.push(data);
   }
 
   render() {
@@ -36,6 +47,12 @@ export default class ConcertPage extends Component {
         <h1>
           Concerts
         </h1>
+        <form>
+          <input placeholder="Name"/>
+          <input placeholder="Genre"/>
+          <input placeholder="Price"/>
+          <button onClick={this.pushData}>Pushit</button>
+        </form>
         <p> This is just to test showing all concerts stored in database </p>
         <div className="concertsBody"> {
           // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
