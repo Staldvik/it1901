@@ -10,17 +10,19 @@ export default class Concert extends Component {
             price: props.price,
             sales: props.sales, //number of tickets sold
             genre: props.genre,
-            capacity: props.capacity //skal komme fra Scene component
+            capacity: props.capacity  //skal komme fra Scene component
             //Må også ha en Artist component og en liste med Tekniker components
-
         }
+        this.scene_name = scene.name
+        this.scene_capacity = scene.capacity
+        this.scene_cost = scene.cost
     }
 
     render() {
         return (
             <div className = "concertDiv">
                 <h1> Concert with: {this.state.name}</h1>
-                <p> Genre: {this.state.genre}</p> 
+                <p> Genre: {this.state.genre}</p>
                 <p> ticket price: {this.state.price} </p>
                 <p> tickets sold: {this.state.sales} </p>
                 <p> Sold out : {this.isSoldOut()} </p>

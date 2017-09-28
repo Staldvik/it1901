@@ -10,9 +10,9 @@ export default class Festival extends Component {
     constructor(props) {
         super(props);
         this.state = { //Kommentarer er tenkt datatype fra objektdiagrammet
-            scenes = []
-            this.state.name = name
-            this.state.total_days = total_days
+            scenes : [],
+            this.state.name : name,
+            this.state.total_days : total_days,
         }
         this.database = database;
     }
@@ -41,13 +41,14 @@ export default class Festival extends Component {
         //      </ul>
         // </div>
         <div className="scenesBody"> {
-          // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
+          // Lager liste over alle scenene
           this.state.scenes.map((scene) => {
             return (
-              <Scene name={scene.name} capacity={scene.capacity} cost={scene.cost} />
+              <li> <Scene name={scene.name} capacity={scene.capacity} cost={scene.cost}/></li>
             )
           })
-        }</div>
+        }
+        </div>
         )
     }
 
