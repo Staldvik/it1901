@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import NavComponent from '../../components/navbar/navbar'
 import './style.css';
 import Concert from '../../components/concert/Concert'
+import database from 'firebase/database'
 
 //firebase
-import db from '../../db'
+import database from '../../database'
 
 export default class ConcertPage extends Component {
   // static propTypes = {}
@@ -14,33 +15,38 @@ export default class ConcertPage extends Component {
     super();
 
     this.state = {
-      concerts: []
+      concerts: [],
+      currentNameInput: ""
     }
 
-    const concertRef = db.child('concerts');
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.database = dat
   }
 
   componentWillMount() {
-    db.on('child_added', snap => {
-      this.state.concerts.push({
-        name: snap.val().name,
-        price: snap.val().price,
-        sales: snap.val().sales
-      })
-    })
-  }
 
-  gotData(data) {
+
+
 
   }
 
-  pushData(name, genre, price) {
-    var data = {
-      name: name,
-      genre: genre,
-      price: price
+  handleChange(e) {
+    this.setState({
+      currentNameInput: e.target.value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const concertsRef = db.child('concerts');
+    const data = {
+      name: this.state.currentNameInput
     }
-    db.child('concerts').push(data);
+    concertsRef.push(data);
+    this.setState({
+      currentNameInput: ''
+    })
   }
 
   render() {
@@ -51,10 +57,10 @@ export default class ConcertPage extends Component {
           Concerts
         </h1>
         <form>
-          <input placeholder="Name"/>
+          <input name="name" placeholder="Name" value={this.state.currentNameInput} onChange={this.handleChange}/>
           <input placeholder="Genre"/>
           <input placeholder="Price"/>
-          <button onClick={this.pushData}>Pushit</button>
+          <button onClick={this.handleSubmit}> Pushit</button>
         </form>
         <p> This is just to test showing all concerts stored in database </p>
         <div className="concertsBody"> {
