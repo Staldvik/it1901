@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import NavComponent from '../../components/navbar/navbar'
-import logo from '../../uka.png'
-
 import './style.css';
 
 export default class PreviousBands extends Component {
@@ -12,11 +10,7 @@ export default class PreviousBands extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Arrangørsoftware for </h2>
-          <NavComponent />
-        </div>
+        <NavComponent />
         <h1>
           Previous Bands
         </h1>
