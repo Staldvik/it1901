@@ -2,34 +2,52 @@ import React, {Component } from 'react'
 import Scene from "../scene/Scene"
 import './dag.css';
 
+//firebase
+import database from '../../database'
+
 export default class Festival extends Component {
 
     constructor(props) {
         super(props);
         this.state = { //Kommentarer er tenkt datatype fra objektdiagrammet
-            for scene in Scene: //Liste med scener.. itere over?
-            this.props.name = name //String navn på festival
-            this.props.total_days = totaldays//antall dager
+            scenes = []
+            this.state.name = name
+            this.state.total_days = total_days
         }
+        this.database = database;
     }
 
     renderList(){
-      //return this.props.scenes.map(scene) => {
-      //  return (
-      //    <li key=(scene.name) className="list-group-item"> {scene.title} </li>
-      //  )
-      //}
-      var scenes = Object.keys(Scene).map(function(s){return Scene[s].name});
-      return scenes
+      const previousScenes = this.state.scenes;
+
+      this.database.child('scenes').on('child_added', snap => {
+        previousScenes.push({
+          id: snap.key,
+          name: snap.val().name,
+        })
+
+        this.setState({
+          scenes: previousScenes
+        })
+      })
+
     }
 
     render() {
         return (
-            <div className = "slotDiv">
-              <ul className="list-group col-sm-4"
-                {this.renderList()}
-              </ul>
-            </div>
+        //    <div className = "slotDiv">
+        //      <ul className="list-group col-sm-4"
+        //        {this.renderList()}
+        //      </ul>
+        // </div>
+        <div className="scenesBody"> {
+          // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
+          this.state.concerts.map((scene) => {
+            return (
+              <Scene name={scene.name} capacity={scene.capacity} cost={scene.cost} />
+            )
+          })
+        }</div>
         )
     }
 

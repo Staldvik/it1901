@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import NavComponent from '../../components/navbar/navbar'
-import logo from '../../uka.png'
 import './style.css';
 import Concert from '../../components/concert/Concert'
 
 //firebase
-import db from '../../db'
+import database from '../../database'
 
 export default class ConcertPage extends Component {
   // static propTypes = {}
@@ -15,58 +14,70 @@ export default class ConcertPage extends Component {
     super();
 
     this.state = {
-      concerts: []
+      concerts: [],
+      currentNameInput: ""
     }
 
-    const concertRef = db.child('concerts');
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.database = database;
   }
 
   componentWillMount() {
-    db.on('child_added', snap => {
-      this.state.concerts.push({
+    const previousConcerts = this.state.concerts;
+
+    this.database.child('concerts').on('child_added', snap => {
+      previousConcerts.push({
+        id: snap.key,
         name: snap.val().name,
-        price: snap.val().price,
-        sales: snap.val().sales
+      })
+
+      this.setState({
+        concerts: previousConcerts
       })
     })
+
+
+
   }
 
-  gotData(data) {
-
+  handleChange(e) {
+    this.setState({
+      currentNameInput: e.target.value
+    });
   }
 
-  pushData(name, genre, price) {
-    var data = {
-      name: name,
-      genre: genre,
-      price: price
+  handleSubmit(e) {
+    e.preventDefault();
+    const concertsRef = database.child('concerts');
+    const data = {
+      name: this.state.currentNameInput
     }
-    db.child('concerts').push(data);
+    concertsRef.push(data);
+    this.setState({
+      currentNameInput: ''
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Arrangørsoftware for </h2>
-          <NavComponent />
-        </div>
+        <NavComponent />
         <h1>
           Concerts
         </h1>
         <form>
-          <input placeholder="Name"/>
+          <input name="name" placeholder="Name" value={this.state.currentNameInput} onChange={this.handleChange}/>
           <input placeholder="Genre"/>
           <input placeholder="Price"/>
-          <button onClick={this.pushData}>Pushit</button>
+          <button onClick={this.handleSubmit}> Pushit</button>
         </form>
         <p> This is just to test showing all concerts stored in database </p>
         <div className="concertsBody"> {
           // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
           this.state.concerts.map((concert) => {
             return (
-              <Concert price={concert.price} sales={concert.sales} key={concert.id} />
+              <Concert name={concert.name} price={concert.price} sales={concert.sales} key={concert.id} />
             )
           })
         }</div>

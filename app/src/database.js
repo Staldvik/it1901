@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 var config = {
     apiKey: "AIzaSyDaYpDvWOMu9LYsbtewVfYinKjdF-TArvc",
     authDomain: "festival-180609.firebaseapp.com",
@@ -7,4 +9,7 @@ var config = {
     messagingSenderId: "587187428094"
 }
 
-export default config;
+const firebaseApp = firebase.initializeApp(config);
+const database = firebaseApp.database().ref().child('festival');
+
+export default database;
