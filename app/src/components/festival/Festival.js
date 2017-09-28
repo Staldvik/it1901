@@ -17,7 +17,7 @@ export default class Festival extends Component {
         this.database = database;
     }
 
-    renderList(){
+    componentWillMount(){
       const previousScenes = this.state.scenes;
 
       this.database.child('scenes').on('child_added', snap => {
@@ -42,7 +42,7 @@ export default class Festival extends Component {
         // </div>
         <div className="scenesBody"> {
           // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
-          this.state.concerts.map((scene) => {
+          this.state.scenes.map((scene) => {
             return (
               <Scene name={scene.name} capacity={scene.capacity} cost={scene.cost} />
             )
