@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NavComponent from '../../components/navbar/navbar'
 import './style.css';
 import Concert from '../../components/concert/Concert'
-import database from 'firebase/database'
 
 //firebase
 import database from '../../database'
@@ -21,7 +20,6 @@ export default class ConcertPage extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.database = dat
   }
 
   componentWillMount() {
@@ -39,7 +37,7 @@ export default class ConcertPage extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const concertsRef = db.child('concerts');
+    const concertsRef = database.child('concerts');
     const data = {
       name: this.state.currentNameInput
     }
