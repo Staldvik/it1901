@@ -9,28 +9,11 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 170px;
   padding: 20px;
   color: white;
 }
 
 .App-intro {
   font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.artistDiv {
-  border: 5px solid #0E2294;
-  max-width: 40%;
-  display: inline-block;
-}
-
-.concertDiv {
-  border: 5px solid red;
-  max-width: 40%;
-  display: inline-block;
 }
