@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './uka.png';
 import './App.css';
 import Artist from './components/artist/Artist'
 import Concert from './components/concert/Concert'
@@ -20,11 +19,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Arrangørsoftware for {this.state.prosjekt}</h2>
-          <NavComponent />
-        </div>
+        <NavComponent />
         <p className="App-intro">
           Hver div er en component
         </p>
