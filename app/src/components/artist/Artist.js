@@ -28,7 +28,7 @@ export default class Artist extends Component {
                 <p> albumSales: {this.state.albumSales} </p>
                 <p> earlierConcerts: {this.state.earlierConcerts} </p>
                 <p> cost: {this.state.cost} </p>
-                <p> approved: {this.checkApproved()} booked: {this.checkBooked()} </p>
+                <p> approved: {this.state.approved.toString()} booked: {this.checkBooked()} </p>
             </div>
 
         )
