@@ -20,10 +20,22 @@ export default class ConcertPage extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.database = database;
   }
 
   componentWillMount() {
+    const previousConcerts = this.state.concerts;
 
+    this.database.child('concerts').on('child_added', snap => {
+      previousConcerts.push({
+        id: snap.key,
+        name: snap.val().name,
+      })
+
+      this.setState({
+        concerts: previousConcerts
+      })
+    })
 
 
 
@@ -65,7 +77,7 @@ export default class ConcertPage extends Component {
           // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
           this.state.concerts.map((concert) => {
             return (
-              <Concert price={concert.price} sales={concert.sales} key={concert.id} />
+              <Concert name={concert.name} price={concert.price} sales={concert.sales} key={concert.id} />
             )
           })
         }</div>

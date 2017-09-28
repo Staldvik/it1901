@@ -6,6 +6,7 @@ export default class Concert extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: props.name,
             price: props.price,
             sales: props.sales, //number of tickets sold
             genre: props.genre,
@@ -18,7 +19,7 @@ export default class Concert extends Component {
     render() {
         return (
             <div className = "concertDiv">
-                <h1> Concert with: Artist</h1>
+                <h1> Concert with: {this.state.name}</h1>
                 <p> Genre: {this.state.genre}</p> 
                 <p> ticket price: {this.state.price} </p>
                 <p> tickets sold: {this.state.sales} </p>
