@@ -5,18 +5,7 @@ export default class Artist extends Component {
 
     constructor(props) {
         super(props);
-<<<<<<< HEAD:app/src/Artist/Artist.js
-        this.state = {
-            name: props.name,
-            age: props.age,
-            info: props.info,
-            popularity: props.popularity,
-            albumSales: props.albumSales,
-            earlierConcerts: props.earlierConcerts,
-            concertNeeds: props.concertNeeds,
-            approved: false,
-            booked: false,
-=======
+
         this.state = { //Kommentarer er tenkt datatype fra objektdiagrammet
             name: props.name, //String
             age: props.age, //Int
@@ -28,7 +17,7 @@ export default class Artist extends Component {
             cost: props.cost, // Int
             approved: false, // Boolean
             booked: false, // Boolean
->>>>>>> origin/master:app/src/components/artist/Artist.js
+
         }
     }
 
