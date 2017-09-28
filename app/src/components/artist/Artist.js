@@ -17,7 +17,6 @@ export default class Artist extends Component {
             cost: props.cost, // Int
             approved: false, // Boolean
             booked: false, // Boolean
-
         }
     }
 

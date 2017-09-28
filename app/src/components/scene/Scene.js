@@ -1,15 +1,13 @@
 import React, {Component } from 'react'
 import './scene.css';
 
-export default class Concert extends Component {
+export default class Scene extends Component {
     constructor(props) {
         super(props);
         this.state = {
             name: this.props.name,
             capacity: this.props.capacity,
             cost: this.props.cost,
-            
-             
         }
     }
 
@@ -17,7 +15,7 @@ export default class Concert extends Component {
         return (
             <div className = "sceneDiv">
                 <h1> Scene: {this.state.name}</h1>
-                <p> Capacity: {this.state.capacity}</p> 
+                <p> Capacity: {this.state.capacity}</p>
                 <p> Rigging cost: {this.state.cost} </p>
             </div>
 
@@ -29,7 +27,7 @@ export default class Concert extends Component {
             return "true";
         }
         return "false"
-        
+
     }
 
 
