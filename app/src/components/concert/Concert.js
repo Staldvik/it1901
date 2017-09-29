@@ -10,8 +10,9 @@ export default class Concert extends Component {
             price: props.price,
             sales: props.sales, //number of tickets sold
             genre: props.genre,
-            capacity: props.capacity //skal komme fra Scene component
+            capacity: props.capacity, //skal komme fra Scene component
             //Må også ha en Artist component og en liste med Tekniker components
+            date: props.date
              
         }
     }
@@ -24,6 +25,7 @@ export default class Concert extends Component {
                 <p> ticket price: {this.state.price} </p>
                 <p> tickets sold: {this.state.sales} </p>
                 <p> Sold out : {this.isSoldOut()} </p>
+                <p> Date: {this.state.date} </p>
             </div>
 
         )

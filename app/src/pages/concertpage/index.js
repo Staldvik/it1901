@@ -18,7 +18,8 @@ export default class ConcertPage extends Component {
       currentNameInput: "",
       currentGenreInput: "",
       currentPriceInput: 0,
-      currentDateInput: 0
+      currentDayInput: "day1",
+
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,46 +28,55 @@ export default class ConcertPage extends Component {
   }
 
   componentWillMount() {
-    const previousConcerts = this.state.concerts;
+    var previousConcerts = this.state.concerts;    
 
-    this.database.child('concerts').on('child_added', snap => {
-      if (snap.val().childtest) {
-        console.log(snap.val().childtest.ticketsales)
-      }
-      previousConcerts.push({
-        id: snap.key,
-        name: snap.val().name,
-        price: snap.val().price,
-        genre: snap.val().genre
+    database.ref().child('festival').on('child_added', festivalSnapshot => {
+      console.log(festivalSnapshot.key);
+      festivalSnapshot.child('concerts').forEach(concertSnapshot => {
+        console.log(concertSnapshot.val().name);
+        var vals = concertSnapshot.val();
+        previousConcerts.push({
+          name: vals.name,
+          genre: vals.genre,
+          price: vals.price,
+          day: concertSnapshot.ref.parent.parent.key,
+          key: concertSnapshot.key
+        })
       })
-
-      this.setState({
-        concerts: previousConcerts
-      })
+      this.setState(this.state.concerts = previousConcerts);
     })
+
   }
+
+
 
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
+    console.log(e.target.name + " is now key for: " + e.target.value)
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const concertsRef = database.child(this.state.currentDateInput).child('concerts');
+    const concertsRef = database.ref().child('festival').child(this.state.currentDayInput).child('concerts');
     const data = {
       name: this.state.currentNameInput,
       genre: this.state.currentGenreInput,
       price: this.state.currentPriceInput
-
     }
-    concertsRef.push(data);
-    this.setState({
-      currentNameInput: '',
-      currentGenreInput: '',
-      currentPriceInput: 0
-    })
+
+    if ((data.name.length < 1) || (data.genre.length < 3)) {
+      alert("HELLO, NEED MORE INFO");
+    } else {
+      concertsRef.push(data);
+      this.setState({
+        currentNameInput: '',
+        currentGenreInput: '',
+        currentPriceInput: 0,
+        currentDayInput: 0
+      })
+    }    
   }
 
   render() {
@@ -80,7 +90,15 @@ export default class ConcertPage extends Component {
           <input type="text" name="currentNameInput" placeholder="Name" value={this.state.currentNameInput} onChange={this.handleChange}/>
           <input type="text" name="currentGenreInput" placeholder="Genre" value={this.state.currentGenreInput} onChange={this.handleChange}/>
           <input type="number" name="currentPriceInput" placeholder="Price" value={this.state.currentPriceInput} onChange={this.handleChange}/>
-          <input type="date" name="currentDateInput" placeholder="20/07/2017" valye={this.state.currentDayInput} onChange={this.handleChange}/>
+          <select name="currentDayInput" onChange={this.handleChange}>
+            <option value="day1">Dag 1</option>
+            <option value="day2">Dag 2</option>
+            <option value="day3">Dag 3</option>
+            <option value="day4">Dag 4</option>
+            <option value="day5">Dag 5</option>
+            <option value="day6">Dag 6</option>
+            <option value="day7">Dag 7</option>
+          </select>
           <button onClick={this.handleSubmit}> Pushit</button>
         </form>
         <p> This is just to test showing all concerts stored in database </p>
@@ -88,7 +106,7 @@ export default class ConcertPage extends Component {
           // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
           this.state.concerts.map((concert) => {
             return (
-              <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.id} />
+              <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} date={concert.date}/>
             )
           })
         }</div>

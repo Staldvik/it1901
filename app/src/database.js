@@ -10,6 +10,6 @@ var config = {
 }
 
 const firebaseApp = firebase.initializeApp(config);
-const database = firebaseApp.database().ref().child('festival');
+const database = firebaseApp.database();
 
 export default database;
