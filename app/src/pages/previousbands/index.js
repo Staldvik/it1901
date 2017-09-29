@@ -40,9 +40,17 @@ export default class PreviousBands extends Component {
       if (this.matches.length > 0) {
         var insertIntoThese = [];
         for (var i = 0; i < this.matches.length; i++) {
-          insertIntoThese.push(this.matches[i].key);
+          insertIntoThese.push(this.matches[i]);
+          console.log(insertIntoThese);
         }
-        console.log(insertIntoThese);
+        for (var j = 0; i < insertIntoThese.length; i++) {
+          var day = insertIntoThese[j].ref.parent.parent.key;
+          console.log("Day: " + day);
+          var key = insertIntoThese[j].key;
+          console.log("Key: " + key);
+          database.ref("festival").child(day).child('concerts').child(key).child('technicians').push(this.state.currentTechnicianInput);
+
+        }
       } else {
         console.log("No matches in array?");
       }
