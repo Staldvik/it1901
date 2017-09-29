@@ -16,6 +16,7 @@ export default class PreviousBands extends Component {
       concertsForTechnician: [],
       currentConcertInput: "",
       currentTechnicianInput: "",
+      currentIdInput: "",
     }
 
     this.matches = [];
@@ -24,8 +25,27 @@ export default class PreviousBands extends Component {
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
   }
 
-  addToConcert(key) {
+  componentWillMount() {
+    var previousConcertsForTechnician = this.state.concertsForTechnician;
 
+    database.ref().child('festival').on('child_added', daySnapshot => {
+      daySnapshot.child('concerts').forEach(concertSnapshot => {
+        concertSnapshot.child('technicians').forEach(techSnapshot => {
+          console.log("Techcshchsch");
+          var vals = techSnapshot.val();
+          previousConcertsForTechnician.push({
+            name: vals.name,
+            id: vals.id
+          })
+        })
+      })
+      this.setState({
+        concertsForTechnician: previousConcertsForTechnician,
+        currentConcertInput: "",
+        currentTechnicianInput: "",
+        currentIdInput: ""
+      })
+    })
   }
 
   handleChange(e) {
@@ -43,13 +63,16 @@ export default class PreviousBands extends Component {
           insertIntoThese.push(this.matches[i]);
           console.log(insertIntoThese);
         }
-        for (var j = 0; i < insertIntoThese.length; i++) {
+        for (var j = 0; j < insertIntoThese.length; j++) {
           var day = insertIntoThese[j].ref.parent.parent.key;
           console.log("Day: " + day);
           var key = insertIntoThese[j].key;
           console.log("Key: " + key);
-          database.ref("festival").child(day).child('concerts').child(key).child('technicians').push(this.state.currentTechnicianInput);
-
+          
+          database.ref("festival").child(day).child('concerts').child(key).child('technicians').push({
+            name: this.state.currentTechnicianInput,
+            id: this.state.currentIdInput
+          });
         }
       } else {
         console.log("No matches in array?");
@@ -58,8 +81,6 @@ export default class PreviousBands extends Component {
   }
 
   searchConcertsFor(query, value) {
-    var match = [];
-
     return database.ref('festival').once('value').then(festivalSnapshot => {
       return festivalSnapshot.forEach(daySnapshot => {
         return daySnapshot.child('concerts').forEach(concertSnapshot => {
@@ -85,6 +106,7 @@ export default class PreviousBands extends Component {
         <p> Formen er for å pushe en tekniker inn i en konsert </p>
         <form>
           <input name="currentTechnicianInput" type="text" value={this.state.currentTechnicianInput} onChange={this.handleChange} placeholder="Technician Name" />
+          <input name="currentIdInput" type="number" value={this.state.currentIdInput} onChange={this.handleChange} placeholder="id" />
           <input name="currentConcertInput" type="text" value={this.state.currentConcertInput} onChange={this.handleChange} placeholder="Concert Name" />
           <button onClick={this.handleSubmit}>Pushit</button>
         </form>
