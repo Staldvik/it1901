@@ -30,9 +30,9 @@ export default class ConcertPage extends Component {
   componentWillMount() {
     var previousConcerts = this.state.concerts;    
 
-    database.ref().child('festival').on('child_added', festivalSnapshot => {
-      console.log(festivalSnapshot.key);
-      festivalSnapshot.child('concerts').forEach(concertSnapshot => {
+    database.ref().child('festival').on('child_added', daySnapshot => {
+      console.log(daySnapshot.key);
+      daySnapshot.child('concerts').forEach(concertSnapshot => {
         console.log(concertSnapshot.val().name);
         var vals = concertSnapshot.val();
         previousConcerts.push({
@@ -43,7 +43,13 @@ export default class ConcertPage extends Component {
           key: concertSnapshot.key
         })
       })
-      this.setState(this.state.concerts = previousConcerts);
+      this.setState({
+        concerts: previousConcerts,
+        currentNameInput: "",
+        currentGenreInput: "",
+        currentPriceInput: 0,
+        currentDayInput: "day1",
+      })
     })
 
   }
@@ -54,7 +60,6 @@ export default class ConcertPage extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(e.target.name + " is now key for: " + e.target.value)
   }
 
   handleSubmit(e) {
@@ -102,14 +107,16 @@ export default class ConcertPage extends Component {
           <button onClick={this.handleSubmit}> Pushit</button>
         </form>
         <p> This is just to test showing all concerts stored in database </p>
-        <div className="concertsBody"> {
-          // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
-          this.state.concerts.map((concert) => {
-            return (
-              <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} date={concert.date}/>
-            )
-          })
-        }</div>
+        <div className="concertsBody"> 
+          {
+            // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
+            this.state.concerts.map((concert) => {
+              return (
+                <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day}/>
+              )
+            })
+          }
+        </div>
       </div>
     );
   }

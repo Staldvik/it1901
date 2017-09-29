@@ -15,7 +15,7 @@ export default class NavComponent extends Component {
                         <Link to='/'>Home</Link>
                         <Link to='/concerts'>Concerts</Link>
                         <Link to='/bandbooking'>Band Booking</Link>
-                        <Link to='/previousbands'>Previous Bands</Link>
+                        <Link to='/previousbands'>TeknikerTest</Link>
                         <Link to='/banddatabase'>Band Database</Link>
                         <Link to='/calculator'>Profit Calculator</Link>
                         <Link to='/calendar'>Booking Calendar</Link>
