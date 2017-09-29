@@ -36,21 +36,28 @@ export default class PreviousBands extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.searchConcertsFor("name", this.state.currentConcertInput);
-    console.log(this.matches);
+    this.searchConcertsFor("name", this.state.currentConcertInput).then(match => {
+      if (this.matches.length > 0) {
+        var insertIntoThese = [];
+        for (var i = 0; i < this.matches.length; i++) {
+          insertIntoThese.push(this.matches[i].key);
+        }
+        console.log(insertIntoThese);
+      } else {
+        console.log("No matches in array?");
+      }
+    })
   }
 
   searchConcertsFor(query, value) {
-    console.log("PUSHIT");
-    database.ref().child('festival').on('value', festivalSnapshot => {
-      console.log(festivalSnapshot.key);
-      festivalSnapshot.forEach(daySnapshot => {
-        console.log(daySnapshot.key);
-        daySnapshot.child('concerts').forEach(concertSnapshot => {
-          console.log("Comparing " + concertSnapshot.val()[query] + " and " + value)
+    var match = [];
+
+    return database.ref('festival').once('value').then(festivalSnapshot => {
+      return festivalSnapshot.forEach(daySnapshot => {
+        return daySnapshot.child('concerts').forEach(concertSnapshot => {
           if (concertSnapshot.val()[query] == value) {
-            this.matches.push(concertSnapshot.val());
-            console.log("match!");
+            this.matches.push(concertSnapshot);
+            console.log(this.matches);
           }
         })
       })
