@@ -15,7 +15,7 @@ export default class Concert extends Component {
         }
         this.scene_name = scene.name
         this.scene_capacity = scene.capacity
-        this.scene_cost = scene.cost
+        this.scene_cost = scene.costn
     }
 
     render() {
