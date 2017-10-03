@@ -57,7 +57,7 @@ export default class PreviousBands extends Component {
     e.preventDefault();
     this.searchConcertsFor("name", this.state.currentConcertInput)
     .then(() => {
-      database.ref("DatabaseModelingTry").child('concerts').child(this.match.key).child('technicians').push({
+      database.ref("DatabaseModelingTry").child('concerts').child(this.match.key).child('technicians').child(this.state.currentIdInput).set({
         name: this.state.currentTechnicianInput,
         id: this.state.currentIdInput,
       })
@@ -66,7 +66,7 @@ export default class PreviousBands extends Component {
 
   handleSubmitTech(e) {
     e.preventDefault();
-    database.ref("DatabaseModelingTry").child('technicians').push({
+    database.ref("DatabaseModelingTry").child('technicians').child(this.state.currentIdInput).set({
       name: this.state.currentTechnicianInput,
       id: this.state.currentIdInput
     })
