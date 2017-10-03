@@ -3,6 +3,7 @@ import NavComponent from '../../components/navbar/navbar'
 import './style.css';
 import database from '../../database';
 import Concert from '../../components/concert/Concert';
+import Technician from '../../components/technician/Technician'
 
 export default class PreviousBands extends Component {
   // static propTypes = {}
@@ -14,33 +15,31 @@ export default class PreviousBands extends Component {
 
     this.state = {
       concertsForTechnician: [],
+      technicians: [],
       currentConcertInput: "",
       currentTechnicianInput: "",
       currentIdInput: "",
     }
 
-    this.matches = [];
+    this.match = "";
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitTech = this.handleSubmitTech.bind(this);
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
   }
 
   componentWillMount() {
-    var previousConcertsForTechnician = this.state.concertsForTechnician;
+    var previousTechnicians = this.state.technicians;
 
-    database.ref().child('festival').on('child_added', daySnapshot => {
-      daySnapshot.child('concerts').forEach(concertSnapshot => {
-        concertSnapshot.child('technicians').forEach(techSnapshot => {
-          console.log("Techcshchsch");
-          var vals = techSnapshot.val();
-          previousConcertsForTechnician.push({
-            name: vals.name,
-            id: vals.id
-          })
-        })
+    database.ref('DatabaseModelingTry').child('technicians').on('child_added', techSnapshot => {
+      var val = techSnapshot.val();
+      previousTechnicians.push({
+        name: val.name,
+        id: val.id,
+        concerts: val.concerts,
       })
       this.setState({
-        concertsForTechnician: previousConcertsForTechnician,
+        technicians: previousTechnicians,
         currentConcertInput: "",
         currentTechnicianInput: "",
         currentIdInput: ""
@@ -56,32 +55,37 @@ export default class PreviousBands extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.searchConcertsFor("name", this.state.currentConcertInput).then(match => {
-      if (this.matches.length > 0) {
-        var insertIntoThese = [];
-        for (var i = 0; i < this.matches.length; i++) {
-          insertIntoThese.push(this.matches[i]);
-          console.log(insertIntoThese);
-        }
-        for (var j = 0; j < insertIntoThese.length; j++) {
-          var day = insertIntoThese[j].ref.parent.parent.key;
-          console.log("Day: " + day);
-          var key = insertIntoThese[j].key;
-          console.log("Key: " + key);
-          
-          database.ref("festival").child(day).child('concerts').child(key).child('technicians').push({
-            name: this.state.currentTechnicianInput,
-            id: this.state.currentIdInput
-          });
-        }
-      } else {
-        console.log("No matches in array?");
-      }
+    this.searchConcertsFor("name", this.state.currentConcertInput)
+    .then(() => {
+      database.ref("DatabaseModelingTry").child('concerts').child(this.match.key).child('technicians').push({
+        name: this.state.currentTechnicianInput,
+        id: this.state.currentIdInput,
+      })
+    })
+  }
+
+  handleSubmitTech(e) {
+    e.preventDefault();
+    database.ref("DatabaseModelingTry").child('technicians').push({
+      name: this.state.currentTechnicianInput,
+      id: this.state.currentIdInput
     })
   }
 
   searchConcertsFor(query, value) {
-    return database.ref('festival').once('value').then(festivalSnapshot => {
+    return database.ref("DatabaseModelingTry").child('concerts').once('value').then(concertsSnapshot => {
+      return concertsSnapshot.forEach(concertSnapshot => {
+        if (concertSnapshot.val()[query] == value) {
+          this.match = concertSnapshot;
+          console.log(this.match);
+        }
+      })
+    })
+
+
+
+
+   /*  return database.ref('festival').once('value').then(festivalSnapshot => {
       return festivalSnapshot.forEach(daySnapshot => {
         return daySnapshot.child('concerts').forEach(concertSnapshot => {
           if (concertSnapshot.val()[query] == value) {
@@ -90,7 +94,7 @@ export default class PreviousBands extends Component {
           }
         })
       })
-    })
+    }) */
   }
 
   render() {
@@ -103,18 +107,38 @@ export default class PreviousBands extends Component {
         <p> Dette er bare en test for å hente konserten som en spesifik tekniker står på (planen er at de
           skal dukke opp som div'er under formen) </p>
 
-        <p> Formen er for å pushe en tekniker inn i en konsert </p>
         <form>
+          <h3> Denne formen er for å pushe en tekniker inn i databasen </h3>
+          <input name="currentTechnicianInput" type="text" value={this.state.currentTechnicianInput} onChange={this.handleChange} placeholder="Technician Name" />
+          <input name="currentIdInput" type="number" value={this.state.currentIdInput} onChange={this.handleChange} placeholder="id" />
+          <button onClick={this.handleSubmitTech}>Pushit</button>
+        </form>
+
+        <form>
+          <h3> Denne formen er for å pushe en tekniker inn i konserten </h3>
           <input name="currentTechnicianInput" type="text" value={this.state.currentTechnicianInput} onChange={this.handleChange} placeholder="Technician Name" />
           <input name="currentIdInput" type="number" value={this.state.currentIdInput} onChange={this.handleChange} placeholder="id" />
           <input name="currentConcertInput" type="text" value={this.state.currentConcertInput} onChange={this.handleChange} placeholder="Concert Name" />
           <button onClick={this.handleSubmit}>Pushit</button>
         </form>
-        <div> 
+        <div>
+          <h1> Concerts for [feature coming soon] </h1> 
           {
             this.state.concertsForTechnician.map((concert) => {
               return (
                 <Concert name={concert.name}/>
+              )
+            })
+          }
+        </div>
+
+        <div>
+          <h1> Technicians found in database </h1>
+          {
+            this.state.technicians.map((technician) => {
+              console.log("Trying to make a tech DIV" + technician.name);
+              return (
+                <Technician name={technician.name} id={technician.id} key={technician.id} />
               )
             })
           }

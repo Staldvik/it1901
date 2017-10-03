@@ -30,18 +30,14 @@ export default class ConcertPage extends Component {
   componentWillMount() {
     var previousConcerts = this.state.concerts;    
 
-    database.ref().child('festival').on('child_added', daySnapshot => {
-      console.log(daySnapshot.key);
-      daySnapshot.child('concerts').forEach(concertSnapshot => {
-        console.log(concertSnapshot.val().name);
-        var vals = concertSnapshot.val();
-        previousConcerts.push({
-          name: vals.name,
-          genre: vals.genre,
-          price: vals.price,
-          day: concertSnapshot.ref.parent.parent.key,
-          key: concertSnapshot.key
-        })
+    database.ref('DatabaseModelingTry').child('concerts').on('child_added', concertSnapshot => {
+      var vals = concertSnapshot.val();
+      previousConcerts.push({
+        name: vals.name,
+        genre: vals.genre,
+        price: vals.price,
+        day: vals.day,
+        key: concertSnapshot.key
       })
       this.setState({
         concerts: previousConcerts,
@@ -64,11 +60,12 @@ export default class ConcertPage extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const concertsRef = database.ref().child('festival').child(this.state.currentDayInput).child('concerts');
+    const concertsRef = database.ref('DatabaseModelingTry').child('concerts');
     const data = {
       name: this.state.currentNameInput,
       genre: this.state.currentGenreInput,
-      price: this.state.currentPriceInput
+      price: this.state.currentPriceInput,
+      day: this.state.currentDayInput
     }
 
     if ((data.name.length < 1) || (data.genre.length < 3)) {
