@@ -17,7 +17,6 @@ export default class Artist extends Component {
             scene: props.scene  //scene
         }
     }
-
     render() {
         return (
             <div className = "dagDiv">
