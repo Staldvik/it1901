@@ -30,7 +30,7 @@ export default class ConcertPage extends Component {
   componentWillMount() {
     var previousConcerts = this.state.concerts;    
 
-    database.ref('DatabaseModelingTry').child('concerts').on('child_added', concertSnapshot => {
+    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
       previousConcerts.push({
         name: vals.name,
@@ -60,7 +60,7 @@ export default class ConcertPage extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const concertsRef = database.ref('DatabaseModelingTry').child('concerts');
+    const concertsRef = database.ref('festival17').child('concerts');
     const data = {
       name: this.state.currentNameInput,
       genre: this.state.currentGenreInput,
@@ -88,21 +88,6 @@ export default class ConcertPage extends Component {
         <h1>
           Concerts
         </h1>
-        <form>
-          <input type="text" name="currentNameInput" placeholder="Name" value={this.state.currentNameInput} onChange={this.handleChange}/>
-          <input type="text" name="currentGenreInput" placeholder="Genre" value={this.state.currentGenreInput} onChange={this.handleChange}/>
-          <input type="number" name="currentPriceInput" placeholder="Price" value={this.state.currentPriceInput} onChange={this.handleChange}/>
-          <select name="currentDayInput" onChange={this.handleChange}>
-            <option value="day1">Dag 1</option>
-            <option value="day2">Dag 2</option>
-            <option value="day3">Dag 3</option>
-            <option value="day4">Dag 4</option>
-            <option value="day5">Dag 5</option>
-            <option value="day6">Dag 6</option>
-            <option value="day7">Dag 7</option>
-          </select>
-          <button onClick={this.handleSubmit}> Pushit</button>
-        </form>
         <p> This is just to test showing all concerts stored in database </p>
         <div className="concertsBody"> 
           {
