@@ -10,7 +10,7 @@ export default class PreviousBands extends Component {
   // static defaultProps = {}
   // state = {}
 
- 
+
 
 
 
@@ -27,7 +27,11 @@ export default class PreviousBands extends Component {
     }) */
     render(){
       return(
-        <div> adsj </div>
+        <div className="app">
+          <NavComponent/>
+
+          <h1> TeknikerTest </h1>
+        </div>
       )
     }
 }
