@@ -53,16 +53,14 @@ export default class PreviousBands extends Component {
           <NavComponent/>
 
           <h1> Teknikere </h1>
-          <ul>
-          <li> Tekniker1 </li>
-          <li> Tekniker2 </li>
-          </ul>
 
           <div className="techniciansBody">
           {
           this.state.technicians.map((technician) => {
             return (
-              <Technician name={technician.name} />
+              <ul>
+              <li> {technician.name} </li>
+              </ul>
             )
           })
           }
