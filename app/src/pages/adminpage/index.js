@@ -21,7 +21,7 @@ export default class AdminPage extends Component {
       technicians: [],
 
       // Technician form
-      currentConcertInput: "",
+      currentTechnicianConcert: "",
       currentTechnicianNameInput: "",
       currentTechnicianIdInput: "",
 
@@ -35,7 +35,7 @@ export default class AdminPage extends Component {
 
     this.match = "";
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.pushTech = this.pushTech.bind(this);
     this.handleSubmitTech = this.handleSubmitTech.bind(this);
     this.handleSubmitConcert = this.handleSubmitConcert.bind(this);
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
@@ -52,7 +52,7 @@ export default class AdminPage extends Component {
       })
       this.setState({
         technicians: previousTechnicians,
-        currentConcertInput: "",
+        currentTechnicianConcert: "",
         currentTechnicianNameInput: "",
         currentTechnicianIdInput: ""
       })
@@ -65,13 +65,12 @@ export default class AdminPage extends Component {
     })
   }
 
-  handleSubmit(e) {
+  pushTech(e) {
     e.preventDefault();
-    this.searchConcertsFor("name", this.state.currentConcertInput)
+    this.searchConcertsFor("name", this.state.currentTechnicianConcert)
     .then(() => {
       database.ref("festival17").child('concerts').child(this.match.key).child('technicians').child(this.state.currentTechnicianIdInput).set({
         name: this.state.currentTechnicianNameInput,
-        id: this.state.currentTechnicianIdInput,
       })
     })
   }
@@ -96,7 +95,7 @@ export default class AdminPage extends Component {
   }
 
   searchConcertsFor(query, value) {
-    return database.ref("festival17").child('concerts').once('value').then(concertsSnapshot => {
+    return database.ref('festival17').child('concerts').once('value').then(concertsSnapshot => {
       return concertsSnapshot.forEach(concertSnapshot => {
         if (concertSnapshot.val()[query] == value) {
           this.match = concertSnapshot;
@@ -129,7 +128,7 @@ export default class AdminPage extends Component {
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
           <input name="currentTechnicianIdInput" type="number" value={this.state.currentTechnicianIdInput} onChange={this.handleChange} placeholder="id" />
           <input name="currentTechnicianConcert" type="text" value={this.state.currentTechnicianConcert} onChange={this.handleChange} placeholder="Concert Name" />
-          <button onClick={this.handleSubmit}>Pushit</button>
+          <button onClick={this.pushTech}>Pushit</button>
         </form>
 
         <form>
