@@ -15,20 +15,18 @@ export default class ConcertPage extends Component {
 
     this.state = {
       concerts: [],
-      currentNameInput: "",
-      currentGenreInput: "",
-      currentPriceInput: 0,
-      currentDayInput: "day1",
-
+      opts: [<option value="showAll"> show all </option>],
+      selectedTech: "showAll",
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.database = database;
+
   }
 
   componentWillMount() {
-    var previousConcerts = this.state.concerts;    
+    var previousConcerts = this.state.concerts;
+    var previousOpts = this.state.opts;
+    var previousSelectedTech = this.state.selectedTech;    
 
     database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
@@ -37,48 +35,34 @@ export default class ConcertPage extends Component {
         genre: vals.genre,
         price: vals.price,
         day: vals.day,
-        key: concertSnapshot.key
-      })
-      this.setState({
-        concerts: previousConcerts,
-        currentNameInput: "",
-        currentGenreInput: "",
-        currentPriceInput: 0,
-        currentDayInput: "day1",
+        key: concertSnapshot.key,
+        technicians: vals.technicians
       })
     })
 
+    database.ref('festival17').child('technicians').on('child_added', technicianSnapshot => {
+      previousOpts.push(
+        <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {technicianSnapshot.val().name + " " + technicianSnapshot.key} </option>
+      )
+      this.setState({
+        concerts: previousConcerts,
+        opts: previousOpts,
+        selectedTech: previousSelectedTech,
+      })
+    })
   }
-
 
 
   handleChange(e) {
+    var previousConcerts = this.state.concerts;
+    var previousOpts = this.state.opts;
+
     this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const concertsRef = database.ref('festival17').child('concerts');
-    const data = {
-      name: this.state.currentNameInput,
-      genre: this.state.currentGenreInput,
-      price: this.state.currentPriceInput,
-      day: this.state.currentDayInput
-    }
-
-    if ((data.name.length < 1) || (data.genre.length < 3)) {
-      alert("HELLO, NEED MORE INFO");
-    } else {
-      concertsRef.push(data);
-      this.setState({
-        currentNameInput: '',
-        currentGenreInput: '',
-        currentPriceInput: 0,
-        currentDayInput: 0
-      })
-    }    
+      concerts: previousConcerts,
+      opts: previousOpts,
+      selectedTech: e.target.value,
+    })    
+    console.log("Selected tech set to: " + e.target.value)
   }
 
   render() {
@@ -88,14 +72,38 @@ export default class ConcertPage extends Component {
         <h1>
           Concerts
         </h1>
-        <p> This is just to test showing all concerts stored in database </p>
+        <p> Alle konsertene til teknikeren funnet i databasen </p>
+        <div className="select">     
+          <select onChange={this.handleChange} value={this.state.selectedTech}>
+            {this.state.opts}
+          </select>
+        </div>
         <div className="concertsBody"> 
           {
             // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
             this.state.concerts.map((concert) => {
-              return (
-                <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day}/>
-              )
+              let match = false;
+
+              // Sjekk om alle skal vises
+              if (this.state.selectedTech == "showAll") {
+                match = true;
+              }
+
+              // Hvis ikke, sjekk om konserten har noen teknikere på seg
+              else if (concert.technicians != undefined) {
+                console.log(this.state.selectedTech)
+                if (concert.technicians[this.state.selectedTech] != undefined) {
+                  match = true;
+                }
+
+              }
+                
+              if (match) {
+                return (
+                  <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day} technicians={concert.technicians} />
+                )
+              }
+                          
             })
           }
         </div>

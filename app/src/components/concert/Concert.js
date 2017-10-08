@@ -12,7 +12,9 @@ export default class Concert extends Component {
             genre: props.genre,
             capacity: props.capacity, //skal komme fra Scene component
             //Må også ha en Artist component og en liste med Tekniker components
-            day: props.day
+            day: props.day,
+            
+
              
         }
     }
