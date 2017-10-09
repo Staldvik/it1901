@@ -22,7 +22,7 @@ export default class Concert extends Component {
 
     render() {
 
-        let techs = [];
+        var techs = [];
         if (this.state.technicians) {
             techs = this.state.technicians
         } else {
@@ -42,7 +42,7 @@ export default class Concert extends Component {
                 Technicians:
                 {
                     techs.map((tech) => {
-                        return <li> {tech} </li>
+                        return <li key={tech}> {tech} </li>
                     })
 
                 }

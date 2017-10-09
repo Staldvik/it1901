@@ -104,14 +104,19 @@ export default class AdminPage extends Component {
 
   handleSubmitConcert(e) {
     e.preventDefault();
-    var data = {
-      name: this.state.currentConcertNameInput,
-      day: this.state.currentConcertDayInput
+    if (this.state.currentConcertNameInput.length > 2 && this.state.currentConcertGenreInput.length > 2 && !isNaN(this.state.currentConcertPriceInput)) {
+      var data = {
+        name: this.state.currentConcertNameInput,
+        day: this.state.currentConcertDayInput
+      }
+      database.ref('festival17').child('concerts').push({
+        name: this.state.currentConcertNameInput,
+        day: this.state.currentConcertDayInput,
+      })
+    } else {
+      alert("need more info")
     }
-    database.ref('festival17').child('concerts').push({
-      name: this.state.currentConcertNameInput,
-      day: this.state.currentConcertDayInput,
-    })
+    
   }
 
   searchConcertsFor(query, value) {

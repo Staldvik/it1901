@@ -32,7 +32,7 @@ export default class ConcertPage extends Component {
       var vals = concertSnapshot.val();
       var prevTechnicianNames = [];
       concertSnapshot.child('technicians').forEach((technician) => {
-        prevTechnicianNames.push(technician.val().name)
+        prevTechnicianNames.push("ID " + technician.key + ": " + technician.val().name)
       })
       previousConcerts.push({
         name: vals.name,
@@ -48,7 +48,7 @@ export default class ConcertPage extends Component {
 
     database.ref('festival17').child('technicians').on('child_added', technicianSnapshot => {
       previousOpts.push(
-        <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {technicianSnapshot.val().name + " ID: " + technicianSnapshot.key} </option>
+        <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {"ID "+technicianSnapshot.key+": " + technicianSnapshot.val().name} </option>
       )
       this.setState({
         concerts: previousConcerts,
