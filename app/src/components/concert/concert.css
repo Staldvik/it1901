@@ -1,5 +1,12 @@
 .concertDiv {
-  border: 5px solid #145012;
+  border: 3px solid #482D41;
   max-width: 40%;
   display: inline-block;
+  margin:3px;
+  padding:3px;
+  -webkit-border-radius: 5px;
+}
+
+.bullet {
+  list-style-position: disc outside none;
 }

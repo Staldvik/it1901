@@ -26,7 +26,7 @@ export default class ConcertPage extends Component {
   componentWillMount() {
     var previousConcerts = this.state.concerts;
     var previousOpts = this.state.opts;
-    var previousSelectedTech = this.state.selectedTech;    
+    var previousSelectedTech = this.state.selectedTech;
 
     database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
@@ -67,7 +67,7 @@ export default class ConcertPage extends Component {
       concerts: previousConcerts,
       opts: previousOpts,
       selectedTech: e.target.value,
-    })    
+    })
     console.log("Selected tech set to: " + e.target.value)
   }
 
@@ -79,7 +79,7 @@ export default class ConcertPage extends Component {
           Concerts
         </h1>
         <p> Alle konsertene til teknikeren funnet i databasen </p>
-        <div className="select">     
+        <div className="select">
           <select onChange={this.handleChange} value={this.state.selectedTech}>
             {this.state.opts}
           </select>
@@ -103,14 +103,14 @@ export default class ConcertPage extends Component {
                 }
 
               }
-                
+
               if (match) {
                 return (
                   <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day} technicians={concert.technicians}
                   technicians={concert.technicianNames} technicalInfo={concert.technicalInfo}/>
                 )
               }
-                          
+
             })
           }
         </div>

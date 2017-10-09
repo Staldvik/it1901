@@ -1,0 +1,20 @@
+<style type="text/css">
+
+.form-style {
+  position: relative;
+  left: 50px;
+  max-width:400px;
+  margin:50px auto;
+  background:#fff;
+  border-radius:2px;
+  padding:20px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.form-style-9 label{
+    position: absolute;
+    top: ;
+    display: block;
+    margin-bottom: 10px;
+    min-height: 35px;
+}
