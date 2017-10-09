@@ -8,6 +8,7 @@ import BandDatabase from './pages/banddatabase';
 import ProfitCalculator from './pages/profitcalculator';
 import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
+import ManagerSite from './pages/manager_site'
 
 const Routes = () => (
     <Switch>
@@ -18,6 +19,7 @@ const Routes = () => (
         <Route path="/calculator" component={ProfitCalculator}/>
         <Route path="/calendar" component={BookingCalendar}/>
         <Route path="/concerts" component={ConcertPage}/>
+        <Route path="/manager" component={ManagerSite}/>
     </Switch>
 );
 

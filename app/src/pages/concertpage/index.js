@@ -28,7 +28,7 @@ export default class ConcertPage extends Component {
   }
 
   componentWillMount() {
-    var previousConcerts = this.state.concerts;    
+    var previousConcerts = this.state.concerts;
 
     database.ref('DatabaseModelingTry').child('concerts').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
@@ -78,7 +78,7 @@ export default class ConcertPage extends Component {
         currentPriceInput: 0,
         currentDayInput: 0
       })
-    }    
+    }
   }
 
   render() {
@@ -104,7 +104,7 @@ export default class ConcertPage extends Component {
           <button onClick={this.handleSubmit}> Pushit</button>
         </form>
         <p> This is just to test showing all concerts stored in database </p>
-        <div className="concertsBody"> 
+        <div className="concertsBody">
           {
             // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
             this.state.concerts.map((concert) => {
