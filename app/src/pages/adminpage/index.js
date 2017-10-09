@@ -15,14 +15,13 @@ export default class AdminPage extends Component {
     super(props);
     var technicianMap = new Map();
 
-
     this.state = {
       technicians: [],
       concertOptions: [],
       technicianOptions: [],
       selectedConcert: "",
       selectedTechnician: "",
-      technicianMap:[[]],
+      technicianMap: technicianMap,
 
       // Technician form
       currentTechnicianConcert: "",
@@ -70,7 +69,7 @@ export default class AdminPage extends Component {
       previousTechnicianOptions.push(
         <option value={techSnapshot.key} key={techSnapshot.key}> {techSnapshot.val().name} </option>
       )
-      technicianMap.set(techSnapshot.key, techSnapshot.val().name)
+      previousTechnicianMap.set(techSnapshot.key, techSnapshot.val().name)
       this.setState({
         technicians: previousTechnicians,
         concertOptions: previousConcertOptions,
@@ -91,8 +90,8 @@ export default class AdminPage extends Component {
 
   pushTech(e) {
     e.preventDefault();
-    database.ref("festival17").child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
-      name: ""
+    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
+      name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
   }
 
@@ -146,8 +145,6 @@ export default class AdminPage extends Component {
 
         <form>
           <h3> Denne formen er for å pushe en tekniker inn i konserten </h3>
-          <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
-          <input name="currentTechnicianIdInput" type="number" value={this.state.currentTechnicianIdInput} onChange={this.handleChange} placeholder="id" />
           <select name="selectedTechnician" onChange={this.handleChange} value={this.state.selectedTechnician}>
             {this.state.technicianOptions}
           </select>
