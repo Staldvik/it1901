@@ -10,15 +10,19 @@ import Concert from '../../components/concert/Concert'
 import database from '../../database'
 
 export default class AdminPage extends Component {
-  // static propTypes = {}
-  // static defaultProps = {}
-  // state = {}
+
   constructor(props) {
     super(props);
+    var technicianMap = new Map();
+
 
     this.state = {
-      concertsForTechnician: [],
       technicians: [],
+      concertOptions: [],
+      technicianOptions: [],
+      selectedConcert: "",
+      selectedTechnician: "",
+      technicianMap:[[]],
 
       // Technician form
       currentTechnicianConcert: "",
@@ -33,6 +37,8 @@ export default class AdminPage extends Component {
       currentConcertDayInput: "",
     }
 
+
+    
     this.match = "";
     this.handleChange = this.handleChange.bind(this);
     this.pushTech = this.pushTech.bind(this);
@@ -43,6 +49,17 @@ export default class AdminPage extends Component {
 
   componentWillMount() {
     var previousTechnicians = this.state.technicians;
+    var previousConcertOptions = this.state.concertOptions;
+    var previousTechnicianOptions = this.state.technicianOptions;
+    var previousTechnicianMap = this.state.technicianMap;
+
+    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
+      console.log(concertSnapshot.val().name)
+      previousConcertOptions.push(
+        <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
+      )
+    })
+
 
     database.ref('festival17').child('technicians').on('child_added', techSnapshot => {
       var val = techSnapshot.val();
@@ -50,8 +67,15 @@ export default class AdminPage extends Component {
         name: val.name,
         id: techSnapshot.key,
       })
+      previousTechnicianOptions.push(
+        <option value={techSnapshot.key} key={techSnapshot.key}> {techSnapshot.val().name} </option>
+      )
+      technicianMap.set(techSnapshot.key, techSnapshot.val().name)
       this.setState({
         technicians: previousTechnicians,
+        concertOptions: previousConcertOptions,
+        technicianOptions: previousTechnicianOptions,
+        technicianMap: previousTechnicianMap,
         currentTechnicianConcert: "",
         currentTechnicianNameInput: "",
         currentTechnicianIdInput: ""
@@ -67,11 +91,8 @@ export default class AdminPage extends Component {
 
   pushTech(e) {
     e.preventDefault();
-    this.searchConcertsFor("name", this.state.currentTechnicianConcert)
-    .then(() => {
-      database.ref("festival17").child('concerts').child(this.match.key).child('technicians').child(this.state.currentTechnicianIdInput).set({
-        name: this.state.currentTechnicianNameInput,
-      })
+    database.ref("festival17").child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
+      name: ""
     })
   }
 
@@ -127,7 +148,12 @@ export default class AdminPage extends Component {
           <h3> Denne formen er for å pushe en tekniker inn i konserten </h3>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
           <input name="currentTechnicianIdInput" type="number" value={this.state.currentTechnicianIdInput} onChange={this.handleChange} placeholder="id" />
-          <input name="currentTechnicianConcert" type="text" value={this.state.currentTechnicianConcert} onChange={this.handleChange} placeholder="Concert Name" />
+          <select name="selectedTechnician" onChange={this.handleChange} value={this.state.selectedTechnician}>
+            {this.state.technicianOptions}
+          </select>
+          <select name="selectedConcert" onChange={this.handleChange} value={this.state.selectedConcert}>
+            {this.state.concertOptions}
+          </select>
           <button onClick={this.pushTech}>Pushit</button>
         </form>
 
