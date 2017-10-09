@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
-import logo from '../../static/img/uka.png'
+import logo from '../../static/img/festival.png'
 
 export default class NavComponent extends Component {
 

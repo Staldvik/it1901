@@ -30,13 +30,19 @@ export default class ConcertPage extends Component {
 
     database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
+      var prevTechnicianNames = [];
+      concertSnapshot.child('technicians').forEach((technician) => {
+        prevTechnicianNames.push(technician.val().name)
+      })
       previousConcerts.push({
         name: vals.name,
         genre: vals.genre,
         price: vals.price,
         day: vals.day,
         key: concertSnapshot.key,
-        technicians: vals.technicians
+        technicians: vals.technicians,
+        technicianNames: prevTechnicianNames,
+        technicalInfo: vals.technicalInfo,
       })
     })
 
@@ -100,7 +106,8 @@ export default class ConcertPage extends Component {
 
               if (match) {
                 return (
-                  <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day} technicians={concert.technicians} />
+                  <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day} technicians={concert.technicians}
+                  technicians={concert.technicianNames} technicalInfo={concert.technicalInfo}/>
                 )
               }
 
