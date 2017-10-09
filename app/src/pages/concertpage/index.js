@@ -42,7 +42,7 @@ export default class ConcertPage extends Component {
 
     database.ref('festival17').child('technicians').on('child_added', technicianSnapshot => {
       previousOpts.push(
-        <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {technicianSnapshot.val().name + " " + technicianSnapshot.key} </option>
+        <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {technicianSnapshot.val().name + " ID: " + technicianSnapshot.key} </option>
       )
       this.setState({
         concerts: previousConcerts,
