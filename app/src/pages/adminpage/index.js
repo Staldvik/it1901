@@ -147,28 +147,6 @@ export default class AdminPage extends Component {
           </select>
           <button onClick={this.handleSubmitConcert}> Pushit</button>
         </form>
-
-        <div>
-          <h1> Concerts for [feature coming soon] </h1> 
-          {
-            this.state.concertsForTechnician.map((concert) => {
-              return (
-                <Concert name={concert.name}/>
-              )
-            })
-          }
-        </div>
-
-        <div>
-          <h1> Technicians found in database </h1>
-          {
-            this.state.technicians.map((technician) => {
-              return (
-                <Technician name={technician.name} id={technician.id} key={technician.id} />
-              )
-            })
-          }
-        </div>
       </div>
     );
   }
