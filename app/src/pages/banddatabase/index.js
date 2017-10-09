@@ -60,6 +60,11 @@ export default class BandDatabase extends Component {
             }
           })
         }
+
+        // Hvis festivalen == festival17: skip
+        else {
+          console.log("Skipping festival17")
+        }
       })
       this.setState({
         genreOptions: previousGenreOptions,
@@ -84,14 +89,16 @@ export default class BandDatabase extends Component {
 
         <div>
           {
+            // Går gjennom alle konsertene i this.state.concerts som concert
             this.state.concerts.map(concert => {
-
               var match = false;
 
+              // Hvis valgt er Show All så "matcher" alle
               if (this.state.selectedGenre == "ShowAll") {
                 match = true;
               }
 
+              // Hvis ikke Show All, matcher valgt sjanger og konsertens sjanger?
               else if (this.state.selectedGenre == concert.val().genre) {
                 match = true;
               }

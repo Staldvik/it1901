@@ -6,10 +6,6 @@ import Concert from '../../components/concert/Concert';
 import Technician from '../../components/technician/Technician'
 
 export default class PreviousBands extends Component {
-  // static propTypes = {}
-  // static defaultProps = {}
-  // state = {}
-
   constructor() {
     super();
     this.state = {
@@ -32,24 +28,10 @@ export default class PreviousBands extends Component {
   })
 
   }
-
-
-
-
-
-   /*  return database.ref('festival').once('value').then(festivalSnapshot => {
-      return festivalSnapshot.forEach(daySnapshot => {
-        return daySnapshot.child('concerts').forEach(concertSnapshot => {
-          if (concertSnapshot.val()[query] == value) {
-            this.matches.push(concertSnapshot);
-            console.log(this.matches);
-          }
-        })
-      })
-    }) */
+  
     render(){
       return(
-        <div className="app">
+        <div className="App">
           <NavComponent/>
 
           <h1> Teknikere </h1>
@@ -58,9 +40,12 @@ export default class PreviousBands extends Component {
           {
           this.state.technicians.map((technician) => {
             return (
-              <ul>
-              <li> {technician.name} </li>
-              </ul>
+              <div>
+                <ul>
+                  <li> {technician.name} </li>
+                </ul>
+              </div>
+              
             )
           })
           }
