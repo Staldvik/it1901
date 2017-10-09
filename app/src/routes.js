@@ -9,6 +9,8 @@ import ProfitCalculator from './pages/profitcalculator';
 import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
 import ManagerSite from './pages/manager_site'
+import AdminPage from './pages/adminpage';
+
 
 const Routes = () => (
     <Switch>
@@ -20,6 +22,7 @@ const Routes = () => (
         <Route path="/calendar" component={BookingCalendar}/>
         <Route path="/concerts" component={ConcertPage}/>
         <Route path="/manager" component={ManagerSite}/>
+        <Route path="/admin" component={AdminPage}/>
     </Switch>
 );
 

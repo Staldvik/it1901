@@ -13,7 +13,7 @@ export default class ProfitCalculator extends Component {
       <div className="App">
         <NavComponent />
         <h1>
-          Proft Calculator
+          Proft CalculatorUGGAYSFUA
         </h1>
         <p> This is just to test React-Router </p>
       </div>
