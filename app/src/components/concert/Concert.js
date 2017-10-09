@@ -16,7 +16,7 @@ export default class Concert extends Component {
             technicians: props.technicians,
             technicalInfo: props.technicalInfo
 
-             
+
         }
     }
 
@@ -33,18 +33,18 @@ export default class Concert extends Component {
         return (
             <div className = "concertDiv">
                 <h1> Concert with: {this.state.name}</h1>
-                <p> Genre: {this.state.genre}</p> 
+                <p> Genre: {this.state.genre}</p>
                 <p> ticket price: {this.state.price} </p>
                 <p> tickets sold: {this.state.sales} </p>
                 <p> Sold out : {this.isSoldOut()} </p>
                 <p> Day: {this.state.day} </p>
-                <ul>
+                <ul className = "bullet">
                 Technicians:
                 {
                     techs.map((tech) => {
                         return <li> {tech} </li>
                     })
-                    
+
                 }
                 </ul>
                 <p> Technical requirements: {this.state.technicalInfo} </p>
@@ -58,7 +58,7 @@ export default class Concert extends Component {
             return "true";
         }
         return "false"
-        
+
     }
 
 
