@@ -11,11 +11,13 @@ export default class BandDatabase extends Component {
   constructor() {
     super();
 
+    var sceneMap = new Map();
     this.state = {
       concerts: [],
+      scenes: [],
       genres: [],
+      sceneMap: sceneMap,
       genreOptions: [<option value="ShowAll" key="ShowALl"> Show All </option>],
-
       selectedGenre: "ShowAll",
     }
 
@@ -36,6 +38,8 @@ export default class BandDatabase extends Component {
     var previousGenreOptions = this.state.genreOptions;
     var previousGenres = this.state.genres;
     var previousConcerts = this.state.concerts;
+    var previousSceneMap = this.state.sceneMap;
+    var previousScenes = this.state.scenes;
 
     // Gå gjennom alle festivalene
     database.ref().on('value', snapshot => {
@@ -59,6 +63,13 @@ export default class BandDatabase extends Component {
               previousGenres.push(genre)
             }
           })
+
+          // For hver scene
+          festivalSnapshot.child('scenes').forEach(sceneSnapshot => {
+            var index = previousScenes.push(sceneSnapshot);
+            previousSceneMap.set(sceneSnapshot.key, index);
+          })
+
         }
 
         // Hvis festivalen == festival17: skip
@@ -107,7 +118,7 @@ export default class BandDatabase extends Component {
                 return(
                 <div key={concert.key}>
                   <h1> {String(concert.ref.parent.parent.key)} </h1>
-                  <Concert name={concert.val().name} sales={concert.val().sales} genre={concert.val().genre} key={concert.key}/>
+                  <Concert name={concert.val().name} sales={concert.val().sales} capacity={this.state.} sceneName={} genre={concert.val().genre} key={concert.key}/>
                 </div>
               )
               }
