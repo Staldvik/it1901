@@ -20,6 +20,7 @@ export default class NavComponent extends Component {
                         <Link to='/calculator'>Profit Calculator</Link>
                         <Link to='/calendar'>Booking Calendar</Link>
                         <Link to='/admin'>Admin Page</Link>
+                        <Link to='/manager'>Manager Site</Link>
                     </div>
                 </nav>
             </div>
