@@ -15,7 +15,7 @@ export default class ConcertPage extends Component {
 
     this.state = {
       concerts: [],
-      opts: [<option value="showAll"> show all </option>],
+      opts: [<option value="showAll" key="showAll"> show all </option>],
       selectedTech: "showAll",
     }
 

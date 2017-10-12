@@ -10,11 +10,13 @@ export default class Concert extends Component {
             price: props.price,
             sales: props.sales, //number of tickets sold
             genre: props.genre,
-            capacity: props.capacity, //skal komme fra Scene component
-            //Må også ha en Artist component og en liste med Tekniker components
             day: props.day,
             technicians: props.technicians,
-            technicalInfo: props.technicalInfo
+            technicalInfo: props.technicalInfo,
+
+            // Scene information
+            sceneLocation: props.sceneLocation,
+            sceneCapacity: props.sceneCapacity
 
 
         }
@@ -36,8 +38,11 @@ export default class Concert extends Component {
                 <p> Genre: {this.state.genre}</p>
                 <p> ticket price: {this.state.price} </p>
                 <p> tickets sold: {this.state.sales} </p>
-                <p> Sold out : {this.isSoldOut()} </p>
+                <p> Sold out: {this.isSoldOut()} </p>
+                <p> Percentage full: {this.checkPercentage()} </p>
                 <p> Day: {this.state.day} </p>
+                <p> SceneLocation: {this.state.sceneLocation} </p>
+                <p> SceneCapacity: {this.state.sceneCapacity} </p>
                 <ul className = "bullet">
                 Technicians:
                 {
@@ -54,11 +59,15 @@ export default class Concert extends Component {
     }
 
     isSoldOut() {
-        if (this.state.sales >= this.state.capacity) {
+        if (this.state.sales >= this.state.sceneCapacity) {
             return "true";
         }
         return "false"
 
+    }
+
+    checkPercentage() {
+        return parseFloat((this.state.sales/this.state.sceneCapacity)*100).toFixed(1);
     }
 
 

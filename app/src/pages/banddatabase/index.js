@@ -35,6 +35,7 @@ export default class BandDatabase extends Component {
   }
 
   componentWillMount() {
+    // Tar vare på current state
     var previousGenreOptions = this.state.genreOptions;
     var previousGenres = this.state.genres;
     var previousConcerts = this.state.concerts;
@@ -66,7 +67,8 @@ export default class BandDatabase extends Component {
 
           // For hver scene
           festivalSnapshot.child('scenes').forEach(sceneSnapshot => {
-            var index = previousScenes.push(sceneSnapshot);
+            var index = previousScenes.push(sceneSnapshot) - 1;
+            console.log("Adding " + sceneSnapshot.key + " to index " + index) 
             previousSceneMap.set(sceneSnapshot.key, index);
           })
 
@@ -81,6 +83,8 @@ export default class BandDatabase extends Component {
         genreOptions: previousGenreOptions,
         genres: previousGenres,
         concerts: previousConcerts,
+        scenes: previousScenes,
+        sceneMap: previousSceneMap
       })
     })
   }
@@ -115,10 +119,17 @@ export default class BandDatabase extends Component {
               }
 
               if (match) {
+                var sceneLocation = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().location;
+                var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity
+                console.log("On concert: " + concert.val().name);
+                console.log("Getting index: " + this.state.sceneMap.get(concert.val().scene))
+                console.log("Which is: " + sceneLocation + " with capacity " + sceneCapacity)
+                console.log("")
                 return(
                 <div key={concert.key}>
                   <h1> {String(concert.ref.parent.parent.key)} </h1>
-                  <Concert name={concert.val().name} sales={concert.val().sales} capacity={this.state.} sceneName={} genre={concert.val().genre} key={concert.key}/>
+                  <Concert name={concert.val().name} sales={concert.val().sales} genre={concert.val().genre} key={concert.key} 
+                  sceneCapacity={sceneCapacity} sceneLocation={sceneLocation}/>
                 </div>
               )
               }

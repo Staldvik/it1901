@@ -28,27 +28,10 @@ export default class Artist extends Component {
                 <p> albumSales: {this.state.albumSales} </p>
                 <p> earlierConcerts: {this.state.earlierConcerts} </p>
                 <p> cost: {this.state.cost} </p>
-                <p> approved: {this.state.approved.toString()} booked: {this.checkBooked()} </p>
+                <p> approved: {this.state.approved.toString()} booked: {this.state.booked.toString()} </p>
             </div>
 
         )
     }
-
-    checkApproved() {
-        if (this.state.approved) {
-            return "true";
-        } else {
-            return "false"
-        }
-    }
-
-    checkBooked() {
-        if (this.state.booked) {
-            return "true";
-        } else {
-            return "false"
-        }
-    }
-
 
 }

@@ -16,28 +16,28 @@ export default class AdminPage extends Component {
     var technicianMap = new Map();
 
     this.state = {
-      technicians: [],
+      concerts: [],
       concertOptions: [],
       technicianOptions: [],
-      selectedConcert: "",
-      selectedTechnician: "",
       technicianMap: technicianMap,
 
-      // Technician form
+      // Technician => Concert form
+      selectedTechnician: "",
+      selectedConcert: "",
+
+      // Technician => database form
       currentTechnicianConcert: "",
       currentTechnicianNameInput: "",
       currentTechnicianIdInput: "",
 
-      // Concert form
+      // Concert => database form
       currentConcertNameInput: "",
       currentConcertGenreInput: "",
-      currentConcertInput: "",
       currentConcertPriceInput: "",
-      currentConcertDayInput: "",
+      currentConcertDayInput: "day1",
     }
 
-
-    
+    // Binder for å få tilgang til dem i andre funksjoner i denne klassen
     this.match = "";
     this.handleChange = this.handleChange.bind(this);
     this.pushTech = this.pushTech.bind(this);
@@ -46,38 +46,67 @@ export default class AdminPage extends Component {
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
   }
 
+
+  // Kjøres når siden/komponenten lastes
   componentWillMount() {
-    var previousTechnicians = this.state.technicians;
+    // Tar vare på verdier vi skal endre på i denne funksjonen
+    // Dette er fordi man ikke skal endre på state direkte
+    var previousTechnicianMap = this.state.technicianMap;
+    var previousConcerts = this.state.concerts;
+
+    // Tilgjengelige valg for formen til å pushe en tekniker inn i en konsert.
     var previousConcertOptions = this.state.concertOptions;
     var previousTechnicianOptions = this.state.technicianOptions;
-    var previousTechnicianMap = this.state.technicianMap;
 
-    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
-      console.log(concertSnapshot.val().name)
-      previousConcertOptions.push(
-        <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
-      )
-    })
+    // Valgt option for formen til å pushe en tekniker inn i en konsert. 
+    var previousSelectedConcert = this.state.selectedConcert;
+    var previousSelectedTechnician = this.state.selectedTechnician;
 
+    //Kjøres en gang og gir alt av data under "festival17" som en snapshot
+    database.ref('festival17').once('value', festivalSnapshot => {
+      
+      // For hver tekniker i festival-snapshotet
+      festivalSnapshot.child('technicians').forEach(technicianSnapshot => {
 
-    database.ref('festival17').child('technicians').on('child_added', techSnapshot => {
-      var val = techSnapshot.val();
-      previousTechnicians.push({
-        name: val.name,
-        id: techSnapshot.key,
+        // Hvis det ikke er valgt noen tekniker, sett til denne tekniker (som også blir første option i dropdown)
+        if (previousSelectedTechnician === "") {
+          previousSelectedTechnician = technicianSnapshot.key
+        }
+
+        // Lag option for denne teknikeren
+        previousTechnicianOptions.push(
+          <option value={technicianSnapshot.key} key={technicianSnapshot.key}> {technicianSnapshot.val().name} </option>
+        )
+
+        // Map ligner veldig på dictionary fra python. Her tar vi vare på teknikerens navn og keyen er rett og slett key.
+        // Dette gjør vi for å slippe å sjekke databasen bare for å finne navnet som samsvarer til key. 
+        previousTechnicianMap.set(technicianSnapshot.key, technicianSnapshot.val().name)
       })
-      previousTechnicianOptions.push(
-        <option value={techSnapshot.key} key={techSnapshot.key}> {techSnapshot.val().name} </option>
-      )
-      previousTechnicianMap.set(techSnapshot.key, techSnapshot.val().name)
+
+      // For hver konsert i festival-snapshotet
+      festivalSnapshot.child('concerts').forEach(concertSnapshot => {
+        // Hvis det ikke er valgt en konsert, sett til denne konserten (som også blir første option i dropdown)
+        if (previousSelectedConcert === "") {
+          previousSelectedConcert = concertSnapshot.key; 
+        }
+
+        // Lag option for denne konserten
+        previousConcertOptions.push(
+          <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
+        )
+
+        // Ta vare på konserten
+        previousConcerts.push(concertSnapshot)
+      })
+
+      // Oppdater "staten" med alle disse vi har pushet til/endret på
       this.setState({
-        technicians: previousTechnicians,
-        concertOptions: previousConcertOptions,
         technicianOptions: previousTechnicianOptions,
         technicianMap: previousTechnicianMap,
-        currentTechnicianConcert: "",
-        currentTechnicianNameInput: "",
-        currentTechnicianIdInput: ""
+        concertOptions: previousConcertOptions,
+        concerts: previousConcerts,
+        selectedConcert: previousSelectedConcert,
+        selectedTechnician: previousSelectedTechnician,
       })
     })
   }
@@ -93,6 +122,9 @@ export default class AdminPage extends Component {
     database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
       name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
+    .catch(
+      console.log("Something went wrong with pushTech?")
+    )
   }
 
   handleSubmitTech(e) {
@@ -107,16 +139,14 @@ export default class AdminPage extends Component {
     if (this.state.currentConcertNameInput.length > 2 && this.state.currentConcertGenreInput.length > 2 && !isNaN(this.state.currentConcertPriceInput)) {
       var data = {
         name: this.state.currentConcertNameInput,
-        day: this.state.currentConcertDayInput
-      }
-      database.ref('festival17').child('concerts').push({
-        name: this.state.currentConcertNameInput,
         day: this.state.currentConcertDayInput,
-      })
+        price: this.state.currentConcertPriceInput,
+        genre: this.state.currentConcertGenreInput,
+      }
+      database.ref('festival17').child('concerts').push(data)
     } else {
       alert("need more info")
-    }
-    
+    }   
   }
 
   searchConcertsFor(query, value) {
@@ -164,7 +194,7 @@ export default class AdminPage extends Component {
           <input type="text" name="currentConcertNameInput" placeholder="Name" value={this.state.currentConcertNameInput} onChange={this.handleChange}/>
           <input type="text" name="currentConcertGenreInput" placeholder="Genre" value={this.state.currentConcertGenreInput} onChange={this.handleChange}/>
           <input type="number" name="currentConcertPriceInput" placeholder="Price" value={this.state.currentConcertPriceInput} onChange={this.handleChange}/>
-          <select name="currentConcertDayInput" onChange={this.handleChange}>
+          <select name="currentConcertDayInput" onChange={this.handleChange} value={this.state.currentConcertDayInput}>
             <option value="day1">Dag 1</option>
             <option value="day2">Dag 2</option>
             <option value="day3">Dag 3</option>
