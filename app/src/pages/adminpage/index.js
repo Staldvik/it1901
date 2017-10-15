@@ -109,6 +109,22 @@ export default class AdminPage extends Component {
         selectedTechnician: previousSelectedTechnician,
       })
     })
+    
+    //Lytter etter child added på tekniker, altså om tekniker blir lagt til
+    // Den nye teknikeren vil ikke vises i dropdown før componenten blir rendered på nytt. Dette for å unngå duplikater.
+    //database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
+      //console.log(lastTechnician);
+
+      //var previousTechnicianMap = this.state.technicianMap;
+      //var previousConcerts = this.state.concerts;
+
+      //previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
+
+      //this.setState({
+      //  technicianOptions: previousTechnicianOptions,
+     //   technicianMap: previousTechnicianMap,
+      //})
+    //})
   }
 
   handleChange(e) {
@@ -117,19 +133,27 @@ export default class AdminPage extends Component {
     })
   }
 
+
   pushTech(e) {
     e.preventDefault();
     database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
       name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
-    .catch(
-      console.log("Something went wrong with pushTech?")
-    )
   }
 
   handleSubmitTech(e) {
     e.preventDefault();
-    database.ref("festival17").child('technicians').child(this.state.currentTechnicianIdInput).set({
+    //regner ut index for ny tekniker til alltid å være en høyere enn den høyeste.
+    //Dermed hindrer man overskriving hvis teknikere er fjernet
+    let indices = []
+    for(var key of this.state.technicianMap.keys()){
+      indices.push(parseInt(key)); //key må være en int for å finne max
+      }
+    var maxIndex = indices.reduce(function(a, b) {
+      return Math.max(a, b);
+    });
+
+    database.ref("festival17").child('technicians').child(maxIndex+1).set({
       name: this.state.currentTechnicianNameInput
     })
   }
@@ -174,7 +198,6 @@ export default class AdminPage extends Component {
         <form>
           <h3> Denne formen er for å pushe en tekniker inn i databasen </h3>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
-          <input name="currentTechnicianIdInput" type="number" value={this.state.currentTechnicianIdInput} onChange={this.handleChange} placeholder="id" />
           <button onClick={this.handleSubmitTech}>Pushit</button>
         </form>
 
