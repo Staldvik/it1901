@@ -16,6 +16,7 @@ export default class BandBooking extends Component {
       currentArtistNameInput: "",
       currentPriceInput: "",
       currentConcertDayInput: "day1",
+      requests: [],
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,20 +24,26 @@ export default class BandBooking extends Component {
   }
 
   //kjøres når siden/komponenten lastes
-  // componentWillMount() {
-  //   var previousArtistName = "",
-  //   var previousArtistPriceInput: "",
-  //   var previousConcertDayInput: "",
-  //
-  //   database.ref('festival17').once('value', festivalSnapshot => {
-  //
-  //     this.setState({
-  //       ArtistName = previousArtistName,
-  //     })
-  //
-  //   })
-  //
-  // }
+  componentWillMount() {
+    var previousRequests = this.state.requests;
+
+    database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+      var vals = requestSnapshot.val();
+      previousRequests.push({
+        artist:vals.artist,
+        price:vals.price,
+        day:vals.day,
+        status:vals.status,
+      })
+
+
+      this.setState({
+        requestedStatus: previousRequests,
+      })
+
+    })
+
+  }
 
   handleChange(e) {
     this.setState({
@@ -52,6 +59,7 @@ export default class BandBooking extends Component {
       artist: this.state.currentArtistNameInput,
       price: this.state.currentPriceInput,
       day: this.state.currentConcertDayInput,
+      status: "pending",
     }
 
     database.ref("festival17").child("requests").push(data)
@@ -81,6 +89,25 @@ export default class BandBooking extends Component {
         </select>
         <button onClick={this.handleSubmitRequest}>Send forespørsel</button>
         </form>
+
+        {/*Liste med requests til Bookingsjef som kan godkjennes, eller ikke godkjennes.*/}
+        <h2> Her er en liste med tilbud fra bookingansvarlig om forslag til artist, med pris og hvilken dag de spiller. </h2>
+        <div className="requestsBody">
+        {this.state.requests.map((requests) => {
+          return (
+            <div>
+            <ul>
+            <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} </li>
+            <button>Godkjenn</button>
+            <button>Avslå</button>
+            </ul>
+            </div>
+          )
+        })
+        }
+
+        </div>
+
 
       </div>
     );
