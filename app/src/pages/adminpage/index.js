@@ -174,6 +174,9 @@ export default class AdminPage extends Component {
     database.ref("festival17").child('technicians').child(maxIndex+1).set({
       name: this.state.currentTechnicianNameInput
     })
+    this.setState({ //setter input boksen tilbake til tom
+      currentTechnicianNameInput: "",
+    })
   }
 
   handleSubmitConcert(e) {
