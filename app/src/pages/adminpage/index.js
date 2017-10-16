@@ -191,7 +191,13 @@ export default class AdminPage extends Component {
       database.ref('festival17').child('concerts').push(data)
     } else {
       alert("need more info")
-    }   
+    } 
+    this.setState({ //setter input boksen tilbake til tom
+      currentConcertNameInput: "",
+      currentConcertDayInput: "Day1",
+      currentConcertPriceInput: "",
+      currentConcertGenreInput: "",
+    })  
   }
 
   searchConcertsFor(query, value) {
@@ -219,7 +225,7 @@ export default class AdminPage extends Component {
         <form>
           <h3> Denne formen er for å pushe en tekniker inn i databasen </h3>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
-          <button onClick={this.handleSubmitTech}>Pushit</button>
+          <button onClick={this.handleSubmitTech}>Submit</button>
         </form>
 
         <form>
@@ -230,7 +236,7 @@ export default class AdminPage extends Component {
           <select name="selectedConcert" onChange={this.handleChange} value={this.state.selectedConcert}>
             {this.state.concertOptions}
           </select>
-          <button onClick={this.pushTech}>Pushit</button>
+          <button onClick={this.pushTech}>Submit</button>
         </form>
 
         <form>
@@ -247,7 +253,7 @@ export default class AdminPage extends Component {
             <option value="day6">Dag 6</option>
             <option value="day7">Dag 7</option>
           </select>
-          <button onClick={this.handleSubmitConcert}> Pushit</button>
+          <button onClick={this.handleSubmitConcert}> Submit</button>
         </form>
       </div>
     );
