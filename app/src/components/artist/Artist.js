@@ -7,10 +7,10 @@ export default class Artist extends Component {
         super(props);
         this.state = { //Kommentarer er tenkt datatype fra objektdiagrammet
             name: props.name, //String
-            age: props.age, //Int
             info: props.info, //String
             popularity: props.popularity, //Int
-            albumSales: props.albumSales, //Int
+            followers: props.followers, //Int
+            genres: props.genres,
             earlierConcerts: props.earlierConcerts, //List
             concertNeeds: props.concertNeeds, // String //kanskje cost hentes herifra. Også ting som antall mikrofoner og instrumenter
             cost: props.cost, // Int
@@ -22,10 +22,11 @@ export default class Artist extends Component {
     render() {
         return (
             <div className = "artistDiv">
-                <h1> {this.state.name} ({this.state.age}) </h1>
+                <h1> {this.state.name} </h1>
                 <p> {this.state.info} </p>
                 <p> popularity: {this.state.popularity} </p>
-                <p> albumSales: {this.state.albumSales} </p>
+                <p> followers: {this.state.followers} </p>
+                <p> genres: {this.state.genres.join("/")} </p>
                 <p> earlierConcerts: {this.state.earlierConcerts} </p>
                 <p> cost: {this.state.cost} </p>
                 <p> approved: {this.state.approved.toString()} booked: {this.state.booked.toString()} </p>
