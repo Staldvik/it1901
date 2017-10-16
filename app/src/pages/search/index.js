@@ -78,7 +78,7 @@ export default class Search extends Component {
         <h1> Lets search </h1>
 
         <form>
-          <h2> Søk etter artist/sang her </h2>
+          <h2> Søk etter artist her </h2>
           <input type="text" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
         </form>
 
