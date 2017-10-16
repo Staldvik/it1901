@@ -25,6 +25,7 @@ export default class ManagerSite extends Component {
  componentWillMount() {
    var previousConcerts = this.state.concerts;
    var previousConcertOptions = this.state.concertOptions;
+   var previousArtistName = this.state.artist_name;
    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
      var vals = concertSnapshot.val();
      previousConcerts.push({
@@ -34,6 +35,10 @@ export default class ManagerSite extends Component {
        //tech_spec : vals.tech_spec,
        //rider : vals.rider
      })
+
+     if (previousArtistName === "") {
+       previousArtistName = concertSnapshot.key;
+     }
      previousConcertOptions.push(
        <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
      )
@@ -42,7 +47,7 @@ export default class ManagerSite extends Component {
   this.setState({
     concerts: previousConcerts,
     concertOptions: previousConcertOptions,
-    artist_name: '',
+    artist_name: previousArtistName,
     tech_spec: '',
     rider: ''
   })
