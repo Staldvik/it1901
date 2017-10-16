@@ -44,6 +44,7 @@ export default class AdminPage extends Component {
     this.handleSubmitTech = this.handleSubmitTech.bind(this);
     this.handleSubmitConcert = this.handleSubmitConcert.bind(this);
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
+    this.isTechInConcert = this.isTechInConcert.bind(this);
   }
 
 
@@ -112,19 +113,16 @@ export default class AdminPage extends Component {
     
     //Lytter etter child added på tekniker, altså om tekniker blir lagt til
     // Den nye teknikeren vil ikke vises i dropdown før componenten blir rendered på nytt. Dette for å unngå duplikater.
-    //database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
-      //console.log(lastTechnician);
+    database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
+      console.log(lastTechnician.val().name +  " added");
+      var previousTechnicianMap = this.state.technicianMap;
+      previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
 
-      //var previousTechnicianMap = this.state.technicianMap;
-      //var previousConcerts = this.state.concerts;
-
-      //previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
-
-      //this.setState({
-      //  technicianOptions: previousTechnicianOptions,
-     //   technicianMap: previousTechnicianMap,
-      //})
-    //})
+      this.setState({
+        technicianOptions: previousTechnicianOptions,
+        technicianMap: previousTechnicianMap,
+      })
+    })
   }
 
   handleChange(e) {
@@ -133,9 +131,29 @@ export default class AdminPage extends Component {
     })
   }
 
+ 
+
+  isTechInConcert(){ //sjekker om en tekniker allerede er i en konsert
+    console.log("is technician already in concert");
+    let bool = false;
+    const currentKey = this.state.selectedTechnician
+    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
+      snap.forEach(function(childSnap){
+        if(childSnap.key == currentKey){
+          console.log(currentKey, "equals", childSnap.key)
+          bool = true
+          console.log("this is the result after comparison", bool)
+      }    
+      bool= bool;
+    })
+    })
+    return bool;
+  }
 
   pushTech(e) {
     e.preventDefault();
+    console.log(this.state.selectedTechnician);
+    console.log("this is the return value of the function", this.isTechInConcert())
     database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
       name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
@@ -156,6 +174,9 @@ export default class AdminPage extends Component {
     database.ref("festival17").child('technicians').child(maxIndex+1).set({
       name: this.state.currentTechnicianNameInput
     })
+    this.setState({ //setter input boksen tilbake til tom
+      currentTechnicianNameInput: "",
+    })
   }
 
   handleSubmitConcert(e) {
@@ -170,7 +191,13 @@ export default class AdminPage extends Component {
       database.ref('festival17').child('concerts').push(data)
     } else {
       alert("need more info")
-    }   
+    } 
+    this.setState({ //setter input boksen tilbake til tom
+      currentConcertNameInput: "",
+      currentConcertDayInput: "Day1",
+      currentConcertPriceInput: "",
+      currentConcertGenreInput: "",
+    })  
   }
 
   searchConcertsFor(query, value) {
@@ -198,7 +225,7 @@ export default class AdminPage extends Component {
         <form>
           <h3> Denne formen er for å pushe en tekniker inn i databasen </h3>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
-          <button onClick={this.handleSubmitTech}>Pushit</button>
+          <button onClick={this.handleSubmitTech}>Submit</button>
         </form>
 
         <form>
@@ -209,7 +236,7 @@ export default class AdminPage extends Component {
           <select name="selectedConcert" onChange={this.handleChange} value={this.state.selectedConcert}>
             {this.state.concertOptions}
           </select>
-          <button onClick={this.pushTech}>Pushit</button>
+          <button onClick={this.pushTech}>Submit</button>
         </form>
 
         <form>
@@ -226,7 +253,7 @@ export default class AdminPage extends Component {
             <option value="day6">Dag 6</option>
             <option value="day7">Dag 7</option>
           </select>
-          <button onClick={this.handleSubmitConcert}> Pushit</button>
+          <button onClick={this.handleSubmitConcert}> Submit</button>
         </form>
       </div>
     );
