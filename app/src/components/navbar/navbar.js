@@ -21,6 +21,7 @@ export default class NavComponent extends Component {
                         <Link to='/calendar'>Booking Calendar</Link>
                         <Link to='/admin'>Admin Page</Link>
                         <Link to='/manager'>Manager Site</Link>
+                        <Link to='/search_previous_bands'>PBands</Link>
                     </div>
                 </nav>
             </div>
