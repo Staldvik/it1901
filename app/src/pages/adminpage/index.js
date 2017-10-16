@@ -66,6 +66,7 @@ export default class AdminPage extends Component {
         name: val.name,
         id: techSnapshot.key,
       })
+      console.log('adding option for', techSnapshot.val().name)
       previousTechnicianOptions.push(
         <option value={techSnapshot.key} key={techSnapshot.key}> {techSnapshot.val().name} </option>
       )

@@ -16,21 +16,20 @@ export default class Search extends Component {
   }
 
   componentWillMount() {
-
-    /* var clientId = '88641e06b03f46d886b98db9c58e9935',
-        clientSecret = '8b9aa7488fb2456a98d4168dd4b5c2c4';
-
-    var spotifyApi = new SpotifyWebApi({
-      clientId: clientId,
-      clientSecret: clientSecret
-    });
-
-    spotifyApi.clientCredentialsGrant()
-      .then(data => {
-        console.log(data);
-      }) */
-
+    var myHeaders = new Headers();
     
+    var myInit = { method: 'GET',
+                   headers: myHeaders,
+                   mode: 'cors',
+                   cache: 'default' };
+    
+    var myRequest = new Request('https://us-central1-festival-180609.cloudfunctions.net/app/', myInit);
+    
+    fetch(myRequest).then(function(response) {
+      console.log(response.json().then(file => {
+        return console.log(file["Hello"])
+      }))
+    })
   }
   
     render(){
