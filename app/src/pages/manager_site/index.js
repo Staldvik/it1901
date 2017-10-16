@@ -11,6 +11,7 @@ export default class ManagerSite extends Component {
     super(props);
     this.state = {
       concerts: [],
+      concertOptions : [],
       artist_name: '',
       tech_spec: '',
       rider: ''
@@ -23,6 +24,7 @@ export default class ManagerSite extends Component {
 
  componentWillMount() {
    var previousConcerts = this.state.concerts;
+   var previousConcertOptions = this.state.concertOptions;
    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
      var vals = concertSnapshot.val();
      previousConcerts.push({
@@ -32,8 +34,14 @@ export default class ManagerSite extends Component {
        //tech_spec : vals.tech_spec,
        //rider : vals.rider
      })
+     previousConcertOptions.push(
+       <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
+     )
+
+
   this.setState({
     concerts: previousConcerts,
+    concertOptions: previousConcertOptions,
     artist_name: '',
     tech_spec: '',
     rider: ''
@@ -60,13 +68,8 @@ handleSubmit(event) {
     tech_spec : this.state.tech_spec,
     rider : this.state.rider
   }
-  for (var i = 0; i < this.state.concerts.length; i++){
-    console.log("heisann hoppsann")
-    if (this.state.artist_name.toLowerCase() === this.state.concerts[i].name.toLowerCase()){
-      console.log("den kjøres");
-      concertsRef.child(this.state.concerts[i].key).update(data);
-    }
-}
+
+  concertsRef.child(this.state.artist_name).update(data);
 
   this.setState({
     artist_name : '',
@@ -82,10 +85,9 @@ render() {
     <NavComponent />
     <div className="form-style">
     <form>
-      <label>
-        Artist:
-        <input name="artist_name" type="text" value={this.state.artist_name} onChange={this.handleChange} />
-      </label>
+    <select name="artist_name" type="text" value={this.state.artist_name} onChange={this.handleChange} >
+      {this.state.concertOptions}
+    </select>
       <label>
         Technical Specifications:
         <input name="tech_spec" type="text" value={this.state.tech_spec} onChange={this.handleChange} />
