@@ -44,6 +44,7 @@ export default class AdminPage extends Component {
     this.handleSubmitTech = this.handleSubmitTech.bind(this);
     this.handleSubmitConcert = this.handleSubmitConcert.bind(this);
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
+    this.isTechInConcert = this.isTechInConcert.bind(this);
   }
 
 
@@ -112,19 +113,16 @@ export default class AdminPage extends Component {
     
     //Lytter etter child added på tekniker, altså om tekniker blir lagt til
     // Den nye teknikeren vil ikke vises i dropdown før componenten blir rendered på nytt. Dette for å unngå duplikater.
-    //database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
-      //console.log(lastTechnician);
+    database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
+      console.log(lastTechnician.val().name +  " added");
+      var previousTechnicianMap = this.state.technicianMap;
+      previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
 
-      //var previousTechnicianMap = this.state.technicianMap;
-      //var previousConcerts = this.state.concerts;
-
-      //previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
-
-      //this.setState({
-      //  technicianOptions: previousTechnicianOptions,
-     //   technicianMap: previousTechnicianMap,
-      //})
-    //})
+      this.setState({
+        technicianOptions: previousTechnicianOptions,
+        technicianMap: previousTechnicianMap,
+      })
+    })
   }
 
   handleChange(e) {
@@ -133,9 +131,29 @@ export default class AdminPage extends Component {
     })
   }
 
+ 
+
+  isTechInConcert(){ //sjekker om en tekniker allerede er i en konsert
+    console.log("is technician already in concert");
+    let bool = false;
+    const currentKey = this.state.selectedTechnician
+    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
+      snap.forEach(function(childSnap){
+        if(childSnap.key == currentKey){
+          console.log(currentKey, "equals", childSnap.key)
+          bool = true
+          console.log("this is the result after comparison", bool)
+      }    
+      bool= bool;
+    })
+    })
+    return bool;
+  }
 
   pushTech(e) {
     e.preventDefault();
+    console.log(this.state.selectedTechnician);
+    console.log("this is the return value of the function", this.isTechInConcert())
     database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
       name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
