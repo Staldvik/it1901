@@ -11,11 +11,12 @@ import ConcertPage from './pages/concertpage';
 import ManagerSite from './pages/manager_site'
 import AdminPage from './pages/adminpage';
 import Search from './pages/search';
+import Login from './pages/login';
 
 
 const Routes = () => (
     <Switch>
-        <Route exact path="/" component={App}/>
+        <Route exact path="/" component={Login}/>
         <Route path="/bandbooking" component={BandBooking}/>
         <Route path="/previousbands" component={PreviousBands}/>
         <Route path="/banddatabase" component={BandDatabase}/>
@@ -25,6 +26,7 @@ const Routes = () => (
         <Route path="/manager" component={ManagerSite}/>
         <Route path="/admin" component={AdminPage}/>
         <Route path="/search" component={Search}/>
+        <Route path="/home" component={App}/>
     </Switch>
 );
 

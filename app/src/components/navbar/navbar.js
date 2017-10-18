@@ -12,7 +12,7 @@ export default class NavComponent extends Component {
                 <h2>Arrangørsoftware for IT1901</h2>
                 <nav>
                     <div className="wideDiv">
-                        <Link to='/'>Home</Link>
+                        <Link to='/home'>Home</Link>
                         <Link to='/concerts'>Concerts</Link>
                         <Link to='/bandbooking'>Band Booking</Link>
                         <Link to='/previousbands'>TeknikerTest</Link>
@@ -26,5 +26,4 @@ export default class NavComponent extends Component {
             </div>
         )
     }
-
 }

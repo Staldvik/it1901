@@ -8,17 +8,56 @@ import Scene from './components/scene/Scene'
 // Prøver å lage navbar
 import NavComponent from './components/navbar/navbar';
 
+// Firebase
+import database, {firebaseApp} from './database';
+
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      prosjekt: "[Min Festival]",
-    }
+      username: "",
+      password: ""
+    };
+
   }
 
+  validateForm() {
+    return this.state.username.length > 0 && this.state.password.length > 0;
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  handleSignup = event => {
+    event.preventDefault();
+
+    firebaseApp.auth().createUserWithEmailAndPassword(this.state.username, this.state.password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    })
+  }
+
+  handleSignin = event => {
+    event.preventDefault();
+
+    firebaseApp.auth().signInWithEmailAndPassword(this.state.username, this.state.password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage)
+    })
+  }
+  
+  
   render() {
     return (
-      <div className="App">
+    <div className="App">
         <NavComponent />
         <p className="App-intro">
           Hver div er en component
