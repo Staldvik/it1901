@@ -5,7 +5,7 @@ import App from './App';
 import BandBooking from './pages/bandbooking';
 import PreviousBands from './pages/previousbands';
 import BandDatabase from './pages/banddatabase';
-import ProfitCalculator from './pages/profitcalculator';
+import PriceCalculator from './pages/pricecalculator';
 import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
 import ManagerSite from './pages/manager_site'
@@ -19,7 +19,7 @@ const Routes = () => (
         <Route path="/bandbooking" component={BandBooking}/>
         <Route path="/previousbands" component={PreviousBands}/>
         <Route path="/banddatabase" component={BandDatabase}/>
-        <Route path="/calculator" component={ProfitCalculator}/>
+        <Route path="/pricecalculator" component={PriceCalculator}/>
         <Route path="/calendar" component={BookingCalendar}/>
         <Route path="/concerts" component={ConcertPage}/>
         <Route path="/manager" component={ManagerSite}/>
