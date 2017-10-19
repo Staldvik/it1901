@@ -12,15 +12,20 @@ export default class BandBooking extends Component {
     super(props);
 
     this.state = {
-      //
       currentArtistNameInput: "",
       currentPriceInput: "",
       currentConcertDayInput: "day1",
       requests: [],
+      currentArtistAccepted: "ARTISTACCEPTED",
+      currentPriceAccepted: "",
+      currentConcertDayAccepted: "day1",
+      email: "Hei <name>!\nVi vil gjerne invitere <artist> til å spille på festival17 på <dag>.\nPris: <pris>.\n\nMvh\n   bookingansvarlig"
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmitRequest = this.handleSubmitRequest.bind(this);
+    this.handleAccept = this.handleAccept.bind(this);
+    this.handleDecline = this.handleDecline.bind(this);
   }
 
   //kjøres når siden/komponenten lastes
@@ -33,7 +38,8 @@ export default class BandBooking extends Component {
         artist:vals.artist,
         price:vals.price,
         day:vals.day,
-        status:vals.status,
+        status:vals.status, //Kan ha tre tilstander: pending, accepted eller declined.
+        key: requestSnapshot.key
       })
 
 
@@ -53,7 +59,6 @@ export default class BandBooking extends Component {
 
   handleSubmitRequest(e) {
     e.preventDefault(); //prevents page from reloading
-    console.log(this.state.currentArtistNameInput);
 
     var data = {
       artist: this.state.currentArtistNameInput,
@@ -62,8 +67,29 @@ export default class BandBooking extends Component {
       status: "pending",
     }
 
+    //Push requesten inn i databasen
     database.ref("festival17").child("requests").push(data)
 
+  }
+
+  handleAccept(key) {
+    console.log("accept");
+    console.log(JSON.stringify(key));
+    database.ref("festival17").child("requests").child(key).update({status: "accepted"});
+    window.location.reload();
+  }
+
+  handleDecline(key) {
+    console.log("decline");
+    database.ref("festival17").child("requests").child(key).update({status: "declined"});
+    window.location.reload();
+  }
+
+  handleCopyEmail(e) {
+    e.preventDefault();
+    var copyText = this.state.email;
+    copyText.select();
+    document.execCommand("Copy");
   }
 
   render() {
@@ -94,20 +120,28 @@ export default class BandBooking extends Component {
         <h2> Her er en liste med tilbud fra bookingansvarlig om forslag til artist, med pris og hvilken dag de spiller. </h2>
         <div className="requestsBody">
         {this.state.requests.map((requests) => {
-          return (
-            <div>
-            <ul>
-            <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} </li>
-            <button>Godkjenn</button>
-            <button>Avslå</button>
-            </ul>
-            </div>
-          )
+          if (requests.status == "pending") {
+            return (
+              <div className="pendingRequests">
+              <ul>
+              <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} Status: {requests.status} </li>
+              <button onClick={() =>this.handleAccept(requests.key)}> Godkjenn </button>
+              <button onClick={() =>this.handleDecline(requests.key)}> Avslå </button>
+              </ul>
+              </div>
+            )
+          }
         })
         }
 
         </div>
 
+        {/*For senere om en skal legge til email funksjon.
+        <div>
+        <h1> Generated email: </h1>
+        <textarea name="email" value={this.state.email} onChange={this.handleChange} rows="10" cols="60"></textarea>
+        <button onClick={this.handleCopyEmail}>Copy Email</button>
+        </div> */}
 
       </div>
     );

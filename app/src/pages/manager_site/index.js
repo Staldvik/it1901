@@ -14,7 +14,8 @@ export default class ManagerSite extends Component {
       concertOptions : [],
       artist_name: '',
       tech_spec: '',
-      rider: ''
+      rider: '',
+      requests : [],
 
     };
     this.handleChange = this.handleChange.bind(this);
@@ -43,7 +44,6 @@ export default class ManagerSite extends Component {
        <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
      )
 
-
   this.setState({
     concerts: previousConcerts,
     concertOptions: previousConcertOptions,
@@ -52,35 +52,69 @@ export default class ManagerSite extends Component {
     rider: ''
   })
 })
-}
 
+  //For tilbud fra bookingsjef
+  var previousRequests = this.state.requests;
+  database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+    var vals = requestSnapshot.val();
+    previousRequests.push({
+      artist: vals.artist,
+      price:vals.price,
+      day:vals.day,
+      status:vals.status,
+      key:requestSnapshot.key,
+    })
+
+    this.setState({
+      requestedStatus: previousRequests,
+    })
+  })
+
+}
 
 handleChange(e) {
   this.setState({
-    //artist_name: event.target.artist_name,
-    //tech_spec: event.target.tech_spec,
-    //rider: event.target.rider
       [e.target.name]: e.target.value
     }
   );
 }
 
 handleSubmit(event) {
-  console.log("hei")
   event.preventDefault();
   const concertsRef = database.ref('festival17').child('concerts');
+  // Lager "datapakken" som sendes
   const data = {
     tech_spec : this.state.tech_spec,
     rider : this.state.rider
   }
-
+  // Sender data til riktig konsert
   concertsRef.child(this.state.artist_name).update(data);
+  var previousArtistName = this.state.artist_name;
 
   this.setState({
-    artist_name : '',
+    // Nullstiller formet etter data er sendt
+    artist_name : previousArtistName,
     tech_spec : '',
     rider : ''
     })
+  }
+
+  //Sletter requesten fra databasen.
+  //Burde kanskje etter hvert bli sendt en melding tilbake til bookingsjef om at de ikke vil spille der
+  handleDeclineConcert(key) {
+    database.ref("festival17").child("requests").child(key).remove();
+    window.location.reload();
+  }
+
+  handleJoinConcert(artist, day, key) {
+    var data = {
+      name: artist,
+      day: day,
+    }
+    database.ref("festival17").child("concerts").push(data);
+    alert("Takk!\n" + artist + " spiller nå på " + day);
+    database.ref("festival17").child("requests").child(key).remove();
+    window.location.reload();
   }
 
 
@@ -104,6 +138,23 @@ render() {
       <button onClick={this.handleSubmit}> Submit </button>
     </form>
     </div>
+
+    <div className = "acceptedRequestsBody">
+    <h2> Her er en liste med band som har blitt spurt som manager for band må godkjenne </h2>
+    <h4> Dersom du godkjenner vil konserten bli registrert med en gang </h4>
+    {this.state.requests.map((requests) => {
+      if (requests.status == "accepted") {
+        return (
+          <div className = "acceptedRequests">
+          <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} </li>
+          <button onClick={() => this.handleJoinConcert(requests.artist, requests.day, requests.key)}> Bli med! </button>
+          <button onClick={() => this.handleDeclineConcert(requests.key)}> Avslå </button>
+          </div>
+        )
+      }
+    })}
+    </div>
+
     </div>
   );
 }
