@@ -18,16 +18,8 @@ export default class NavComponent extends Component {
     componentWillMount() {
         firebaseApp.auth().onAuthStateChanged(user => {
             if (user) {
-              // User is signed in.
-              var displayName = user.displayName;
-              var email = user.email;
-              var emailVerified = user.emailVerified;
-              var photoURL = user.photoURL;
-              var isAnonymous = user.isAnonymous;
-              var uid = user.uid;
-              var providerData = user.providerData;
+              console.log(user.uid)
               this.setState({user: user})
-        
             } else {
               // User is signed out.
               // ...
@@ -41,7 +33,7 @@ export default class NavComponent extends Component {
         var loggedInAs = "Not logged in"
 
         if (this.state.user) {
-            loggedInAs = this.state.user.email
+            loggedInAs = this.state.user.email.split('@')[0]
         } 
 
 

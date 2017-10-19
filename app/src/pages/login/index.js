@@ -21,10 +21,11 @@ class Login extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      errorCode: null,
+      errorMessage: null,
     };
-    
-    firebaseApp.auth().onAuthStateChanged.bind(this)
+
   }
 
 
@@ -45,27 +46,48 @@ class Login extends Component {
   handleSignup = event => {
     event.preventDefault();
 
-    firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+    firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(error => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage)
+      this.setState({
+        errorCode: errorCode,
+        errorMessage: errorMessage
+      })
     })
   }
 
   handleSignin = event => {
     event.preventDefault();
 
-    firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+    firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      this.setState({
+        errorCode:null, 
+        errorMessage:null
+      })
+    })
+    .catch(error => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode, errorMessage)
+      this.setState({
+        errorCode: errorCode,
+        errorMessage: errorMessage,
+        email: "",
+        password: "",
+      })
     })
   }
   
   
   render() {
-
-    console.log("EMAIL" , this.state.email)
+    var error = ""
+    
+    if (this.state.errorCode) {
+      error = <h3> {this.state.errorMessage} </h3>
+    }
 
     return (
 
@@ -77,7 +99,10 @@ class Login extends Component {
         </h1>
 
         <div className="Login">
-        <form onSubmit={this.handleSubmit}>
+        {
+          error
+        }
+        <form>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>email</ControlLabel>
             <FormControl

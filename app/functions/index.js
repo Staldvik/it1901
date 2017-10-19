@@ -22,6 +22,8 @@ var spotifyApi = new SpotifyWebApi({
 
 const app = express();
 
+
+// SPOTIFY TOKEN //
 app.use(cors);
 app.get('', (req, res) => {
     // Retrieve an access token.
@@ -37,7 +39,6 @@ app.get('', (req, res) => {
 });
 
 exports.spotifyToken = functions.https.onRequest(app);
-
 // END OF SPOTIFY TOKEN //
 
 
@@ -45,19 +46,20 @@ exports.spotifyToken = functions.https.onRequest(app);
 
 exports.addNewUser = functions.auth.user().onCreate(event => {
     // [END onCreateTrigger]
-      // [START eventAttributes]
-      const user = event.data; // The Firebase user.
-      const uid = user.uid;
-      const email = user.email; // The email of the user.
-      const displayName = user.displayName; // The display name of the user.
-      // [END eventAttributes]
-    
-      return addUser(email, displayName, uid);
+        // [START eventAttributes]
+        const user = event.data; // The Firebase user.
+        const uid = user.uid;
+        const email = user.email; // The email of the user.
+        const displayName = email.split('@')[0]
+        // [END eventAttributes]
+        user.updateProfile({displayName: displayName})
+        .then(() => {
+            return admin.database().ref().child('users').child(uid).update({
+            email: email,
+            displayName: displayName
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     });
-
-function addUser(email, displayName, uid) {
-    return functions.database.ref().child('users').child(uid).update({
-        email: email,
-        displayName: email.split('@')[0]
-    })
-}
