@@ -76,8 +76,10 @@ handleSubmit(event) {
 
   concertsRef.child(this.state.artist_name).update(data);
 
+  var previousArtistName = this.state.artist_name;
+
   this.setState({
-    artist_name : '',
+    artist_name : previousArtistName,
     tech_spec : '',
     rider : ''
     })
