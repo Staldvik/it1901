@@ -23,28 +23,13 @@ class Login extends Component {
       email: "",
       password: ""
     };
+    
+    firebaseApp.auth().onAuthStateChanged.bind(this)
+  }
 
 
-  firebaseApp.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      var providerData = user.providerData;
-      console.log("TODO: Redirect")
-      console.log("Logged in as", email)
-
-    } else {
-      // User is signed out.
-      // ...
-    }
-  });
-
-
+  componentWillMount() {
+    
   }
 
   validateForm() {
@@ -79,6 +64,9 @@ class Login extends Component {
   
   
   render() {
+
+    console.log("EMAIL" , this.state.email)
+
     return (
 
       <div className="App">

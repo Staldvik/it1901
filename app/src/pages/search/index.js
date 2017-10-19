@@ -96,9 +96,12 @@ export default class Search extends Component {
             this.lastfm.getArtistInfo({
               artist: artist.name,
               lang: 'nob',
-              callback: function(result) { 
+              callback: function(err, result) { 
+                if (err) {console.log(err)}
+                else {
                 summary = result.artistInfo.bio.summary;
                 artist.summary = summary;
+                }
               }
             })
           })
