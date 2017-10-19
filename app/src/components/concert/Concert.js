@@ -16,8 +16,10 @@ export default class Concert extends Component {
 
             // Scene information
             sceneLocation: props.sceneLocation,
-            sceneCapacity: props.sceneCapacity
+            sceneCapacity: props.sceneCapacity,
 
+            // Omtaler
+            publicMentions: props.publicMentions
 
         }
     }
@@ -28,7 +30,7 @@ export default class Concert extends Component {
         if (this.state.technicians) {
             techs = this.state.technicians
         } else {
-            techs = ["No techs is assigned to this concert"]
+            techs = ["No techs are assigned to this concert"]
         }
 
 
@@ -53,6 +55,7 @@ export default class Concert extends Component {
                 }
                 </ul>
                 <p> Technical requirements: {this.state.technicalInfo} </p>
+                <p> Public Mentions: {this.state.publicMentions} </p>
             </div>
 
         )

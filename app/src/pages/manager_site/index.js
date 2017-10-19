@@ -43,7 +43,6 @@ export default class ManagerSite extends Component {
        <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
      )
 
-
   this.setState({
     concerts: previousConcerts,
     concertOptions: previousConcertOptions,
@@ -54,31 +53,27 @@ export default class ManagerSite extends Component {
 })
 }
 
-
 handleChange(e) {
   this.setState({
-    //artist_name: event.target.artist_name,
-    //tech_spec: event.target.tech_spec,
-    //rider: event.target.rider
       [e.target.name]: e.target.value
     }
   );
 }
 
 handleSubmit(event) {
-  console.log("hei")
   event.preventDefault();
   const concertsRef = database.ref('festival17').child('concerts');
+  // Lager "datapakken" som sendes
   const data = {
     tech_spec : this.state.tech_spec,
     rider : this.state.rider
   }
-
+  // Sender data til riktig konsert
   concertsRef.child(this.state.artist_name).update(data);
-
   var previousArtistName = this.state.artist_name;
 
   this.setState({
+    // Nullstiller formet etter data er sendt
     artist_name : previousArtistName,
     tech_spec : '',
     rider : ''
