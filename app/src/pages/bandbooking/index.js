@@ -26,8 +26,6 @@ export default class BandBooking extends Component {
     this.handleSubmitRequest = this.handleSubmitRequest.bind(this);
     this.handleAccept = this.handleAccept.bind(this);
     this.handleDecline = this.handleDecline.bind(this);
-    this.handleDeclineConcert = this.handleDeclineConcert.bind(this);
-    //this.handleJoinConcert = this.handleJoinConcert.bind(this);
   }
 
   //kjøres når siden/komponenten lastes
@@ -94,26 +92,6 @@ export default class BandBooking extends Component {
     document.execCommand("Copy");
   }
 
-  //Skal flyttes til manager site
-  //Sletter requesten fra databasen.
-  //Burde kanskje etter hvert bli sendt en melding tilbake til bookingsjef om at de ikke vil spille der
-  handleDeclineConcert(key) {
-    database.ref("festival17").child("requests").child(key).remove();
-    window.location.reload();
-  }
-
-  //Skal flyttes til manager site
-  handleJoinConcert(artist, day, key) {
-    var data = {
-      name: artist,
-      day: day,
-    }
-    database.ref("festival17").child("concerts").push(data);
-    alert("Takk!\n" + artist + " spiller nå på " + day);
-    database.ref("festival17").child("requests").child(key).remove();
-    window.location.reload();
-  }
-
   render() {
     return (
       <div className="App">
@@ -156,22 +134,6 @@ export default class BandBooking extends Component {
         })
         }
 
-        </div>
-        {/*Denne skal tilslutt legges inn i manager site. */}
-        <div className = "acceptedRequestsBody">
-        <h2> Her er en liste med band som har blitt spurt som manager for band må godkjenne </h2>
-        <h4> Dersom du godkjenner vil konserten bli registrert med en gang </h4>
-        {this.state.requests.map((requests) => {
-          if (requests.status == "accepted") {
-            return (
-              <div className = "acceptedRequests">
-              <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} </li>
-              <button onClick={() => this.handleJoinConcert(requests.artist, requests.day, requests.key)}> Bli med! </button>
-              <button onClick={() => this.handleDeclineConcert(requests.key)}> Avslå </button>
-              </div>
-            )
-          }
-        })}
         </div>
 
         {/*For senere om en skal legge til email funksjon.

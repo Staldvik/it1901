@@ -14,7 +14,8 @@ export default class ManagerSite extends Component {
       concertOptions : [],
       artist_name: '',
       tech_spec: '',
-      rider: ''
+      rider: '',
+      requests : [],
 
     };
     this.handleChange = this.handleChange.bind(this);
@@ -51,6 +52,24 @@ export default class ManagerSite extends Component {
     rider: ''
   })
 })
+
+  //For tilbud fra bookingsjef
+  var previousRequests = this.state.requests;
+  database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+    var vals = requestSnapshot.val();
+    previousRequests.push({
+      artist: vals.artist,
+      price:vals.price,
+      day:vals.day,
+      status:vals.status,
+      key:requestSnapshot.key,
+    })
+
+    this.setState({
+      requestedStatus: previousRequests,
+    })
+  })
+
 }
 
 handleChange(e) {
@@ -80,6 +99,24 @@ handleSubmit(event) {
     })
   }
 
+  //Sletter requesten fra databasen.
+  //Burde kanskje etter hvert bli sendt en melding tilbake til bookingsjef om at de ikke vil spille der
+  handleDeclineConcert(key) {
+    database.ref("festival17").child("requests").child(key).remove();
+    window.location.reload();
+  }
+
+  handleJoinConcert(artist, day, key) {
+    var data = {
+      name: artist,
+      day: day,
+    }
+    database.ref("festival17").child("concerts").push(data);
+    alert("Takk!\n" + artist + " spiller nå på " + day);
+    database.ref("festival17").child("requests").child(key).remove();
+    window.location.reload();
+  }
+
 
 render() {
   return (
@@ -101,6 +138,23 @@ render() {
       <button onClick={this.handleSubmit}> Submit </button>
     </form>
     </div>
+
+    <div className = "acceptedRequestsBody">
+    <h2> Her er en liste med band som har blitt spurt som manager for band må godkjenne </h2>
+    <h4> Dersom du godkjenner vil konserten bli registrert med en gang </h4>
+    {this.state.requests.map((requests) => {
+      if (requests.status == "accepted") {
+        return (
+          <div className = "acceptedRequests">
+          <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} </li>
+          <button onClick={() => this.handleJoinConcert(requests.artist, requests.day, requests.key)}> Bli med! </button>
+          <button onClick={() => this.handleDeclineConcert(requests.key)}> Avslå </button>
+          </div>
+        )
+      }
+    })}
+    </div>
+
     </div>
   );
 }
