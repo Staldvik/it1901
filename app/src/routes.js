@@ -10,6 +10,7 @@ import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
 import ManagerSite from './pages/manager_site'
 import AdminPage from './pages/adminpage';
+import Search from './pages/search';
 
 
 const Routes = () => (
@@ -23,6 +24,7 @@ const Routes = () => (
         <Route path="/concerts" component={ConcertPage}/>
         <Route path="/manager" component={ManagerSite}/>
         <Route path="/admin" component={AdminPage}/>
+        <Route path="/search" component={Search}/>
     </Switch>
 );
 
