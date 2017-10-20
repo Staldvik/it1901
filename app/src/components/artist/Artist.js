@@ -36,13 +36,13 @@ export default class Artist extends Component {
         }
 
         return (
-            <div className = "artistDiv">
-                <h1> {this.state.name} </h1>
-                <p> {this.state.info} </p>
-                <p> Popularity on Spotify: {this.state.popularity}/100 points </p>
-                <p> Followers: {this.state.followers} </p>
-                <p> Genres: {genres} </p>
-            </div>
+            <tr className = "artistTable">
+                <td> {this.state.name} </td>
+                <td> {this.state.followers} </td>
+                <td> {this.state.popularity} </td>
+                <td> {this.state.genres} </td>
+            </tr>
+
         )
     }
 }
