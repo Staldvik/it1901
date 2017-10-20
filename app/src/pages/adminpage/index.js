@@ -8,9 +8,9 @@ import Concert from '../../components/concert/Concert'
 
 //Firebase
 import database from '../../database'
-
+//region
 export default class AdminPage extends Component {
-
+//endregion
   constructor(props) {
     super(props);
     var technicianMap = new Map();
