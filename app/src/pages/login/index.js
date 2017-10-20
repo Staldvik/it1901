@@ -85,8 +85,19 @@ class Login extends Component {
   render() {
     var error = ""
     
-    if (this.state.errorCode) {
-      error = <h3> {this.state.errorMessage} </h3>
+    // TODO: catch them all
+    switch(this.state.errorCode) {
+      case "auth/user-not-found":
+        error = <h3> User not found </h3>
+        break;
+      
+      case "auth/email-already-in-use":
+        error = <h3> This email is already in use </h3>
+        break; 
+
+      default:
+        error = <h3> {this.state.errorCode} </h3>
+        break;
     }
 
     return (
