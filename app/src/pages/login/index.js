@@ -11,10 +11,8 @@ import NavComponent from '../../components/navbar/navbar';
 // Firebase
 import database, {firebaseApp} from '../../database';
 
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
 // React Router
-import {auth, roles} from '../../routes'
+import {auth, roles} from '../../roles'
 
 
 
@@ -27,20 +25,34 @@ class Login extends Component {
       password: "",
       errorCode: null,
       errorMessage: null,
+      
+
+      // Login
+      loginOptions: [],
+      selectedLogin: "",
+
     };
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    var previousLoginOptions = this.state.loginOptions
+
     auth.authenticate(() => {
-      console.log("Auth says logged in:", auth.isAuthenticated)
+      console.log("Auth says logged in:", auth.user)
     })
 
-    roles.fetchRoles(() => {
-      console.log("Roles says users:", roles.roleMap)
+    database.ref('users').once('value', users => {
+      users.forEach(user => {
+        previousLoginOptions.push(
+          <option value={user.val().email} key={user.key}>{user.val().displayName}</option> 
+        )
+      })
+    }).then(() => {
+      this.setState({
+        loginOptions: previousLoginOptions
+      })
     })
-
-    
   }
 
   validateForm() {
@@ -48,8 +60,9 @@ class Login extends Component {
   }
 
   handleChange = event => {
+    console.log("changing", event.target.name, "to", event.target.value)
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.name]: event.target.value
     });
   }
 
@@ -84,7 +97,7 @@ class Login extends Component {
     })
   }
 
-  handleSignOut = event => {
+  handleSignout = event => {
     event.preventDefault();
 
     firebaseApp.auth().signOut()
@@ -107,6 +120,23 @@ class Login extends Component {
       email: "",
       password: "",
     })
+  }
+
+  changeUser = event => {
+    event.preventDefault();
+
+    firebaseApp.auth().signInWithEmailAndPassword(this.state.selectedLogin, "festival")
+    .then((user) => {
+      console.log("Signed In as", user)
+      this.setState({
+        errorCode:null, 
+        errorMessage:null
+      })
+    })
+    .catch(error => {
+      this.handleError(error);
+    })
+
   }
 
   render() {
@@ -142,7 +172,7 @@ class Login extends Component {
           Login/Signup
         </h1>
 
-        <div className="Login">
+        <div>
         {
           error
         }
@@ -150,54 +180,29 @@ class Login extends Component {
           redirected
         }
 
-        {
-          // Her prøvde jeg bare å bruke react-bootstrap, det gikk ikke i første omgang.
-          // FormGroup og slikt er altså ikke viktig for funksjonaliteten
-        }
         <form>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            onClick={this.handleSignin}
-            id="signin"
-          >
-            Login
-          </Button>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            onClick={this.handleSignup}
-            id="signup"
-          >
-            Sign Up
-          </Button>
-          <Button
-            block
-            bsSize="large"
-            onClick={this.handleSignOut}
-            id="signout"
-          >
-            Sign Out
-          </Button>
+          <label>
+            Email:
+            <input name="email" type="email" value={this.state.email} onChange={this.handleChange} />
+          </label>
+          <label>
+            Password:
+            <input name="password" type="password" value={this.state.password} onChange={this.handleChange} />
+          </label>
+          <button onClick={this.handleSignin}>Sign in</button>
+          <button onClick={this.handleSignout}>Sign out</button>
+          <button onClick={this.handleSignup}>Sign up</button>
+        </form>
+
+        <form>
+          <h3> Dropdown to select user </h3>
+          
+          <select name="selectedLogin" value={this.state.selectedLogin} onChange={this.handleChange} >
+            {this.state.loginOptions}
+          </select>
+
+          <button onClick={this.changeUser}>Change to</button>
+
         </form>
       </div>
       </div>

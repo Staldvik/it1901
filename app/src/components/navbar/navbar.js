@@ -6,6 +6,9 @@ import logo from '../../static/img/festival.png'
 // Firebase
 import database, {firebaseApp} from '../../database';
 
+// Roles
+import {auth, roles} from '../../roles';
+
 export default class NavComponent extends Component {
     
     constructor() {
@@ -16,13 +19,9 @@ export default class NavComponent extends Component {
     }
 
     componentDidMount() {
-        firebaseApp.auth().onAuthStateChanged(user => {
-            if (user) {
-              this.setState({user: user})
-            } else {
-              this.setState({user: null})
-            }
-          })
+        auth.authenticate((user) => {
+            this.setState({user: user})
+        })
     }
 
 
@@ -40,7 +39,7 @@ export default class NavComponent extends Component {
                 <h2>Arrangørsoftware for IT1901 [Logged in as: {loggedInAs}]</h2>
                 <nav>
                     <div className="wideDiv">
-                        <Link to='/home'>Home</Link>
+                        <Link to='/'>Home</Link>
                         <Link to='/concerts'>Concerts</Link>
                         <Link to='/bandbooking'>Band Booking</Link>
                         <Link to='/previousbands'>TeknikerTest</Link>
