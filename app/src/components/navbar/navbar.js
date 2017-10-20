@@ -48,7 +48,7 @@ export default class NavComponent extends Component {
                         <Link to='/bandbooking'>Band Booking</Link>
                         <Link to='/previousbands'>TeknikerTest</Link>
                         <Link to='/banddatabase'>Band Database</Link>
-                        <Link to='/calculator'>Profit Calculator</Link>
+                        <Link to='/pricecalculator'>Ticket Price Calculator</Link>
                         <Link to='/calendar'>Booking Calendar</Link>
                         <Link to='/admin'>Admin Page</Link>
                         <Link to='/manager'>Manager Site</Link>

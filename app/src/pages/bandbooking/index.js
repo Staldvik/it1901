@@ -26,11 +26,13 @@ export default class BandBooking extends Component {
     this.handleSubmitRequest = this.handleSubmitRequest.bind(this);
     this.handleAccept = this.handleAccept.bind(this);
     this.handleDecline = this.handleDecline.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   //kjøres når siden/komponenten lastes
   componentWillMount() {
     var previousRequests = this.state.requests;
+    console.log(previousRequests);
 
     database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
       var vals = requestSnapshot.val();
@@ -41,12 +43,9 @@ export default class BandBooking extends Component {
         status:vals.status, //Kan ha tre tilstander: pending, accepted eller declined.
         key: requestSnapshot.key
       })
-
-
       this.setState({
-        requestedStatus: previousRequests,
+        requests: previousRequests,
       })
-
     })
 
   }
@@ -69,7 +68,7 @@ export default class BandBooking extends Component {
 
     //Push requesten inn i databasen
     database.ref("festival17").child("requests").push(data)
-
+    console.log(this.state.requests);
   }
 
   handleAccept(key) {
@@ -84,6 +83,12 @@ export default class BandBooking extends Component {
     database.ref("festival17").child("requests").child(key).update({status: "declined"});
     window.location.reload();
   }
+  
+  handleDelete(key) {
+    console.log("Deleted");
+    database.ref("festival17").child("requests").child(key).remove();
+    window.location.reload();
+  }
 
   handleCopyEmail(e) {
     e.preventDefault();
@@ -96,54 +101,118 @@ export default class BandBooking extends Component {
     return (
       <div className="App">
         <NavComponent />
-        <h1>
-          Band Booking
-        </h1>
+        
+        <h1>Band Booking</h1>
+        
         {/*Sendes videre til bookingsjef for godkjenning.*/}
+        <h3> Her kan du sende tilbud til manager for et band om de vil spille. </h3>
+
         <form>
-        <h2> Her kan du sende tilbud til manager for et band om de vil spille. </h2>
-        <input name="currentArtistNameInput" value={this.state.currentArtistNameInput} onChange={this.handleChange} placeholder="artist"/>
-        <input name="currentPriceInput" type="number" value={this.state.currentPriceInput} onChange={this.handleChange} placeholder="price" />
-        <select name="currentConcertDayInput" id="day" value={this.state.currentConcertDayInput} onChange={this.handleChange}>
-          <option value="day1">Dag 1</option>
-          <option value="day2">Dag 2</option>
-          <option value="day3">Dag 3</option>
-          <option value="day4">Dag 4</option>
-          <option value="day5">Dag 5</option>
-          <option value="day6">Dag 6</option>
-          <option value="day7">Dag 7</option>
-        </select>
-        <button onClick={this.handleSubmitRequest}>Send forespørsel</button>
+          <input name="currentArtistNameInput" value={this.state.currentArtistNameInput} onChange={this.handleChange} placeholder="Artist"/>
+          <input name="currentPriceInput" type="number" value={this.state.currentPriceInput} onChange={this.handleChange} placeholder="price" />
+          <select name="currentConcertDayInput" id="day" value={this.state.currentConcertDayInput} onChange={this.handleChange}>
+            <option value="day1">Dag 1</option>
+            <option value="day2">Dag 2</option>
+            <option value="day3">Dag 3</option>
+            <option value="day4">Dag 4</option>
+            <option value="day5">Dag 5</option>
+            <option value="day6">Dag 6</option>
+            <option value="day7">Dag 7</option>
+          </select>
+          <button onClick={this.handleSubmitRequest}>Submit</button>
         </form>
 
         {/*Liste med requests til Bookingsjef som kan godkjennes, eller ikke godkjennes.*/}
-        <h2> Her er en liste med tilbud fra bookingansvarlig om forslag til artist, med pris og hvilken dag de spiller. </h2>
         <div className="requestsBody">
-        {this.state.requests.map((requests) => {
-          if (requests.status == "pending") {
-            return (
-              <div className="pendingRequests">
-              <ul>
-              <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} Status: {requests.status} </li>
-              <button onClick={() =>this.handleAccept(requests.key)}> Godkjenn </button>
-              <button onClick={() =>this.handleDecline(requests.key)}> Avslå </button>
-              </ul>
-              </div>
-            )
-          }
-        })
-        }
+
+        <h3>Active Bookings</h3>
+
+          <table>
+            <thead>
+              <tr>
+                  <th>Artist</th>
+                  <th>Day</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Approve</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.requests.map((requests) => {
+                if (requests.status == "pending") {
+                    return(
+                    <tr className="pendingRequests">
+                      <td>{requests.artist}</td>
+                      <td>{requests.day}</td>
+                      <td>{requests.price}</td>
+                      <td>{requests.status}</td>
+                      <td>
+                        <button onClick={() =>this.handleAccept(requests.key)}> Accept </button>
+                        <button onClick={() =>this.handleDecline(requests.key)}> Reject </button>
+                      </td>
+                    </tr>
+                    )
+                  }
+                  if (requests.status == "accepted") {
+                    return(
+                    <tr className="acceptedRequests">
+                      <td>{requests.artist}</td>
+                      <td>{requests.day}</td>
+                      <td>{requests.price}</td>
+                      <td>{requests.status}</td>
+                      <td>
+                        
+                      </td>
+                    </tr>
+                    )
+                  }
+                })
+
+              }
+            </tbody>
+          </table>
+        
+
+          <h3>Declined by Bookingsjef</h3>
+          <table>
+            <thead>
+              <tr>
+                  <th>Artist</th>
+                  <th>Day</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody className="declinedRequests">
+              {this.state.requests.map((requests) => {
+                if (requests.status == "declined") {
+                    return(
+                    <tr>
+                      <td>{requests.artist}</td>
+                      <td>{requests.day}</td>
+                      <td>{requests.price}</td>
+                      <td>{requests.status}</td>
+                      <td><button onClick={() =>this.handleDelete(requests.key)}> Delete </button></td>
+                    </tr>
+                    )
+                  }
+                })
+
+              }
+            </tbody>
+          </table>
+
+          {/*For senere om en skal legge til email funksjon.
+          <div>
+          <h1> Generated email: </h1>
+          <textarea name="email" value={this.state.email} onChange={this.handleChange} rows="10" cols="60"></textarea>
+          <button onClick={this.handleCopyEmail}>Copy Email</button>
+          </div> */}
 
         </div>
-
-        {/*For senere om en skal legge til email funksjon.
-        <div>
-        <h1> Generated email: </h1>
-        <textarea name="email" value={this.state.email} onChange={this.handleChange} rows="10" cols="60"></textarea>
-        <button onClick={this.handleCopyEmail}>Copy Email</button>
-        </div> */}
-
       </div>
+      
     );
     }
 }

@@ -106,10 +106,12 @@ handleSubmit(event) {
     window.location.reload();
   }
 
-  handleJoinConcert(artist, day, key) {
+  handleJoinConcert(artist, day, price, key) {
     var data = {
       name: artist,
       day: day,
+      price: price,
+      status: "booked"
     }
     database.ref("festival17").child("concerts").push(data);
     alert("Takk!\n" + artist + " spiller nå på " + day);
@@ -122,6 +124,8 @@ render() {
   return (
     <div className="App">
     <NavComponent />
+
+    <h3>Add requirements for my artist</h3>
     <div className="form-style">
     <form>
     <select name="artist_name" type="text" value={this.state.artist_name} onChange={this.handleChange} >
@@ -139,20 +143,39 @@ render() {
     </form>
     </div>
 
-    <div className = "acceptedRequestsBody">
-    <h2> Her er en liste med band som har blitt spurt som manager for band må godkjenne </h2>
-    <h4> Dersom du godkjenner vil konserten bli registrert med en gang </h4>
-    {this.state.requests.map((requests) => {
-      if (requests.status == "accepted") {
-        return (
-          <div className = "acceptedRequests">
-          <li> Artist: {requests.artist} Price: {requests.price} Day: {requests.day} </li>
-          <button onClick={() => this.handleJoinConcert(requests.artist, requests.day, requests.key)}> Bli med! </button>
-          <button onClick={() => this.handleDeclineConcert(requests.key)}> Avslå </button>
-          </div>
-        )
-      }
-    })}
+    <div className = "managerRequestsBody">
+      <h3>Concert offers</h3>
+      <p>(hver mananger skal kun se requests for de artistene han er manager for)</p>
+
+      <table>
+              <thead>
+                <tr>
+                    <th>Artist</th>
+                    <th>Day</th>
+                    <th>Price</th>
+                    <th>Approve</th>
+                </tr>
+              </thead>
+              <tbody className="managerRequests">
+                {this.state.requests.map((requests) => {
+                  if (requests.status == "accepted") {
+                      return(
+                      <tr>
+                        <td>{requests.artist}</td>
+                        <td>{requests.day}</td>
+                        <td>{requests.price}</td>
+                        <td>
+                          <button onClick={() => this.handleJoinConcert(requests.artist, requests.day, requests.price, requests.key)}> Accept </button>
+                          <button onClick={() => this.handleDeclineConcert(requests.key)}> Decline </button>
+                        </td>
+                      </tr>
+                      )
+                    }
+                  })
+
+                }
+              </tbody>
+        </table>
     </div>
 
     </div>
