@@ -75,21 +75,31 @@ export default class Search extends Component {
       <div className="App">
         <NavComponent/>
 
-        <h1> Lets search </h1>
+        <h1> Let's search </h1>
 
         <form>
-          <h2> Søk etter artist her </h2>
-          <input type="text" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
+          
+          <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
         </form>
 
         <div className="Artists">
-          {
-            this.state.artists.map(artist => {
-              return (
-                <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} key={artist.uri} />
-              )
-            })
-          }
+          <table>
+            <thead>
+              <tr>
+                  <th>Artist</th>
+                  <th>Followers</th>
+                  <th>Popularity(0-100)</th>
+                  <th>Genres</th>
+              </tr>
+            </thead>
+            {
+              this.state.artists.map(artist => {
+                return (
+                  <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} key={artist.uri} />
+                )
+              })
+            }
+          </table>
         </div>
 
       </div>

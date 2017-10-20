@@ -21,16 +21,12 @@ export default class Artist extends Component {
 
     render() {
         return (
-            <div className = "artistDiv">
-                <h1> {this.state.name} </h1>
-                <p> {this.state.info} </p>
-                <p> popularity: {this.state.popularity} </p>
-                <p> followers: {this.state.followers} </p>
-                <p> genres: {this.state.genres} </p>
-                <p> earlierConcerts: {this.state.earlierConcerts} </p>
-                <p> cost: {this.state.cost} </p>
-                <p> approved: {this.state.approved.toString()} booked: {this.state.booked.toString()} </p>
-            </div>
+            <tr className = "artistTable">
+                <td> {this.state.name} </td>
+                <td> {this.state.followers} </td>
+                <td> {this.state.popularity} </td>
+                <td> {this.state.genres} </td>
+            </tr>
 
         )
     }
