@@ -13,6 +13,9 @@ import database, {firebaseApp} from '../../database';
 
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
+// React Router
+import {auth, roles} from '../../routes'
+
 
 
 class Login extends Component {
@@ -28,8 +31,15 @@ class Login extends Component {
 
   }
 
-
   componentWillMount() {
+    auth.authenticate(() => {
+      console.log("Auth says logged in:", auth.isAuthenticated)
+    })
+
+    roles.fetchRoles(() => {
+      console.log("Roles says users:", roles.roleMap)
+    })
+
     
   }
 
@@ -63,28 +73,46 @@ class Login extends Component {
 
     firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(() => {
+      console.log("Signed In")
       this.setState({
         errorCode:null, 
         errorMessage:null
       })
     })
     .catch(error => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
-      this.setState({
-        errorCode: errorCode,
-        errorMessage: errorMessage,
-        email: "",
-        password: "",
-      })
+      this.handleError(error);
     })
   }
+
+  handleSignOut = event => {
+    event.preventDefault();
+
+    firebaseApp.auth().signOut()
+    .then(() => {
+      console.log("Signed Out")
+      this.forceUpdate()
+    })
+    .catch(error => {
+      this.handleError(error);
+    }) 
+  }
   
-  
+  handleError = error => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorCode, errorMessage)
+    this.setState({
+      errorCode: errorCode,
+      errorMessage: errorMessage,
+      email: "",
+      password: "",
+    })
+  }
+
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+
     var error = ""
-    
     // TODO: catch them all
     switch(this.state.errorCode) {
       case "auth/user-not-found":
@@ -100,6 +128,11 @@ class Login extends Component {
         break;
     }
 
+    var redirected = ""
+    if (from.pathname !== "/") {
+      redirected = <h3> You don't have access to {from.pathname} </h3>
+    }
+
     return (
 
       <div className="App">
@@ -113,9 +146,17 @@ class Login extends Component {
         {
           error
         }
+        {
+          redirected
+        }
+
+        {
+          // Her prøvde jeg bare å bruke react-bootstrap, det gikk ikke i første omgang.
+          // FormGroup og slikt er altså ikke viktig for funksjonaliteten
+        }
         <form>
           <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>email</ControlLabel>
+            <ControlLabel>Email</ControlLabel>
             <FormControl
               autoFocus
               type="email"
@@ -148,6 +189,14 @@ class Login extends Component {
             id="signup"
           >
             Sign Up
+          </Button>
+          <Button
+            block
+            bsSize="large"
+            onClick={this.handleSignOut}
+            id="signout"
+          >
+            Sign Out
           </Button>
         </form>
       </div>

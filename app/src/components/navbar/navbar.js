@@ -15,18 +15,15 @@ export default class NavComponent extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         firebaseApp.auth().onAuthStateChanged(user => {
             if (user) {
-              console.log(user.uid)
               this.setState({user: user})
             } else {
-              // User is signed out.
-              // ...
+              this.setState({user: null})
             }
           })
     }
-
 
 
     render() {
