@@ -41,6 +41,7 @@ export default class NavComponent extends Component {
                     <div className="wideDiv">
                         <Link id="navLink" to='/'>Home</Link>
                         <Link id="navLink" to='/concerts'>Concerts</Link>
+                        <Link id="navLink" to='/artists'>My Artists</Link>
                         <Link id="navLink" to='/bandbooking'>Band Booking</Link>
                         <Link id="navLink" to='/previousbands'>TeknikerTest</Link>
                         <Link id="navLink" to='/banddatabase'>Band Database</Link>
