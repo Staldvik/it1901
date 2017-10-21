@@ -1,6 +1,10 @@
 import React, {Component } from 'react'
 import './artist.css';
 
+import database from '../../database' //firebase
+
+import spotifyIcon from '../../static/img/spotify.png'
+
 export default class Artist extends Component {
 
     constructor(props) {
@@ -11,6 +15,7 @@ export default class Artist extends Component {
             popularity: props.popularity, //Int
             followers: props.followers, //Int
             genres: props.genres,
+            uri: props.uri
             /* earlierConcerts: props.earlierConcerts, //List
             concertNeeds: props.concertNeeds, // String //kanskje cost hentes herifra. Også ting som antall mikrofoner og instrumenter
             cost: props.cost, // Int
@@ -25,12 +30,24 @@ export default class Artist extends Component {
         }
     }
 
+    addArtist(name,followers,popularity,genres,uri){
+        console.log(genres)
+        const data = {
+            name: name,
+            followers: followers,
+            popularity: popularity, 
+            genres: genres,
+            uri: uri,
+        }
+        database.ref("festival17").child("artists").push(data)    
+    }
+
 
     render() {
 
-        var genres = ""
+        let genres = ""
         if (this.state.genres !== undefined) {
-            genres = this.state.genres.slice(0,2).join("/")
+            genres = this.state.genres.slice(0,2).join(", ")
         } else {
             genres = "None provided"
         }
@@ -40,7 +57,17 @@ export default class Artist extends Component {
                 <td> {this.state.name} </td>
                 <td> {this.state.followers} </td>
                 <td> {this.state.popularity} </td>
-                <td> {this.state.genres} </td>
+                <td> {genres} </td>
+                <td> <a href={this.state.uri}><img  width="30" height="30" src={spotifyIcon}></img></a>
+                </td>
+                <td> <button onClick={() => this.addArtist(
+                        this.state.name, 
+                        this.state.followers, 
+                        this.state.popularity,
+                        genres,
+                        this.state.uri
+                    )}> Add </button>
+                </td>
             </tr>
 
         )

@@ -1,4 +1,4 @@
-a {
+#navLink {
     text-decoration: none;
     color: #FFFFFF;
     background: #424040;
@@ -8,6 +8,6 @@ a {
 
 }
 
-a:hover {
+#navLink:hover {
     color: grey;
 }

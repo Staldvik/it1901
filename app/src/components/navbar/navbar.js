@@ -39,15 +39,15 @@ export default class NavComponent extends Component {
                 <h2>Arrangørsoftware for IT1901 [Logged in as: {loggedInAs}]</h2>
                 <nav>
                     <div className="wideDiv">
-                        <Link to='/'>Home</Link>
-                        <Link to='/concerts'>Concerts</Link>
-                        <Link to='/bandbooking'>Band Booking</Link>
-                        <Link to='/previousbands'>TeknikerTest</Link>
-                        <Link to='/banddatabase'>Band Database</Link>
-                        <Link to='/pricecalculator'>Ticket Price Calculator</Link>
-                        <Link to='/calendar'>Booking Calendar</Link>
-                        <Link to='/admin'>Admin Page</Link>
-                        <Link to='/manager'>Manager Site</Link>
+                        <Link id="navLink" to='/'>Home</Link>
+                        <Link id="navLink" to='/concerts'>Concerts</Link>
+                        <Link id="navLink" to='/bandbooking'>Band Booking</Link>
+                        <Link id="navLink" to='/previousbands'>TeknikerTest</Link>
+                        <Link id="navLink" to='/banddatabase'>Band Database</Link>
+                        <Link id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>
+                        <Link id="navLink" to='/calendar'>Booking Calendar</Link>
+                        <Link id="navLink" to='/admin'>Admin Page</Link>
+                        <Link id="navLink" to='/manager'>Manager Site</Link>
                     </div>
                 </nav>
             </div>
