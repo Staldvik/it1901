@@ -36,7 +36,7 @@ export default class NavComponent extends Component {
         return(
             <div className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
-                <h2>Arrangørsoftware for IT1901 [Logged in as: {loggedInAs}]</h2>
+                <h2>Arrangørsoftware for IT1901 [Logged in as: <Link to='/login'>{loggedInAs}</Link>]</h2>
                 <nav>
                     <div className="wideDiv">
                         <Link to='/'>Home</Link>

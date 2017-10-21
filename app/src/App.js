@@ -19,10 +19,11 @@ class App extends Component {
       <nav>
         <NavComponent />
       </nav>
-        
+      
+      Home Page
 
       
-      </div>
+    </div>
     );
   }
 }

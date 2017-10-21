@@ -30,6 +30,7 @@ class Login extends Component {
       // Login
       loginOptions: [],
       selectedLogin: "",
+      user: null,
 
     };
 
@@ -37,20 +38,23 @@ class Login extends Component {
 
   componentDidMount() {
     var previousLoginOptions = this.state.loginOptions
+    var previousUser = this.state.user
 
     auth.authenticate(() => {
       console.log("Auth says logged in:", auth.user)
+      previousUser = auth.user
     })
 
-    database.ref('users').once('value', users => {
-      users.forEach(user => {
+    database.ref('users').once('value', usersSnapshot => {
+      usersSnapshot.forEach(userSnapshot => {
         previousLoginOptions.push(
-          <option value={user.val().email} key={user.key}>{user.val().displayName}</option> 
+          <option value={userSnapshot.val().email} key={userSnapshot.key}>{userSnapshot.val().displayName}</option> 
         )
       })
     }).then(() => {
       this.setState({
-        loginOptions: previousLoginOptions
+        loginOptions: previousLoginOptions,
+        user: previousUser
       })
     })
   }
