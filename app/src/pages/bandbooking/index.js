@@ -110,6 +110,7 @@ export default class BandBooking extends Component {
 
     //Push requesten inn i databasen
     database.ref("festival17").child("requests").push(data)
+    database.ref("festival17").child("artists").child(this.state.selectedArtist).update({status: "pending"});
     console.log(this.state.requests);
   }
 

@@ -35,7 +35,8 @@ export default class Artists extends Component {
         followers:vals.followers,
         popularity:vals.popularity,
         genres:vals.genres,
-        reviews: vals.reviews, 
+        reviews: vals.reviews,
+        status: vals.status,
         uri: vals.uri,
         
       })
@@ -72,6 +73,7 @@ export default class Artists extends Component {
                   <th>Popularity (0-100)</th>
                   <th>Genres</th>
                   <th>Reviews</th>
+                  <th>Booked</th>
                   <th>Listen</th>
                   <th>Edit</th>
               </tr>
@@ -84,6 +86,7 @@ export default class Artists extends Component {
                 popularity={artist.popularity}
                 genres={artist.genres}
                 reviews={artist.reviews}
+                status={artist.status}
                 uri={artist.uri}
                 id={artist.id} //kan ikke kalle den key fordi map har en egen key.
                />
