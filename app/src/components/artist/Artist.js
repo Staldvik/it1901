@@ -1,6 +1,10 @@
 import React, {Component } from 'react'
 import './artist.css';
 
+import database from '../../database' //firebase
+
+import spotifyIcon from '../../static/img/spotify.png'
+
 export default class Artist extends Component {
 
     constructor(props) {
@@ -11,28 +15,61 @@ export default class Artist extends Component {
             popularity: props.popularity, //Int
             followers: props.followers, //Int
             genres: props.genres,
-            earlierConcerts: props.earlierConcerts, //List
+            uri: props.uri
+            /* earlierConcerts: props.earlierConcerts, //List
             concertNeeds: props.concertNeeds, // String //kanskje cost hentes herifra. Også ting som antall mikrofoner og instrumenter
             cost: props.cost, // Int
             approved: false, // Boolean
-            booked: false, // Boolean
+            booked: false, // Boolean */
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.props.info != nextProps.info) {
+            this.setState({info: nextProps.info})
+        }
+    }
+
+    addArtist(name,followers,popularity,genres,uri){
+        console.log(genres)
+        const data = {
+            name: name,
+            followers: followers,
+            popularity: popularity, 
+            genres: genres,
+            uri: uri,
+        }
+        database.ref("festival17").child("artists").push(data)    
+    }
+
+
     render() {
+
+        let genres = ""
+        if (this.state.genres !== undefined) {
+            genres = this.state.genres.slice(0,2).join(", ")
+        } else {
+            genres = "None provided"
+        }
+
         return (
-            <div className = "artistDiv">
-                <h1> {this.state.name} </h1>
-                <p> {this.state.info} </p>
-                <p> popularity: {this.state.popularity} </p>
-                <p> followers: {this.state.followers} </p>
-                <p> genres: {this.state.genres} </p>
-                <p> earlierConcerts: {this.state.earlierConcerts} </p>
-                <p> cost: {this.state.cost} </p>
-                <p> approved: {this.state.approved.toString()} booked: {this.state.booked.toString()} </p>
-            </div>
+            <tr className = "artistTable">
+                <td> {this.state.name} </td>
+                <td> {this.state.followers} </td>
+                <td> {this.state.popularity} </td>
+                <td> {genres} </td>
+                <td> <a href={this.state.uri}><img  width="30" height="30" src={spotifyIcon}></img></a>
+                </td>
+                <td> <button onClick={() => this.addArtist(
+                        this.state.name, 
+                        this.state.followers, 
+                        this.state.popularity,
+                        genres,
+                        this.state.uri
+                    )}> Add </button>
+                </td>
+            </tr>
 
         )
     }
-
 }

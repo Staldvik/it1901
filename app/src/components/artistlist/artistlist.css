@@ -1,0 +1,11 @@
+#colorCodeBooked{
+  background: rgb(84, 248, 63);
+}
+
+#colorCodeDeclined{
+  background: rgb(255, 97, 97);
+}
+
+#colorCodePending{
+  background: rgb(246, 255, 76);
+}

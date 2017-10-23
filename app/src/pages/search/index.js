@@ -1,3 +1,15 @@
+//LASTFM KEY
+/* 
+Application name:	Festival App
+API key:	4a8a0fe142d2a436d9a80d3e460ec1eb
+Shared secret:	66c6a14111b6faf09afe1df9e78df5bc
+Registered to	aasmusta 
+*/
+
+
+
+
+
 import React, { Component } from 'react';
 import NavComponent from '../../components/navbar/navbar'
 import './style.css';
@@ -5,6 +17,8 @@ import database from '../../database';
 import Artist from '../../components/artist/Artist';
 
 import * as SpotifyWebApi from 'spotify-web-api-node';
+/* import * as LastfmWebApi from 'lastfmapi'; */
+import * as Lastfm from 'simple-lastfm';
 
 
 export default class Search extends Component {
@@ -16,17 +30,29 @@ export default class Search extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.loadInfo = this.loadInfo.bind(this);
+    
     
     this.spotifyApi = new SpotifyWebApi({
       redirectUri : 'http://localhost:3000/callback'
+    });
+
+    /* this.lastfmApi = new LastfmWebApi({
+      'api_key' : '4a8a0fe142d2a436d9a80d3e460ec1eb',
+      'secret' : '66c6a14111b6faf09afe1df9e78df5bc'
+    }); */
+
+    this.lastfm = new Lastfm({
+      api_key: '4a8a0fe142d2a436d9a80d3e460ec1eb',
+      api_secret: '66c6a14111b6faf09afe1df9e78df5bc',
+      username: 'xxx',
+      password: 'xxx',
+      authToken: 'xxx' // Optional, you can use this instead of password, where authToken = md5(username + md5(password))
     });
   }
 
   componentWillMount() {
     this.fetchToken();
-
-
-
   }
   
   fetchToken() {
@@ -51,22 +77,57 @@ export default class Search extends Component {
     },
     () => {
       if (this.state.currentSearchInput.length > 1) {
-        this.spotifyApi.searchArtists(this.state.currentSearchInput, {country: 'NO', locale: 'no_NO'})
-        .then(function(data) {
+        this.spotifyApi.searchArtists(this.state.currentSearchInput)
+        .then(data => {
           var artistsToShow = []
           data.body.artists.items.map(artist => {
-            artistsToShow.push(artist)
+            if (artist.popularity > 5 && artist.followers.total > 1000) {
+              artist.summary = "NO INFO"
+              artistsToShow.push(artist)
+            }
           })
           return artistsToShow;
-        }, function(err) {
+        }, err => {
           console.error(err)
         })
-        .then((artistsToShow) => {
-          this.setState({artists:artistsToShow})
+        .then(artistsToShow => {
+          artistsToShow.map(artist => {
+            var summary = ""
+            this.lastfm.getArtistInfo({
+              artist: artist.name,
+              lang: 'nob',
+              callback: function(err, result) { 
+                if (err) {console.log(err)}
+                else {
+                summary = result.artistInfo.bio.summary;
+                artist.summary = summary;
+                }
+              }
+            })
+          })
+          return artistsToShow
+        })
+        .then(artistsToShow => {
+          this.setState({artists:artistsToShow});
         })
       } else {
         this.setState({artists:[]})
       }
+    })
+  }
+
+  loadInfo() {
+    var previousArtists = this.state.artists;
+    previousArtists.map(artist => {
+      var summary = "";
+      this.lastfm.getArtistInfo({
+        artist: artist.name,
+        callback: function(result) { 
+          summary = result.artistInfo.bio.summary
+          artist.summary = summary
+        }
+      })
+      this.setState({artists:previousArtists})
     })
   }
 
@@ -75,21 +136,33 @@ export default class Search extends Component {
       <div className="App">
         <NavComponent/>
 
-        <h1> Lets search </h1>
+        <h1> Let's search </h1>
 
         <form>
-          <h2> Søk etter artist her </h2>
-          <input type="text" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
+          
+          <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
         </form>
 
         <div className="Artists">
-          {
-            this.state.artists.map(artist => {
-              return (
-                <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} key={artist.uri} />
-              )
-            })
-          }
+          <table>
+            <thead>
+              <tr>
+                  <th>Artist</th>
+                  <th>Followers</th>
+                  <th>Popularity (0-100)</th>
+                  <th>Genres</th>
+                  <th>Spotify</th>
+                  <th>Add</th>
+              </tr>
+            </thead>
+            {
+              this.state.artists.map(artist => {
+                return (
+                  <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri} />
+                )
+              })
+            }
+          </table>
         </div>
 
       </div>
