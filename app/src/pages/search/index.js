@@ -139,7 +139,6 @@ export default class Search extends Component {
         <h1> Let's search </h1>
 
         <form>
-          
           <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
         </form>
 

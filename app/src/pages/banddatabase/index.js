@@ -19,6 +19,9 @@ export default class BandDatabase extends Component {
       sceneMap: sceneMap,
       genreOptions: [<option value="ShowAll" key="ShowALl"> Show All </option>],
       selectedGenre: "ShowAll",
+
+      // Search
+      currentSearchInput: "",
     }
 
 
@@ -98,9 +101,12 @@ export default class BandDatabase extends Component {
         </h1>
         <p> Her kan man sjekke alle tidligere konserter innen en sjanger </p>
 
-        <select name="selectedGenre" value={this.state.selectedGenre} onChange={this.handleChange}>
-          {this.state.genreOptions}
-        </select>
+        <form>
+          <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
+          <select name="selectedGenre" value={this.state.selectedGenre} onChange={this.handleChange}>
+            {this.state.genreOptions}
+          </select>
+        </form>
 
         <div>
           {
@@ -109,22 +115,32 @@ export default class BandDatabase extends Component {
               var match = false;
 
               // Hvis valgt er Show All så "matcher" alle
-              if (this.state.selectedGenre == "ShowAll") {
-                match = true;
+              if (this.state.selectedGenre === "ShowAll") {
+
+                if (this.state.currentSearchInput === "") {
+                  match = true
+                }
+
+                else if (concert.val().name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
+                  match = true
+                }
               }
 
               // Hvis ikke Show All, matcher valgt sjanger og konsertens sjanger?
+              // Og matcher søket og navnet?
               else if (this.state.selectedGenre == concert.val().genre) {
-                match = true;
+                if (this.state.currentSearchInput === "") {
+                  match = true
+                }
+
+                else if (concert.val().name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
+                  match = true
+                }
               }
 
               if (match) {
                 var sceneLocation = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().location;
-                var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity
-                console.log("On concert: " + concert.val().name);
-                console.log("Getting index: " + this.state.sceneMap.get(concert.val().scene))
-                console.log("Which is: " + sceneLocation + " with capacity " + sceneCapacity)
-                console.log("")
+                var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity;
                 return(
                 <div key={concert.key}>
                   <h1> {String(concert.ref.parent.parent.key)} </h1>
