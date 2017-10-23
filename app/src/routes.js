@@ -18,6 +18,7 @@ import BandDatabase from './pages/banddatabase';
 import PriceCalculator from './pages/pricecalculator';
 import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
+import Artists from './pages/artists';
 import ManagerSite from './pages/manager_site'
 import AdminPage from './pages/adminpage';
 import Search from './pages/search';
@@ -48,6 +49,7 @@ const Routes = () => (
         <Route path="/pricecalculator" component={PriceCalculator}/>
         <Route path="/calendar" component={BookingCalendar}/>
         <Route path="/concerts" component={ConcertPage}/>
+        <Route path="/artists" component={Artists}/>
         <Route path="/search" component={Search}/>
 
         <PrivateRoute path="/admin" component={AdminPage}/>

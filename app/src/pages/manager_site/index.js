@@ -9,13 +9,17 @@ export default class ManagerSite extends Component {
 
   constructor(props) {
     super(props);
+
+    let artistMap = new Map();
+
     this.state = {
       concerts: [],
       concertOptions : [],
       artist_name: '',
       tech_spec: '',
       rider: '',
-      requests : [],
+      requests: [],
+      artistMap: artistMap
 
     };
     this.handleChange = this.handleChange.bind(this);
@@ -44,14 +48,25 @@ export default class ManagerSite extends Component {
        <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
      )
 
-  this.setState({
-    concerts: previousConcerts,
-    concertOptions: previousConcertOptions,
-    artist_name: previousArtistName,
-    tech_spec: '',
-    rider: ''
+    this.setState({
+      concerts: previousConcerts,
+      concertOptions: previousConcertOptions,
+      artist_name: previousArtistName,
+      tech_spec: '',
+      rider: ''
+    })
   })
-})
+  
+  //connect directly to artist objects in firebase
+  let previousArtistMap = this.state.artistMap;
+  database.ref('festival17').child('artists').on('child_added', snap => {
+
+    previousArtistMap.set(snap.key, snap.val().name);
+
+    this.setState({
+      artistMap: previousArtistMap,
+    })
+  })
 
   //For tilbud fra bookingsjef
   var previousRequests = this.state.requests;
@@ -69,8 +84,7 @@ export default class ManagerSite extends Component {
       requestedStatus: previousRequests,
     })
   })
-
-}
+ }
 
 handleChange(e) {
   this.setState({
@@ -101,21 +115,24 @@ handleSubmit(event) {
 
   //Sletter requesten fra databasen.
   //Burde kanskje etter hvert bli sendt en melding tilbake til bookingsjef om at de ikke vil spille der
-  handleDeclineConcert(key) {
+  handleDeclineConcert(artist,key) {
     database.ref("festival17").child("requests").child(key).remove();
+    database.ref('festival17').child('artists').child(artist).update({status:"declined"})
     window.location.reload();
   }
 
   handleJoinConcert(artist, day, price, key) {
     var data = {
-      name: artist,
+      artist: artist,
       day: day,
       price: price,
       status: "booked"
     }
     database.ref("festival17").child("concerts").push(data);
     alert("Takk!\n" + artist + " spiller nå på " + day);
-    database.ref("festival17").child("requests").child(key).remove();
+    database.ref("festival17").child("requests").child(key).remove(); //remove from requests
+    database.ref('festival17').child('artists').child(artist).update({status:"booked"}) //setter artist status til booked 
+
     window.location.reload();
   }
 
@@ -161,12 +178,12 @@ render() {
                   if (requests.status == "accepted") {
                       return(
                       <tr>
-                        <td>{requests.artist}</td>
+                        <td>{this.state.artistMap.get(requests.artist)}</td>
                         <td>{requests.day}</td>
                         <td>{requests.price}</td>
                         <td>
                           <button onClick={() => this.handleJoinConcert(requests.artist, requests.day, requests.price, requests.key)}> Accept </button>
-                          <button onClick={() => this.handleDeclineConcert(requests.key)}> Decline </button>
+                          <button onClick={() => this.handleDeclineConcert(requests.artist, requests.key)}> Decline </button>
                         </td>
                       </tr>
                       )

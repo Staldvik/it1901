@@ -149,14 +149,16 @@ export default class Search extends Component {
               <tr>
                   <th>Artist</th>
                   <th>Followers</th>
-                  <th>Popularity(0-100)</th>
+                  <th>Popularity (0-100)</th>
                   <th>Genres</th>
+                  <th>Spotify</th>
+                  <th>Add</th>
               </tr>
             </thead>
             {
               this.state.artists.map(artist => {
                 return (
-                  <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} key={artist.uri} />
+                  <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri} />
                 )
               })
             }

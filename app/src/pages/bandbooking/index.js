@@ -10,8 +10,13 @@ export default class BandBooking extends Component {
 
   constructor(props) {
     super(props);
-
+    let artistMap = new Map();
     this.state = {
+      artists: [],
+      artistOptions: [],
+      selectedArtist:"",
+      artistMap: artistMap, //for keeping name of artist and be able to get it by key
+
       currentArtistNameInput: "",
       currentPriceInput: "",
       currentConcertDayInput: "day1",
@@ -34,6 +39,7 @@ export default class BandBooking extends Component {
     var previousRequests = this.state.requests;
     console.log(previousRequests);
 
+    //get requests from database
     database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
       var vals = requestSnapshot.val();
       previousRequests.push({
@@ -48,6 +54,42 @@ export default class BandBooking extends Component {
       })
     })
 
+    let previousArtistMap = this.state.artistMap;
+    
+
+    let previousArtists = this.state.artists;
+    let previousArtistsOptions = this.state.artistOptions;
+
+    //get artists from database
+    database.ref('festival17').child('artists').on('child_added', snap => {
+      var vals = snap.val();
+
+      previousArtists.push({
+        id: snap.key,
+        name:vals.name,
+        followers:vals.followers,
+        popularity:vals.popularity,
+        genres:vals.genres,
+        reviews: vals.reviews, 
+        uri: vals.uri,
+        
+      })
+
+      //push artists into an array of options elements
+      previousArtistsOptions.push(
+        <option value={snap.key} key={snap.key}> {vals.name} </option>
+      )
+      
+      //push name and key into a map
+      previousArtistMap.set(snap.key, vals.name);
+      console.log(previousArtistMap);
+
+      this.setState({
+        artists: previousArtists,
+        artistOptions: previousArtistsOptions,
+        artistMap: previousArtistMap,
+      })
+    })
   }
 
   handleChange(e) {
@@ -60,7 +102,7 @@ export default class BandBooking extends Component {
     e.preventDefault(); //prevents page from reloading
 
     var data = {
-      artist: this.state.currentArtistNameInput,
+      artist: this.state.selectedArtist, //key of artist in firebase
       price: this.state.currentPriceInput,
       day: this.state.currentConcertDayInput,
       status: "pending",
@@ -68,6 +110,7 @@ export default class BandBooking extends Component {
 
     //Push requesten inn i databasen
     database.ref("festival17").child("requests").push(data)
+    database.ref("festival17").child("artists").child(this.state.selectedArtist).update({status: "pending"});
     console.log(this.state.requests);
   }
 
@@ -108,7 +151,10 @@ export default class BandBooking extends Component {
         <h3> Her kan du sende tilbud til manager for et band om de vil spille. </h3>
 
         <form>
-          <input name="currentArtistNameInput" value={this.state.currentArtistNameInput} onChange={this.handleChange} placeholder="Artist"/>
+          
+          <select name="selectedArtist" onChange={this.handleChange} value={this.state.selectedArtist}>
+            {this.state.artistOptions}
+          </select>
           <input name="currentPriceInput" type="number" value={this.state.currentPriceInput} onChange={this.handleChange} placeholder="price" />
           <select name="currentConcertDayInput" id="day" value={this.state.currentConcertDayInput} onChange={this.handleChange}>
             <option value="day1">Dag 1</option>
@@ -142,7 +188,7 @@ export default class BandBooking extends Component {
                 if (requests.status == "pending") {
                     return(
                     <tr className="pendingRequests">
-                      <td>{requests.artist}</td>
+                      <td>{this.state.artistMap.get(requests.artist)}</td>
                       <td>{requests.day}</td>
                       <td>{requests.price}</td>
                       <td>{requests.status}</td>
@@ -156,7 +202,7 @@ export default class BandBooking extends Component {
                   if (requests.status == "accepted") {
                     return(
                     <tr className="acceptedRequests">
-                      <td>{requests.artist}</td>
+                      <td>{this.state.artistMap.get(requests.artist)}</td>
                       <td>{requests.day}</td>
                       <td>{requests.price}</td>
                       <td>{requests.status}</td>
@@ -189,7 +235,7 @@ export default class BandBooking extends Component {
                 if (requests.status == "declined") {
                     return(
                     <tr>
-                      <td>{requests.artist}</td>
+                      <td>{this.state.artistMap.get(requests.artist)}</td>
                       <td>{requests.day}</td>
                       <td>{requests.price}</td>
                       <td>{requests.status}</td>

@@ -1,4 +1,4 @@
-.wideDiv a {
+#navLink {
     text-decoration: none;
     color: #FFFFFF;
     background: #424040;
@@ -8,6 +8,7 @@
 
 }
 
-.wideDiv a:hover {
+#navLink:hover {
     color: grey;
 }
+
