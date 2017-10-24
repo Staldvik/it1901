@@ -53,8 +53,8 @@ export default class BandDatabase extends Component {
     database.ref().on('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
-        // Hvis festivalen != festival17:
-        if (festivalSnapshot.key != "festival17") {
+        // Hvis festivalen != festival17 og ikke er en av de andre keysene som er kommet:
+        if (! ((festivalSnapshot.key === "festival17") || (festivalSnapshot.key.slice(0,8) != "festival"))) {
 
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
@@ -85,9 +85,6 @@ export default class BandDatabase extends Component {
         }
 
         // Hvis festivalen == festival17: skip
-        else {
-          console.log("Skipping festival17")
-        }
       })
       this.setState({
         genreOptions: previousGenreOptions,
