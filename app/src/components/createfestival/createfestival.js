@@ -26,15 +26,7 @@ export default class CreateFestival extends Component {
 
     createFestival(name){
         database.ref().push( //creating the strucuture of the database.
-            {name:name,
-            artists:{"placeholder":"placeholder"}, //I dont think it's possible to create empty children
-            concerts:{"placeholder":"placeholder"},
-            scenes:{"placeholder":"placeholder"},
-            requests:{"placeholder":"placeholder"},
-            technicians:{"placeholder":"placeholder"},
-            users:{"placeholder":"placeholder"},
-            
-    })
+            {name:name})
     }
 
   

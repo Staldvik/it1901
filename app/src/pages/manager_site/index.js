@@ -31,7 +31,7 @@ export default class ManagerSite extends Component {
    var previousConcerts = this.state.concerts;
    var previousConcertOptions = this.state.concertOptions;
    var previousArtistName = this.state.artist_name;
-   database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
+   database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').on('child_added', concertSnapshot => {
      var vals = concertSnapshot.val();
      previousConcerts.push({
        name : vals.name,
@@ -59,7 +59,7 @@ export default class ManagerSite extends Component {
   
   //connect directly to artist objects in firebase
   let previousArtistMap = this.state.artistMap;
-  database.ref('festival17').child('artists').on('child_added', snap => {
+  database.ref('-KxJHWYoj6w08GVnyKwz').child('artists').on('child_added', snap => {
 
     previousArtistMap.set(snap.key, snap.val().name);
 
@@ -70,7 +70,7 @@ export default class ManagerSite extends Component {
 
   //For tilbud fra bookingsjef
   var previousRequests = this.state.requests;
-  database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+  database.ref('-KxJHWYoj6w08GVnyKwz').child('requests').on('child_added', requestSnapshot => {
     var vals = requestSnapshot.val();
     previousRequests.push({
       artist: vals.artist,
@@ -95,7 +95,7 @@ handleChange(e) {
 
 handleSubmit(event) {
   event.preventDefault();
-  const concertsRef = database.ref('festival17').child('concerts');
+  const concertsRef = database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts');
   // Lager "datapakken" som sendes
   const data = {
     tech_spec : this.state.tech_spec,
@@ -116,8 +116,8 @@ handleSubmit(event) {
   //Sletter requesten fra databasen.
   //Burde kanskje etter hvert bli sendt en melding tilbake til bookingsjef om at de ikke vil spille der
   handleDeclineConcert(artist,key) {
-    database.ref("festival17").child("requests").child(key).remove();
-    database.ref('festival17').child('artists').child(artist).update({status:"declined"})
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("requests").child(key).remove();
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('artists').child(artist).update({status:"declined"})
     window.location.reload();
   }
 
@@ -128,10 +128,10 @@ handleSubmit(event) {
       price: price,
       status: "booked"
     }
-    database.ref("festival17").child("concerts").push(data);
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("concerts").push(data);
     alert("Takk!\n" + artist + " spiller nå på " + day);
-    database.ref("festival17").child("requests").child(key).remove(); //remove from requests
-    database.ref('festival17').child('artists').child(artist).update({status:"booked"}) //setter artist status til booked 
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("requests").child(key).remove(); //remove from requests
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('artists').child(artist).update({status:"booked"}) //setter artist status til booked 
 
     window.location.reload();
   }

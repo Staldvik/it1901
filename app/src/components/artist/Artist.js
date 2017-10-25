@@ -39,7 +39,7 @@ export default class Artist extends Component {
             genres: genres,
             uri: uri,
         }
-        database.ref("festival17").child("artists").push(data)    
+        database.ref('-KxJHWYoj6w08GVnyKwz').child("artists").push(data)    
     }
 
 

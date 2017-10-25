@@ -26,7 +26,7 @@ export default class Artists extends Component {
     var previousArtists = this.state.artists;
 
 
-    database.ref('festival17').child('artists').on('child_added', snap => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('artists').on('child_added', snap => {
       var vals = snap.val();
 
       previousArtists.push({

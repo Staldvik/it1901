@@ -28,7 +28,7 @@ export default class ConcertPage extends Component {
     var previousOpts = this.state.opts;
     var previousSelectedTech = this.state.selectedTech;
 
-    database.ref('festival17').child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
       var prevTechnicianNames = [];
       concertSnapshot.child('technicians').forEach((technician) => {
@@ -46,7 +46,7 @@ export default class ConcertPage extends Component {
       })
     })
 
-    database.ref('festival17').child('technicians').orderByChild('ID').on('child_added', technicianSnapshot => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('technicians').orderByChild('ID').on('child_added', technicianSnapshot => {
       previousOpts.push(
         <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {"ID "+technicianSnapshot.key+": " + technicianSnapshot.val().name} </option>
       )

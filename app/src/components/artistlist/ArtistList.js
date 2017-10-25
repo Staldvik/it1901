@@ -28,7 +28,7 @@ export default class ArtistList extends Component {
         const data = {
             //name: "nils",
         }
-        database.ref("festival17").child("artists").child(key).update(data)    
+        database.ref('-KxJHWYoj6w08GVnyKwz').child("artists").child(key).update(data)    
     }
 
     setColorCode(status){

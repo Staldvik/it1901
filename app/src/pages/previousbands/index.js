@@ -17,7 +17,7 @@ export default class PreviousBands extends Component {
   componentWillMount() {
     var previousTechnicians = this.state.technicians;
 
-    database.ref('festival17').child('technicians').on('child_added', technicianSnapshot => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('technicians').on('child_added', technicianSnapshot => {
       var vals = technicianSnapshot.val();
       previousTechnicians.push ({
         name:vals.name,

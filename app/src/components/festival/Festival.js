@@ -9,16 +9,15 @@ export default class Festival extends Component {
         super(props);
         this.state = {
             festival: props.festival,
-            name: props.name,
-            
+            name: props.name,   
         }
-
-        this.enterFestival = this.enterFestival.bind(this)
+        this.enterFestival = this.enterFestival.bind(this);
     }
 
     enterFestival(festival){
-        console.log("hei");
+        this.props.enter(festival);
     }
+
 
     render() {
         return (

@@ -40,7 +40,7 @@ export default class BandBooking extends Component {
     console.log(previousRequests);
 
     //get requests from database
-    database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('requests').on('child_added', requestSnapshot => {
       var vals = requestSnapshot.val();
       previousRequests.push({
         artist:vals.artist,
@@ -61,7 +61,7 @@ export default class BandBooking extends Component {
     let previousArtistsOptions = this.state.artistOptions;
 
     //get artists from database
-    database.ref('festival17').child('artists').on('child_added', snap => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('artists').on('child_added', snap => {
       var vals = snap.val();
 
       previousArtists.push({
@@ -109,27 +109,27 @@ export default class BandBooking extends Component {
     }
 
     //Push requesten inn i databasen
-    database.ref("festival17").child("requests").push(data)
-    database.ref("festival17").child("artists").child(this.state.selectedArtist).update({status: "pending"});
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("requests").push(data)
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("artists").child(this.state.selectedArtist).update({status: "pending"});
     console.log(this.state.requests);
   }
 
   handleAccept(key) {
     console.log("accept");
     console.log(JSON.stringify(key));
-    database.ref("festival17").child("requests").child(key).update({status: "accepted"});
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("requests").child(key).update({status: "accepted"});
     window.location.reload();
   }
 
   handleDecline(key) {
     console.log("decline");
-    database.ref("festival17").child("requests").child(key).update({status: "declined"});
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("requests").child(key).update({status: "declined"});
     window.location.reload();
   }
   
   handleDelete(key) {
     console.log("Deleted");
-    database.ref("festival17").child("requests").child(key).remove();
+    database.ref('-KxJHWYoj6w08GVnyKwz').child("requests").child(key).remove();
     window.location.reload();
   }
 

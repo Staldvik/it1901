@@ -10,17 +10,32 @@ import database, {firebaseApp} from './database';
 
 class App extends Component {
 
+   constructor(props) {
+        super(props);
+        this.state = {
+            selectedFestival:""
+        }
+        this.enter = this.enter.bind(this)
+    }
+
+    enter(festival){
+        console.log("entered", festival);
+
+        this.setState({
+          selectedFestival: festival,
+        })
+    }
+
+
   render() {
     return (
     <div className="App">
-      
-    
      
      <h3>Create new festival:</h3>
      <form><CreateFestival/></form>
      
      <h3>All festivals:</h3>
-     <AllFestivals/>
+     <AllFestivals enter={this.enter}/>
      
 
 

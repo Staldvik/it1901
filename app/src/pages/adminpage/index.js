@@ -16,6 +16,7 @@ export default class AdminPage extends Component {
     var technicianMap = new Map();
 
     this.state = {
+      festival: '-Kx8SaOpmAZwE26xGMV0',
       technicians: [],
       concertOptions: [],
       technicianOptions: [],
@@ -72,14 +73,14 @@ export default class AdminPage extends Component {
     // User Form
     var previousUserOptions = this.state.userOptions;
 
-    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').on('child_added', concertSnapshot => {
       console.log(concertSnapshot.val().name)
       previousConcertOptions.push(
         <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
       )
     })
 
-    database.ref('festival17').child('technicians').on('child_added', techSnapshot => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('technicians').on('child_added', techSnapshot => {
       var val = techSnapshot.val();
       previousTechnicians.push({
         name: val.name,
@@ -103,7 +104,7 @@ export default class AdminPage extends Component {
     
     //Lytter etter child added på tekniker, altså om tekniker blir lagt til
     // Den nye teknikeren vil ikke vises i dropdown før componenten blir rendered på nytt. Dette for å unngå duplikater.
-    database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
       console.log(lastTechnician.val().name +  " added");
       var previousTechnicianMap = this.state.technicianMap;
       previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
@@ -135,7 +136,7 @@ export default class AdminPage extends Component {
     console.log("is technician already in concert");
     let bool = false;
     const currentKey = this.state.selectedTechnician
-    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
       snap.forEach(function(childSnap){
         if(childSnap.key == currentKey){
           console.log(currentKey, "equals", childSnap.key)
@@ -152,7 +153,7 @@ export default class AdminPage extends Component {
     e.preventDefault();
     console.log(this.state.selectedTechnician);
     console.log("this is the return value of the function", this.isTechInConcert())
-    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
       name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
   }
@@ -176,7 +177,7 @@ export default class AdminPage extends Component {
       return Math.max(a, b);
     });
 
-    database.ref("festival17").child('technicians').child(maxIndex+1).set({
+    database.ref('-KxJHWYoj6w08GVnyKwz').child('technicians').child(maxIndex+1).set({
       name: this.state.currentTechnicianNameInput
     })
     this.setState({ //setter input boksen tilbake til tom
@@ -191,7 +192,7 @@ export default class AdminPage extends Component {
         name: this.state.currentConcertNameInput,
         day: this.state.currentConcertDayInput
       }
-      database.ref('festival17').child('concerts').push({
+      database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').push({
         name: this.state.currentConcertNameInput,
         day: this.state.currentConcertDayInput,
       })
@@ -207,7 +208,7 @@ export default class AdminPage extends Component {
   }
 
   searchConcertsFor(query, value) {
-    return database.ref('festival17').child('concerts').once('value').then(concertsSnapshot => {
+    return database.ref('-KxJHWYoj6w08GVnyKwz').child('concerts').once('value').then(concertsSnapshot => {
       return concertsSnapshot.forEach(concertSnapshot => {
         if (concertSnapshot.val()[query] == value) {
           this.match = concertSnapshot;
