@@ -12,7 +12,7 @@ import NavComponent from '../../components/navbar/navbar';
 import database, {firebaseApp} from '../../database';
 
 // React Router
-import {auth, roles} from '../../roles'
+import {auth, roles} from '../../roles';
 
 
 
@@ -136,6 +136,7 @@ class Login extends Component {
         errorCode:null, 
         errorMessage:null
       })
+      this.forceUpdate();
     })
     .catch(error => {
       this.handleError(error);
