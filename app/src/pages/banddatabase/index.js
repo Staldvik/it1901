@@ -50,7 +50,7 @@ export default class BandDatabase extends Component {
 
 
     // Gå gjennom alle festivalene
-    database.ref().on('value', snapshot => {
+    database.ref().once('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
         // Hvis festivalen != festival17 og ikke er en av de andre keysene som er kommet:
@@ -78,13 +78,11 @@ export default class BandDatabase extends Component {
             console.log("Adding " + sceneSnapshot.key + " to index " + index) 
             previousSceneMap.set(sceneSnapshot.key, index);
             previousSceneOptions.push(
-              <option value={sceneSnapshot} key={sceneSnapshot.key}> {sceneSnapshot.val().location} - {sceneSnapshot.ref.parent.parent.key} </option> 
+              <option value={sceneSnapshot.key} key={sceneSnapshot.key}> {sceneSnapshot.val().location} - {sceneSnapshot.ref.parent.parent.key} </option> 
             )
           })
 
         }
-
-        // Hvis festivalen == festival17: skip
       })
       this.setState({
         genreOptions: previousGenreOptions,
