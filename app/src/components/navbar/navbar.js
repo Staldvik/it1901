@@ -10,7 +10,7 @@ import database, {firebaseApp} from '../../database';
 import {auth, roles} from '../../roles';
 
 export default class NavComponent extends Component {
-    
+
     constructor() {
         super();
         this.state = {
@@ -30,7 +30,7 @@ export default class NavComponent extends Component {
 
         if (this.state.user) {
             loggedInAs = this.state.user.email.split('@')[0]
-        } 
+        }
 
 
         return(
@@ -49,6 +49,7 @@ export default class NavComponent extends Component {
                         <Link id="navLink" to='/calendar'>Booking Calendar</Link>
                         <Link id="navLink" to='/admin'>Admin Page</Link>
                         <Link id="navLink" to='/manager'>Manager Site</Link>
+                        <Link id="navLink" to='/pr'>Pr Site</Link>
                     </div>
                 </nav>
             </div>

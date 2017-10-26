@@ -35,44 +35,10 @@ export default class PrSite extends Component {
    })
 
 
-
-   //console.log(this.state.artists)
 }
 
-/*
-handleChange(e) {
-  this.setState({
-    //artist_name: event.target.artist_name,
-    //tech_spec: event.target.tech_spec,
-    //rider: event.target.rider
-      [e.target.name]: e.target.value
-    }
-  );
-}
-*/
-/*handleSubmit(event) {
-  console.log("hei")
-  event.preventDefault();
-  const concertsRef = database.ref('festival17').child('concerts');
-  const data = {
-    tech_spec : this.state.tech_spec,
-    rider : this.state.rider
-  }
-
-  concertsRef.child(this.state.artist_name).update(data);
-
-  var previousArtistName = this.state.artist_name;
-
-  this.setState({
-    artist_name : previousArtistName,
-    tech_spec : '',
-    rider : ''
-    })
-  }
-*/
 
 render() {
-  console.log(this.state.artists)
   return (
     <div className="App">
     <NavComponent />
@@ -80,7 +46,6 @@ render() {
     <div className="artistBody">
     {
       this.state.artists.map((artist) => {
-        console.log(artist)
         return(
           <ArtistPR name={artist.name} contact_info={artist.contact_info} sales_number={artist.sales_number}/>
         )
