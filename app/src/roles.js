@@ -36,8 +36,35 @@ const auth = {
       if (rolesForUser.admin === true) {return true}
       switch(path) {
   
-          case "/manager":
-              return rolesForUser.manager == true
+        case "/bandbooking":
+            return rolesForUser.booking == true
+
+        case "/previousbands":
+            return rolesForUser.booking == true
+
+        case "/banddatabase":
+            return rolesForUser.booking == true
+
+        case "/pricecalculator":
+            return rolesForUser.booking == true
+
+        case "/calendar":
+            return rolesForUser.booking == true
+
+        case "/concerts":
+            return rolesForUser.technician == true || rolesForUser.booking == true
+
+        case "/artists":
+            return rolesForUser.booking == true
+
+        case "/search":
+            return rolesForUser.booking == true
+
+        case "/manager":
+            return rolesForUser.manager == true
+            
+        default:
+            return false
 
       }
     }

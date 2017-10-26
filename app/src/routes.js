@@ -41,17 +41,17 @@ const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
 const Routes = () => (
     <Switch>
         <Route exact path="/" component={App}/>
-
         <Route path="/login" component={Login}/>
-        <Route path="/bandbooking" component={BandBooking}/>
-        <Route path="/previousbands" component={PreviousBands}/>
-        <Route path="/banddatabase" component={BandDatabase}/>
-        <Route path="/pricecalculator" component={PriceCalculator}/>
-        <Route path="/calendar" component={BookingCalendar}/>
-        <Route path="/concerts" component={ConcertPage}/>
-        <Route path="/artists" component={Artists}/>
-        <Route path="/search" component={Search}/>
-        <Route path="/pr" component={PrSite}/>
+        
+        <PrivateRoute path="/bandbooking" component={BandBooking}/>
+        <PrivateRoute path="/previousbands" component={PreviousBands}/>
+        <PrivateRoute path="/banddatabase" component={BandDatabase}/>
+        <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>
+        <PrivateRoute path="/calendar" component={BookingCalendar}/>
+        <PrivateRoute path="/concerts" component={ConcertPage}/>
+        <PrivateRoute path="/artists" component={Artists}/>
+        <PrivateRoute path="/search" component={Search}/>
+        <PrivateRoute path="/pr" component={PrSite}/>
         <PrivateRoute path="/admin" component={AdminPage}/>
         <PrivateRoute path="/manager" component={ManagerSite}/>
     </Switch>

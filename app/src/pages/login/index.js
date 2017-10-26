@@ -129,6 +129,7 @@ class Login extends Component {
   changeUser = event => {
     event.preventDefault();
 
+    // Logg inn med epost fra dropdown og passord festival (som er passordet til alle brukere jeg har lagt inn)
     firebaseApp.auth().signInWithEmailAndPassword(this.state.selectedLogin, "festival")
     .then((user) => {
       console.log("Signed In as", user)
@@ -136,7 +137,7 @@ class Login extends Component {
         errorCode:null, 
         errorMessage:null
       })
-      this.forceUpdate();
+
     })
     .catch(error => {
       this.handleError(error);
@@ -151,11 +152,11 @@ class Login extends Component {
     // TODO: catch them all
     switch(this.state.errorCode) {
       case "auth/user-not-found":
-        error = <h3> User not found </h3>
+        error = <h3 className="Error-message"> User not found </h3>
         break;
       
       case "auth/email-already-in-use":
-        error = <h3> This email is already in use </h3>
+        error = <h3 className="Error-message"> This email is already in use </h3>
         break; 
 
       default:
@@ -171,7 +172,6 @@ class Login extends Component {
     return (
 
       <div className="App">
-        <NavComponent />
 
         <h1 className="App-intro">
           Login/Signup
@@ -185,7 +185,7 @@ class Login extends Component {
           redirected
         }
 
-        <form>
+        <form className="Login-form">
           <label>
             Email:
             <input name="email" type="email" value={this.state.email} onChange={this.handleChange} />
