@@ -206,13 +206,11 @@ export default class AdminPage extends Component {
         name: this.state.currentConcertNameInput,
         day: this.state.currentConcertDayInput,
       }
+      let does_exist = false
       for (var i = 0; i < this.state.artists.length; i++){
         if(data.name === this.state.artists[i].name){
-          database.ref('festival17').child('artists').child(this.state.artists[i].id).update({
-            name: this.state.currentConcertNameInput,
-            contact_info: this.state.currentConcertContactInfo,
-            sales_number: this.state.currentConcertSalesNumber,
-          })
+          does_exist = true
+          }
           // trengs dette?
           /*database.ref('festival17').child('concerts').update({
             name: this.state.currentConcertNameInput,
@@ -221,7 +219,13 @@ export default class AdminPage extends Component {
             price: this.state.currentConcertPriceInput,
           })*/
         }
-        else{
+        if (does_exist){
+            database.ref('festival17').child('artists').child(this.state.artists[i].id).update({
+              name: this.state.currentConcertNameInput,
+              contact_info: this.state.currentConcertContactInfo,
+              sales_number: this.state.currentConcertSalesNumber,
+        })
+      } else{
           database.ref('festival17').child('artists').push({
             name: this.state.currentConcertNameInput,
             contact_info: this.state.currentConcertContactInfo,
@@ -237,7 +241,7 @@ export default class AdminPage extends Component {
       }
 
 
-    } else {
+     else {
       alert("need more info")
     }
     this.setState({ //setter input boksen tilbake til tom
