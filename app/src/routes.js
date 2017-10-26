@@ -52,13 +52,10 @@ const Routes = () => (
         <Route path="/concerts" component={ConcertPage}/>
         <Route path="/artists" component={Artists}/>
         <Route path="/search" component={Search}/>
-<<<<<<< HEAD
         <Route path="/search_previous_bands" component={SearchPreviousBands}/>
-=======
 
         <PrivateRoute path="/admin" component={AdminPage}/>
         <PrivateRoute path="/manager" component={ManagerSite}/> 
->>>>>>> master
     </Switch>
 );
 
