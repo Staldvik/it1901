@@ -35,7 +35,7 @@ export default class PrSite extends Component {
    })
 
 
-}
+ }
 
 
 render() {
