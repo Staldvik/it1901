@@ -29,11 +29,13 @@ export default class PrSite extends Component {
        contact_info: val.contact_info,
        sales_number: val.sales_number,
      })
+     this.setState({
+       artists: previousArtists,
+     })
    })
 
-   this.setState({
-     artists: previousArtists,
-   })
+
+
    //console.log(this.state.artists)
 }
 
@@ -79,7 +81,7 @@ render() {
     {
       this.state.artists.map((artist) => {
         console.log(artist)
-      return(
+        return(
           <ArtistPR name={artist.name} contact_info={artist.contact_info} sales_number={artist.sales_number}/>
         )
       })
