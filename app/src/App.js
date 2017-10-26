@@ -40,11 +40,106 @@ import {roles, auth} from './roles';
 
 class App extends Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      message: "Hello from App",
+      user: null
+    }
+
+    this.roleMap = new Map()
+  }
+
+  componentWillMount() {
+    // Get user from firebase Auth
+    console.log("Running auth")
+    firebaseApp.auth().onAuthStateChanged(user => {
+      if (user) {
+        // Logged in
+        this.setState({
+          user: user
+        })
+      } else {
+        // Logged out
+        this.setState({
+          user: null
+        })
+      }
+    })
+  }
+
+  componentDidMount() {
+    database.ref('users').once("value", users => {
+      users.forEach(user => {
+          console.log(user.val().displayName)
+          this.roleMap.set(user.key, user.val().roles)
+      })
+    })
+    .then(() => {
+      console.log("Component did mount")
+      console.log("User", this.state.user)
+      console.log("roles for user", this.roleMap.get(this.state.user.uid))
+      console.log(this.isCorrectRole("/bandbooking", this.roleMap.get(this.state.user.uid)))
+    })
+  }
+
+  isCorrectRole = path => {
+    var rolesForUser = this.roleMap.get(this.state.user.uid)
+
+    if (rolesForUser === undefined) {return false}
+
+    // Admin har tilgang til alt
+    console.log("Roles for user",rolesForUser)
+    if (rolesForUser.admin === true) {return true}
+
+    // Sjekk path
+    switch(path) {
+
+        case "/bandbooking":
+            return rolesForUser.booking == true
+
+        case "/previousbands":
+            return rolesForUser.booking == true
+
+        case "/banddatabase":
+            return rolesForUser.booking == true
+
+        case "/pricecalculator":
+            return rolesForUser.booking == true
+
+        case "/calendar":
+            return rolesForUser.booking == true
+
+        case "/concerts":
+            return rolesForUser.technician == true || rolesForUser.booking == true
+
+        case "/artists":
+            return rolesForUser.booking == true
+
+        case "/search":
+            return rolesForUser.booking == true
+
+        case "/manager":
+            return rolesForUser.manager == true
+            
+        default:
+            return false
+
+    }
+  }
+
+
+
   render() {
+
+    if (this.state.user === null) {
+      return <div>Loading</div>
+    }
 
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
       <Route {...rest} render={props => (
-        auth.isCorrectRole(pathname) ? (
+        this.isCorrectRole(pathname) ? (
           <Component {...props}/>
         ) : (
           <Redirect to={{
@@ -58,7 +153,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="navbar">
-          <NavComponent />
+          <NavComponent user={this.state.user} />
         </div>
 
         <div className="container">
@@ -66,7 +161,7 @@ class App extends Component {
             <Route exact path="/" component={Login}/>
             <Route path="/login" component={Login}/>
             
-            <PrivateRoute path="/bandbooking" component={BandBooking}/>
+            <PrivateRoute path="/bandbooking" component={BandBooking} state={this.state}/>
             <PrivateRoute path="/previousbands" component={PreviousBands}/>
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
             <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>

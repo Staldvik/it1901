@@ -13,6 +13,7 @@ import database, {firebaseApp} from '../../database';
 
 // React Router
 import {auth, roles} from '../../roles';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -31,6 +32,7 @@ class Login extends Component {
       loginOptions: [],
       selectedLogin: "",
       user: null,
+      redirectToReferrer: false,
 
     };
 
@@ -39,11 +41,6 @@ class Login extends Component {
   componentDidMount() {
     var previousLoginOptions = this.state.loginOptions
     var previousUser = this.state.user
-
-    auth.authenticate(() => {
-      console.log("Auth says logged in:", auth.user)
-      previousUser = auth.user
-    })
 
     database.ref('users').once('value', usersSnapshot => {
       usersSnapshot.forEach(userSnapshot => {
@@ -74,6 +71,9 @@ class Login extends Component {
     event.preventDefault();
 
     firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      this.setState({redirectToReferrer: true})
+    })
     .catch(error => {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -93,7 +93,8 @@ class Login extends Component {
       console.log("Signed In")
       this.setState({
         errorCode:null, 
-        errorMessage:null
+        errorMessage:null,
+        redirectToReferrer: true,
       })
     })
     .catch(error => {
@@ -135,7 +136,8 @@ class Login extends Component {
       console.log("Signed In as", user)
       this.setState({
         errorCode:null, 
-        errorMessage:null
+        errorMessage:null,
+        redirectToReferrer: true,
       })
 
     })
@@ -147,6 +149,14 @@ class Login extends Component {
 
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
+
+    if (this.state.redirectToReferrer) {
+      return (
+        <Redirect to={from}/>
+      )
+    }
+
+
 
     var error = ""
     // TODO: catch them all

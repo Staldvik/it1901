@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import {
     BrowserRouter as Router,
@@ -57,4 +57,4 @@ const Routes = () => (
     </Switch>
 );
 
-export default Routes;
+export default Routes; */

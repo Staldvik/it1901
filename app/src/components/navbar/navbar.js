@@ -11,10 +11,10 @@ import {auth, roles} from '../../roles';
 
 export default class NavComponent extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            user: null,
+            user: props.user,
             viewableLinks: []
         }
 
@@ -56,48 +56,42 @@ export default class NavComponent extends Component {
 
     componentDidMount() {
         var previousViewableLinks = this.state.viewableLinks;
-        auth.authenticate((user) => {
-            var displayName = user.email.split('@')[0]
-            console.log(displayName)
+        var displayName = this.state.user.email.split('@')[0]
+        
+        switch(displayName){
 
-            switch(displayName){
+            case "manager":
+                previousViewableLinks = this.managerLinks
+                break;
 
-                case "manager":
-                    previousViewableLinks = this.managerLinks
-                    break;
+            case "admin":
+                previousViewableLinks = this.adminLinks
+                break;
 
-                case "admin":
-                    previousViewableLinks = this.adminLinks
-                    break;
+            case "pr":
+                previousViewableLinks = this.prLinks
+                break;
+            
+            case "tekniker":
+                previousViewableLinks = this.technicianLinks
+                break;
 
-                case "pr":
-                    previousViewableLinks = this.prLinks
-                    break;
-                
-                case "tekniker":
-                    previousViewableLinks = this.technicianLinks
-                    break;
-
-                case "booking":
-                    previousViewableLinks = this.bookingLinks
-                    break;
+            case "booking":
+                previousViewableLinks = this.bookingLinks
+                break;
 
 
-                default:
-                    previousViewableLinks = []
-                    break;
-            }
+            default:
+                previousViewableLinks = []
+                break;
+        }
 
-            console.log("viewable links", previousViewableLinks)
+        console.log("viewable links", previousViewableLinks)
 
 
-            this.setState({
-                user: user,
-                viewableLinks: previousViewableLinks
-            })
+        this.setState({
+            viewableLinks: previousViewableLinks
         })
-
-
     }
 
 
