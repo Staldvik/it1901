@@ -6,7 +6,6 @@ import App from './App';
 
 // Prøver ut React-Router (V4)
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes';
 import './index.css';
 
 ReactDOM.render(

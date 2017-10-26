@@ -55,8 +55,22 @@ export default class NavComponent extends Component {
     }
 
     componentDidMount() {
+        this.setState({viewableLinks: this.getCorrectNav()})
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        this.setState({
+            user: nextProps.user,
+            viewableLinks: this.getCorrectNav(nextProps.user)
+        })
+
+    }
+
+    // Om den ikke mottar user, bruk this.state.user
+    getCorrectNav(user = this.state.user) {
         var previousViewableLinks = this.state.viewableLinks;
-        var displayName = this.state.user.email.split('@')[0]
+        var displayName = user.email.split('@')[0]
         
         switch(displayName){
 
@@ -80,22 +94,16 @@ export default class NavComponent extends Component {
                 previousViewableLinks = this.bookingLinks
                 break;
 
-
             default:
                 previousViewableLinks = []
                 break;
         }
-
-        console.log("viewable links", previousViewableLinks)
-
-
-        this.setState({
-            viewableLinks: previousViewableLinks
-        })
+        return previousViewableLinks
     }
 
-
     render() {
+
+
         var loggedInAs = "Not logged in"
 
 

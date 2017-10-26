@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Artist from './components/artist/Artist'
-import Concert from './components/concert/Concert'
-import Technician from './components/technician/Technician'
-import Scene from './components/scene/Scene'
 
 // Prøver å lage navbar
 import NavComponent from './components/navbar/navbar';
@@ -12,14 +8,7 @@ import NavComponent from './components/navbar/navbar';
 import database, {firebaseApp} from './database';
 
 // React Router
-import {
-  BrowserRouter as Router,
-  Link,
-  Redirect,
-  withRouter,
-  Switch,
-  Route
-} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 //Pages
 import BandBooking from './pages/bandbooking';
@@ -33,10 +22,7 @@ import ManagerSite from './pages/manager_site'
 import AdminPage from './pages/adminpage';
 import Search from './pages/search';
 import Login from './pages/login';
-import PrSite from './pages/pr_site'
-
-//Roles
-import {roles, auth} from './roles';
+import PrSite from './pages/pr_site';
 
 class App extends Component {
 
@@ -54,22 +40,6 @@ class App extends Component {
   componentWillMount() {
     // Get user from firebase Auth
     console.log("Running auth")
-    firebaseApp.auth().onAuthStateChanged(user => {
-      if (user) {
-        // Logged in
-        this.setState({
-          user: user
-        })
-      } else {
-        // Logged out
-        this.setState({
-          user: null
-        })
-      }
-    })
-  }
-
-  componentDidMount() {
     database.ref('users').once("value", users => {
       users.forEach(user => {
           console.log(user.val().displayName)
@@ -77,51 +47,72 @@ class App extends Component {
       })
     })
     .then(() => {
-      console.log("Component did mount")
-      console.log("User", this.state.user)
-      console.log("roles for user", this.roleMap.get(this.state.user.uid))
-      console.log(this.isCorrectRole("/bandbooking", this.roleMap.get(this.state.user.uid)))
+      firebaseApp.auth().onAuthStateChanged(user => {
+        if (user) {
+          // Logged in
+          console.log("Changed user")
+          this.setState({
+            user: user
+          })
+        } else {
+          // Logged out
+          this.setState({
+            user: null
+          })
+        }
+      })
     })
   }
 
+  componentDidMount() {
+    
+  }
+
   isCorrectRole = path => {
+    console.log("isCorrectRole is checking", path, "And user is", this.state.user)
     var rolesForUser = this.roleMap.get(this.state.user.uid)
+    console.log("while roles for user is",rolesForUser)
 
     if (rolesForUser === undefined) {return false}
 
     // Admin har tilgang til alt
-    console.log("Roles for user",rolesForUser)
-    if (rolesForUser.admin === true) {return true}
+    if (rolesForUser.admin === true) {console.log("User is admin so returned true"); return true}
 
     // Sjekk path
     switch(path) {
 
+        case "/":
+          return true
+
+        case "/login":
+          return true
+
         case "/bandbooking":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/previousbands":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/banddatabase":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/pricecalculator":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/calendar":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/concerts":
-            return rolesForUser.technician == true || rolesForUser.booking == true
+            return rolesForUser.technician === true || rolesForUser.booking === true
 
         case "/artists":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/search":
-            return rolesForUser.booking == true
+            return rolesForUser.booking === true
 
         case "/manager":
-            return rolesForUser.manager == true
+            return rolesForUser.manager === true
             
         default:
             return false
@@ -152,16 +143,16 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div className="navbar">
+        <div className="navbar-container">
           <NavComponent user={this.state.user} />
         </div>
 
-        <div className="container">
+        <div className="content-container">
           <Switch>
             <Route exact path="/" component={Login}/>
             <Route path="/login" component={Login}/>
-            
-            <PrivateRoute path="/bandbooking" component={BandBooking} state={this.state}/>
+
+            <PrivateRoute path="/bandbooking" component={BandBooking}/>
             <PrivateRoute path="/previousbands" component={PreviousBands}/>
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
             <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>

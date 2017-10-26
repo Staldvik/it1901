@@ -5,9 +5,6 @@ import Concert from '../../components/concert/Concert'
 import Technician from '../../components/technician/Technician'
 import Scene from '../../components/scene/Scene'
 
-// Prøver å lage navbar
-
-
 // Firebase
 import database, {firebaseApp} from '../../database';
 
@@ -27,7 +24,6 @@ class Login extends Component {
       errorCode: null,
       errorMessage: null,
       
-
       // Login
       loginOptions: [],
       selectedLogin: "",
@@ -41,16 +37,22 @@ class Login extends Component {
   componentDidMount() {
     var previousLoginOptions = this.state.loginOptions
     var previousUser = this.state.user
+    var previousSelectedLogin = this.state.selectedLogin
 
     database.ref('users').once('value', usersSnapshot => {
       usersSnapshot.forEach(userSnapshot => {
         previousLoginOptions.push(
           <option value={userSnapshot.val().email} key={userSnapshot.key}>{userSnapshot.val().displayName}</option> 
         )
+
+        if (! previousSelectedLogin) {
+          previousSelectedLogin = userSnapshot.val().email
+        }
       })
     }).then(() => {
       this.setState({
         loginOptions: previousLoginOptions,
+        selectedLogin: previousSelectedLogin,
         user: previousUser
       })
     })
@@ -151,12 +153,8 @@ class Login extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
     if (this.state.redirectToReferrer) {
-      return (
-        <Redirect to={from}/>
-      )
+      
     }
-
-
 
     var error = ""
     // TODO: catch them all
