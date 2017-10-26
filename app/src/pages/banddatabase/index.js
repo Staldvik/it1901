@@ -17,8 +17,13 @@ export default class BandDatabase extends Component {
       scenes: [],
       genres: [],
       sceneMap: sceneMap,
-      genreOptions: [<option value="ShowAll" key="ShowALl"> Show All </option>],
+      genreOptions: [<option value="ShowAll" key="ShowALl"> Sjanger </option>],
+      sceneOptions: [<option value="ShowAll" key="ShowAll"> Scene </option>],
       selectedGenre: "ShowAll",
+      selectedScene: "ShowAll",
+
+      // Search
+      currentSearchInput: "",
     }
 
 
@@ -41,13 +46,15 @@ export default class BandDatabase extends Component {
     var previousConcerts = this.state.concerts;
     var previousSceneMap = this.state.sceneMap;
     var previousScenes = this.state.scenes;
+    var previousSceneOptions = this.state.sceneOptions;
+
 
     // Gå gjennom alle festivalene
-    database.ref().on('value', snapshot => {
+    database.ref().once('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
-        // Hvis festivalen != festival17:
-        if (festivalSnapshot.key != "festival17") {
+        // Hvis festivalen != festival17 og ikke er en av de andre keysene som er kommet:
+        if (! ((festivalSnapshot.key === "festival17") || (festivalSnapshot.key.slice(0,8) != "festival"))) {
 
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
@@ -70,13 +77,11 @@ export default class BandDatabase extends Component {
             var index = previousScenes.push(sceneSnapshot) - 1;
             console.log("Adding " + sceneSnapshot.key + " to index " + index) 
             previousSceneMap.set(sceneSnapshot.key, index);
+            previousSceneOptions.push(
+              <option value={sceneSnapshot.key} key={sceneSnapshot.key}> {sceneSnapshot.val().location} - {sceneSnapshot.ref.parent.parent.key} </option> 
+            )
           })
 
-        }
-
-        // Hvis festivalen == festival17: skip
-        else {
-          console.log("Skipping festival17")
         }
       })
       this.setState({
@@ -98,9 +103,15 @@ export default class BandDatabase extends Component {
         </h1>
         <p> Her kan man sjekke alle tidligere konserter innen en sjanger </p>
 
-        <select name="selectedGenre" value={this.state.selectedGenre} onChange={this.handleChange}>
-          {this.state.genreOptions}
-        </select>
+        <form>
+          <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
+          <select name="selectedGenre" value={this.state.selectedGenre} onChange={this.handleChange}>
+            {this.state.genreOptions}
+          </select>
+          <select name="selectedScene" value={this.state.selectedScene} onChange={this.handleChange}>
+            {this.state.sceneOptions}
+          </select>
+        </form>
 
         <div>
           {
@@ -109,22 +120,32 @@ export default class BandDatabase extends Component {
               var match = false;
 
               // Hvis valgt er Show All så "matcher" alle
-              if (this.state.selectedGenre == "ShowAll") {
-                match = true;
+              if (this.state.selectedGenre === "ShowAll") {
+
+                if (this.state.currentSearchInput === "") {
+                  match = true
+                }
+
+                else if (concert.val().name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
+                  match = true
+                }
               }
 
               // Hvis ikke Show All, matcher valgt sjanger og konsertens sjanger?
+              // Og matcher søket og navnet?
               else if (this.state.selectedGenre == concert.val().genre) {
-                match = true;
+                if (this.state.currentSearchInput === "") {
+                  match = true
+                }
+
+                else if (concert.val().name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
+                  match = true
+                }
               }
 
               if (match) {
                 var sceneLocation = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().location;
-                var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity
-                console.log("On concert: " + concert.val().name);
-                console.log("Getting index: " + this.state.sceneMap.get(concert.val().scene))
-                console.log("Which is: " + sceneLocation + " with capacity " + sceneCapacity)
-                console.log("")
+                var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity;
                 return(
                 <div key={concert.key}>
                   <h1> {String(concert.ref.parent.parent.key)} </h1>

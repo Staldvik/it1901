@@ -5,7 +5,11 @@ const functions = require('firebase-functions');
 const SpotifyWebApi = require('spotify-web-api-node');
 const express = require('express');
 const cors = require('cors')({origin: "*"});
+const admin = require('firebase-admin');
+admin.initializeApp(functions.config().firebase);
 
+
+// SPOTIFY TOKEN //
 
 // Gotten from spotify
 var clientId = '88641e06b03f46d886b98db9c58e9935',
@@ -18,6 +22,8 @@ var spotifyApi = new SpotifyWebApi({
 
 const app = express();
 
+
+// SPOTIFY TOKEN //
 app.use(cors);
 app.get('', (req, res) => {
     // Retrieve an access token.
@@ -33,5 +39,27 @@ app.get('', (req, res) => {
 });
 
 exports.spotifyToken = functions.https.onRequest(app);
+// END OF SPOTIFY TOKEN //
 
 
+
+
+exports.addNewUser = functions.auth.user().onCreate(event => {
+    // [END onCreateTrigger]
+        // [START eventAttributes]
+        const user = event.data; // The Firebase user.
+        const uid = user.uid;
+        const email = user.email; // The email of the user.
+        const displayName = email.split('@')[0]
+        // [END eventAttributes]
+        user.updateProfile({displayName: displayName})
+        .then(() => {
+            return admin.database().ref().child('users').child(uid).update({
+            email: email,
+            displayName: displayName
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    });
