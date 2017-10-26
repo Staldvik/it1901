@@ -23,7 +23,7 @@ import ManagerSite from './pages/manager_site'
 import AdminPage from './pages/adminpage';
 import Search from './pages/search';
 import Login from './pages/login';
-
+import PrSite from './pages/pr_site'
 
 const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
     <Route {...rest} render={props => (
@@ -51,9 +51,9 @@ const Routes = () => (
         <Route path="/concerts" component={ConcertPage}/>
         <Route path="/artists" component={Artists}/>
         <Route path="/search" component={Search}/>
-
+        <Route path="/pr" component={PrSite}/>
         <PrivateRoute path="/admin" component={AdminPage}/>
-        <PrivateRoute path="/manager" component={ManagerSite}/> 
+        <PrivateRoute path="/manager" component={ManagerSite}/>
     </Switch>
 );
 

@@ -29,10 +29,13 @@ export default class AdminPage extends Component {
       currentTechnicianIdInput: "",
 
       // Concert form
+      artists: [],
       currentConcertNameInput: "",
       currentConcertGenreInput: "",
       currentConcertInput: "",
       currentConcertPriceInput: "",
+      currentConcertContactInfo: "",
+      currentConcertSalesNumber: "",
       currentConcertDayInput: "",
 
       // User form
@@ -52,7 +55,7 @@ export default class AdminPage extends Component {
     }
 
 
-    
+
     this.match = "";
     this.handleChange = this.handleChange.bind(this);
     this.pushTech = this.pushTech.bind(this);
@@ -68,6 +71,7 @@ export default class AdminPage extends Component {
     var previousConcertOptions = this.state.concertOptions;
     var previousTechnicianOptions = this.state.technicianOptions;
     var previousTechnicianMap = this.state.technicianMap;
+    var previousArtists = this.state.artists;
 
     // User Form
     var previousUserOptions = this.state.userOptions;
@@ -100,7 +104,16 @@ export default class AdminPage extends Component {
         currentTechnicianIdInput: ""
       })
     })
-    
+
+    // Henter ut artistene i databasen
+    database.ref('festival17').child('artists').on('child_added', artistSnapShot => {
+      var val = artistSnapShot.val();
+      previousArtists.push({
+        name: val.name,
+        id: artistSnapShot.key,
+      })
+    })
+
     //Lytter etter child added på tekniker, altså om tekniker blir lagt til
     // Den nye teknikeren vil ikke vises i dropdown før componenten blir rendered på nytt. Dette for å unngå duplikater.
     database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
@@ -129,7 +142,7 @@ export default class AdminPage extends Component {
     })
   }
 
- 
+
 
   isTechInConcert(){ //sjekker om en tekniker allerede er i en konsert
     console.log("is technician already in concert");
@@ -141,7 +154,7 @@ export default class AdminPage extends Component {
           console.log(currentKey, "equals", childSnap.key)
           bool = true
           console.log("this is the result after comparison", bool)
-      }    
+      }
       bool= bool;
     })
     })
@@ -186,24 +199,55 @@ export default class AdminPage extends Component {
 
   handleSubmitConcert(e) {
     e.preventDefault();
+    console.log(this.state.artists)
+    console.log(this.state.artists[0].id)
     if (this.state.currentConcertNameInput.length > 2 && this.state.currentConcertGenreInput.length > 2 && !isNaN(this.state.currentConcertPriceInput)) {
       var data = {
         name: this.state.currentConcertNameInput,
-        day: this.state.currentConcertDayInput
-      }
-      database.ref('festival17').child('concerts').push({
-        name: this.state.currentConcertNameInput,
         day: this.state.currentConcertDayInput,
-      })
+      }
+      for (var i = 0; i < this.state.artists.length; i++){
+        if(data.name === this.state.artists[i].name){
+          database.ref('festival17').child('artists').child(this.state.artists[i].id).update({
+            name: this.state.currentConcertNameInput,
+            contact_info: this.state.currentConcertContactInfo,
+            sales_number: this.state.currentConcertSalesNumber,
+          })
+          // trengs dette?
+          /*database.ref('festival17').child('concerts').update({
+            name: this.state.currentConcertNameInput,
+            day: this.state.currentConcertDayInput,
+            genre: this.state.currentConcertGenreInput,
+            price: this.state.currentConcertPriceInput,
+          })*/
+        }
+        else{
+          database.ref('festival17').child('artists').push({
+            name: this.state.currentConcertNameInput,
+            contact_info: this.state.currentConcertContactInfo,
+            sales_number: this.state.currentConcertSalesNumber,
+          })
+          database.ref('festival17').child('concerts').push({
+            name: this.state.currentConcertNameInput,
+            day: this.state.currentConcertDayInput,
+            genre: this.state.currentConcertGenreInput,
+            price: this.state.currentConcertPriceInput,
+          })
+      }
+      }
+
+
     } else {
       alert("need more info")
-    } 
+    }
     this.setState({ //setter input boksen tilbake til tom
       currentConcertNameInput: "",
       currentConcertDayInput: "Day1",
       currentConcertPriceInput: "",
       currentConcertGenreInput: "",
-    })  
+      currentConcertContactInfo: "",
+      currentConcertSalesNumber: "",
+    })
   }
 
   searchConcertsFor(query, value) {
@@ -250,6 +294,8 @@ export default class AdminPage extends Component {
           <input type="text" name="currentConcertNameInput" placeholder="Name" value={this.state.currentConcertNameInput} onChange={this.handleChange}/>
           <input type="text" name="currentConcertGenreInput" placeholder="Genre" value={this.state.currentConcertGenreInput} onChange={this.handleChange}/>
           <input type="number" name="currentConcertPriceInput" placeholder="Price" value={this.state.currentConcertPriceInput} onChange={this.handleChange}/>
+          <input type="text" name="currentConcertContactInfo" placeholder="Contact Info" value={this.state.currentConcertContactInfo} onChange={this.handleChange}/>
+          <input type="text" name="currentConcertSalesNumber" placeholder="Sales Number" value={this.state.currentConcertSalesNumber} onChange={this.handleChange}/>
           <select name="currentConcertDayInput" onChange={this.handleChange}>
             <option value="day1">Dag 1</option>
             <option value="day2">Dag 2</option>
