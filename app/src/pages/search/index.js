@@ -11,7 +11,7 @@ Registered to	aasmusta
 
 
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import database from '../../database';
 import Artist from '../../components/artist/Artist';
@@ -134,7 +134,7 @@ export default class Search extends Component {
   render(){
     return(
       <div className="App">
-        <NavComponent/>
+        
 
         <h1> Let's search </h1>
 

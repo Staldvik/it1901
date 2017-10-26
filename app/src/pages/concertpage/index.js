@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import Concert from '../../components/concert/Concert'
 
@@ -74,7 +74,6 @@ export default class ConcertPage extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
         <h1>
           Concerts
         </h1>

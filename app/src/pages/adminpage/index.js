@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 
 import './style.css';
 
@@ -269,7 +269,6 @@ export default class AdminPage extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
         <h1>
           AdminPage
         </h1>

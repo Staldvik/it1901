@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar';
+
 import './style.css';
 import ArtistPR from '../../components/artist_pr/ArtistPR';
 //firebase
@@ -41,7 +41,7 @@ export default class PrSite extends Component {
 render() {
   return (
     <div className="App">
-    <NavComponent />
+    
     <h1>Artist Info</h1>
     <div className="artistBody">
     {

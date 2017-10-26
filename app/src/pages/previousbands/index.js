@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import database from '../../database';
 import Concert from '../../components/concert/Concert';
@@ -32,7 +32,7 @@ export default class PreviousBands extends Component {
     render(){
       return(
         <div className="App">
-          <NavComponent/>
+          
 
           <h1> Teknikere </h1>
 

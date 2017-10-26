@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import database from '../../database'
 
@@ -143,7 +143,7 @@ export default class BandBooking extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
+        
         
         <h1>Band Booking</h1>
         

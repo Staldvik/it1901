@@ -5,14 +5,12 @@ import Concert from '../../components/concert/Concert'
 import Technician from '../../components/technician/Technician'
 import Scene from '../../components/scene/Scene'
 
-// Prøver å lage navbar
-import NavComponent from '../../components/navbar/navbar';
-
 // Firebase
 import database, {firebaseApp} from '../../database';
 
 // React Router
 import {auth, roles} from '../../roles';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -26,11 +24,11 @@ class Login extends Component {
       errorCode: null,
       errorMessage: null,
       
-
       // Login
       loginOptions: [],
       selectedLogin: "",
       user: null,
+      redirectToReferrer: false,
 
     };
 
@@ -39,21 +37,22 @@ class Login extends Component {
   componentDidMount() {
     var previousLoginOptions = this.state.loginOptions
     var previousUser = this.state.user
-
-    auth.authenticate(() => {
-      console.log("Auth says logged in:", auth.user)
-      previousUser = auth.user
-    })
+    var previousSelectedLogin = this.state.selectedLogin
 
     database.ref('users').once('value', usersSnapshot => {
       usersSnapshot.forEach(userSnapshot => {
         previousLoginOptions.push(
           <option value={userSnapshot.val().email} key={userSnapshot.key}>{userSnapshot.val().displayName}</option> 
         )
+
+        if (! previousSelectedLogin) {
+          previousSelectedLogin = userSnapshot.val().email
+        }
       })
     }).then(() => {
       this.setState({
         loginOptions: previousLoginOptions,
+        selectedLogin: previousSelectedLogin,
         user: previousUser
       })
     })
@@ -74,6 +73,9 @@ class Login extends Component {
     event.preventDefault();
 
     firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      this.setState({redirectToReferrer: true})
+    })
     .catch(error => {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -93,7 +95,8 @@ class Login extends Component {
       console.log("Signed In")
       this.setState({
         errorCode:null, 
-        errorMessage:null
+        errorMessage:null,
+        redirectToReferrer: true,
       })
     })
     .catch(error => {
@@ -129,14 +132,16 @@ class Login extends Component {
   changeUser = event => {
     event.preventDefault();
 
+    // Logg inn med epost fra dropdown og passord festival (som er passordet til alle brukere jeg har lagt inn)
     firebaseApp.auth().signInWithEmailAndPassword(this.state.selectedLogin, "festival")
     .then((user) => {
       console.log("Signed In as", user)
       this.setState({
         errorCode:null, 
-        errorMessage:null
+        errorMessage:null,
+        redirectToReferrer: true,
       })
-      this.forceUpdate();
+
     })
     .catch(error => {
       this.handleError(error);
@@ -147,15 +152,19 @@ class Login extends Component {
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
+    if (this.state.redirectToReferrer) {
+      
+    }
+
     var error = ""
     // TODO: catch them all
     switch(this.state.errorCode) {
       case "auth/user-not-found":
-        error = <h3> User not found </h3>
+        error = <h3 className="Error-message"> User not found </h3>
         break;
       
       case "auth/email-already-in-use":
-        error = <h3> This email is already in use </h3>
+        error = <h3 className="Error-message"> This email is already in use </h3>
         break; 
 
       default:
@@ -171,7 +180,6 @@ class Login extends Component {
     return (
 
       <div className="App">
-        <NavComponent />
 
         <h1 className="App-intro">
           Login/Signup
@@ -185,7 +193,7 @@ class Login extends Component {
           redirected
         }
 
-        <form>
+        <form className="Login-form">
           <label>
             Email:
             <input name="email" type="email" value={this.state.email} onChange={this.handleChange} />
