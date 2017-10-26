@@ -6,7 +6,7 @@ import Technician from '../../components/technician/Technician'
 import Scene from '../../components/scene/Scene'
 
 // Prøver å lage navbar
-import NavComponent from '../../components/navbar/navbar';
+
 
 // Firebase
 import database, {firebaseApp} from '../../database';

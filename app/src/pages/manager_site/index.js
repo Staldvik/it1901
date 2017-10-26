@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar';
+
 import './style.css';
 //firebase
 import database from '../../database';
@@ -140,7 +140,7 @@ handleSubmit(event) {
 render() {
   return (
     <div className="App">
-    <NavComponent />
+    
 
     <h3>Add requirements for my artist</h3>
     <div className="form-style">

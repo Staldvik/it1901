@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 
 import './style.css';
 
@@ -11,7 +11,7 @@ export default class BookingCalendar extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
+        
         <h1>
           Booking Calendar
         </h1>
