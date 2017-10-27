@@ -131,7 +131,7 @@ class App extends Component {
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
       <Route {...rest} render={props => (
         this.isCorrectRole(pathname) ? (
-          <Component {...props}/>
+          <Component {...props} state={this.state}/>
         ) : (
           <Redirect to={{
             pathname: '/login',
@@ -149,8 +149,8 @@ class App extends Component {
 
         <div className="content-container">
           <Switch>
-            <Route exact path="/" component={Login}/>
-            <Route path="/login" component={Login}/>
+            <Route exact path="/" render={(props)=><Login {...props} state={this.state}/>}/>
+            <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
 
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
             <PrivateRoute path="/previousbands" component={PreviousBands}/>
