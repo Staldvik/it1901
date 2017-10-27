@@ -23,6 +23,7 @@ import AdminPage from './pages/adminpage';
 import Search from './pages/search';
 import Login from './pages/login';
 import PrSite from './pages/pr_site';
+import FrontPage from './pages/frontpage';
 
 class App extends Component {
 
@@ -30,6 +31,7 @@ class App extends Component {
     super();
 
     this.state = {
+      festival: 'festival17',
       message: "Hello from App",
       user: null
     }
@@ -62,10 +64,18 @@ class App extends Component {
         }
       })
     })
+    this.enter = this.enter.bind(this) //to enter the selected festival
   }
 
   componentDidMount() {
     
+  }
+
+  enter(festival){
+    this.setState({
+      festival: festival
+    })
+    console.log("switched to festival: ", festival)
   }
 
   isCorrectRole = path => {
@@ -149,7 +159,7 @@ class App extends Component {
 
         <div className="content-container">
           <Switch>
-            <Route exact path="/" render={(props)=><Login {...props} state={this.state}/>}/>
+            <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
 
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
