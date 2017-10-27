@@ -12,6 +12,7 @@ export default class BandBooking extends Component {
     super(props);
     let artistMap = new Map();
     this.state = {
+
       artists: [],
       artistOptions: [],
       selectedArtist:"",
@@ -91,6 +92,7 @@ export default class BandBooking extends Component {
       })
     })
   }
+  
 
   handleChange(e) {
     this.setState({
@@ -109,27 +111,27 @@ export default class BandBooking extends Component {
     }
 
     //Push requesten inn i databasen
-    database.ref("festival17").child("requests").push(data)
-    database.ref("festival17").child("artists").child(this.state.selectedArtist).update({status: "pending"});
+    database.ref(this.props.state.festival).child("requests").push(data)
+    database.ref(this.props.state.festival).child("artists").child(this.state.selectedArtist).update({status: "pending"});
     console.log(this.state.requests);
   }
 
   handleAccept(key) {
     console.log("accept");
     console.log(JSON.stringify(key));
-    database.ref("festival17").child("requests").child(key).update({status: "accepted"});
+    database.ref(this.props.state.festival).child("requests").child(key).update({status: "accepted"});
     window.location.reload();
   }
 
   handleDecline(key) {
     console.log("decline");
-    database.ref("festival17").child("requests").child(key).update({status: "declined"});
+    database.ref(this.props.state.festival).child("requests").child(key).update({status: "declined"});
     window.location.reload();
   }
   
   handleDelete(key) {
     console.log("Deleted");
-    database.ref("festival17").child("requests").child(key).remove();
+    database.ref(this.props.state.festival).child("requests").child(key).remove();
     window.location.reload();
   }
 

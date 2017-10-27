@@ -80,7 +80,8 @@ export default class Artists extends Component {
             </thead>
             <tbody>
             {this.state.artists.map((artist) => {
-              return(<ArtistList 
+              return(<ArtistList
+                festival={this.props.state.festival}
                 name={artist.name}
                 followers={artist.followers}
                 popularity={artist.popularity}

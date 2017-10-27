@@ -31,8 +31,9 @@ class App extends Component {
     super();
 
     this.state = {
-      festival: 'festival17', //this state will allow you to select which festival
-      festivalName: "festival17", //just use this as a default
+      festival: 'festival16', //this state will allow you to select which festival
+      festivalName: "festival16", //just use this as a default
+      isFestivalSelected: false,
       message: "Hello from App",
       user: null
     }
@@ -65,6 +66,29 @@ class App extends Component {
         }
       })
     })
+
+    database.ref("isFestivalSelected").once("value", snap => {
+      let bool = snap.val();
+      this.setState({
+        isFestivalSelected: bool,
+      })
+    })
+
+    database.ref("selectedFestival").once("value", snap => {
+      let festival = snap.val();
+      
+      this.setState({
+        festival: festival,
+      })
+    })
+
+    database.ref("selectedFestivalName").once("value", snap => {
+      let festivalName = snap.val();
+      this.setState({
+        festivalName: festivalName,
+      })
+    })
+
     this.enter = this.enter.bind(this) //to enter the selected festival
   }
 
@@ -73,11 +97,37 @@ class App extends Component {
   }
 
   enter(festival,name){
-    this.setState({
-      festival: festival,
-      festivalName: name
-    })
+    database.ref("selectedFestival").set(festival)
+    database.ref("selectedFestivalName").set(name)
+    database.ref("isFestivalSelected").set("true")
     console.log("switched to festival: ", name)
+    this.setState({
+      festivalSelected: true,
+    })
+
+    database.ref("isFestivalSelected").once("value", snap => {
+      let bool = snap.val();
+      console.log("heuhuehuafhhefhaefaufueuafuehu", festival)
+      this.setState({
+        isFestivalSelected: bool,
+      })
+    })
+
+    database.ref("selectedFestival").once("value", snap => {
+      let festival = snap.val();
+      console.log("heuhuehuafhhefhaefaufueuafuehu", festival)
+      this.setState({
+        festival: festival,
+      })
+    })
+
+    database.ref("selectedFestivalName").once("value", snap => {
+      let festivalName = snap.val();
+      this.setState({
+        festivalName: festivalName,
+      })
+    })
+    
   }
 
   isCorrectRole = path => {
@@ -138,6 +188,10 @@ class App extends Component {
 
     if (this.state.user === null) {
       return <div>Loading</div>
+    }
+
+    if (! this.state.isFestivalSelected) {
+      return <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
     }
 
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (

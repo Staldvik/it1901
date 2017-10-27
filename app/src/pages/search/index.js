@@ -157,7 +157,7 @@ export default class Search extends Component {
             {
               this.state.artists.map(artist => {
                 return (
-                  <Artist name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri} />
+                  <Artist festival={this.props.state.festival} name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri}/>
                 )
               })
             }

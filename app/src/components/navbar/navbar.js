@@ -21,6 +21,7 @@ export default class NavComponent extends Component {
         this.adminLinks = [
             <Link id="navLink" to='/'>Home</Link>,
             <Link id="navLink" to='/concerts'>Concerts</Link>,
+            <Link id="navLink" to='/search'>Artist Search</Link>,
             <Link id="navLink" to='/artists'>My Artists</Link>,
             <Link id="navLink" to='/bandbooking'>Band Booking</Link>,
             <Link id="navLink" to='/previousbands'>TeknikerTest</Link>,
@@ -45,7 +46,7 @@ export default class NavComponent extends Component {
         ]
         this.bookingLinks = [
             <Link id="navLink" to='/'>Home</Link>,
-            <Link id="navLink" to='/concerts'>Concerts</Link>,
+            <Link id="navLink" to='/search'>Artist Search</Link>,
             <Link id="navLink" to='/artists'>My Artists</Link>,
             <Link id="navLink" to='/bandbooking'>Band Booking</Link>,
             <Link id="navLink" to='/previousbands'>TeknikerTest</Link>,
