@@ -14,15 +14,15 @@ export default class Festival extends Component {
         this.enterFestival = this.enterFestival.bind(this);
     }
 
-    enterFestival(festival){
-        this.props.enter(festival);
+    enterFestival(festival,name){
+        this.props.enter(festival,name);
     }
 
 
     render() {
         return (
             <button class="festivalSelector" onClick={() => 
-                this.enterFestival(this.state.festival)}>{this.state.name}</button>
+                this.enterFestival(this.state.festival,this.state.name)}>{this.state.name}</button>
         )
     }
 

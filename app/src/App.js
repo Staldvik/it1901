@@ -31,7 +31,8 @@ class App extends Component {
     super();
 
     this.state = {
-      festival: 'festival17',
+      festival: 'festival17', //this state will allow you to select which festival
+      festivalName: "festival17", //just use this as a default
       message: "Hello from App",
       user: null
     }
@@ -71,11 +72,12 @@ class App extends Component {
     
   }
 
-  enter(festival){
+  enter(festival,name){
     this.setState({
-      festival: festival
+      festival: festival,
+      festivalName: name
     })
-    console.log("switched to festival: ", festival)
+    console.log("switched to festival: ", name)
   }
 
   isCorrectRole = path => {
@@ -154,7 +156,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="navbar-container">
-          <NavComponent user={this.state.user} />
+          <NavComponent user={this.state.user} festivalName={this.state.festivalName}/>
         </div>
 
         <div className="content-container">

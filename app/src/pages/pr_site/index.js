@@ -22,7 +22,7 @@ export default class PrSite extends Component {
  componentWillMount() {
    var previousArtists = this.state.artists;
 
-   database.ref('festival17').child('artists').on('child_added', artistSnapshot => {
+   database.ref(this.props.state.festival).child('artists').on('child_added', artistSnapshot => {
      var val = artistSnapshot.val();
      previousArtists.push({
        name: val.name,

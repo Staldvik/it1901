@@ -17,8 +17,8 @@ export default class AllFestivals extends Component {
         this.enter = this.enter.bind(this)
     }
 
-    enter(festival){
-        this.props.enter(festival)
+    enter(festival,name){
+        this.props.enter(festival,name)
     }
 
 

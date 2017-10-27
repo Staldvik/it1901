@@ -76,14 +76,14 @@ export default class AdminPage extends Component {
     // User Form
     var previousUserOptions = this.state.userOptions;
 
-    database.ref('festival17').child('concerts').on('child_added', concertSnapshot => {
+    database.ref(this.props.state.festival).child('concerts').on('child_added', concertSnapshot => {
       console.log(concertSnapshot.val().name)
       previousConcertOptions.push(
         <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
       )
     })
 
-    database.ref('festival17').child('technicians').on('child_added', techSnapshot => {
+    database.ref(this.props.state.festival).child('technicians').on('child_added', techSnapshot => {
       var val = techSnapshot.val();
       previousTechnicians.push({
         name: val.name,
@@ -106,7 +106,7 @@ export default class AdminPage extends Component {
     })
 
     // Henter ut artistene i databasen
-    database.ref('festival17').child('artists').on('child_added', artistSnapShot => {
+    database.ref(this.props.state.festival).child('artists').on('child_added', artistSnapShot => {
       var val = artistSnapShot.val();
       previousArtists.push({
         name: val.name,
@@ -116,7 +116,7 @@ export default class AdminPage extends Component {
 
     //Lytter etter child added på tekniker, altså om tekniker blir lagt til
     // Den nye teknikeren vil ikke vises i dropdown før componenten blir rendered på nytt. Dette for å unngå duplikater.
-    database.ref('festival17').child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
+    database.ref(this.props.state.festival).child('technicians').orderByKey().limitToLast(1).on('child_added', lastTechnician => {
       console.log(lastTechnician.val().name +  " added");
       var previousTechnicianMap = this.state.technicianMap;
       previousTechnicianMap.set(parseInt(lastTechnician.key), lastTechnician.val().name)
@@ -148,7 +148,7 @@ export default class AdminPage extends Component {
     console.log("is technician already in concert");
     let bool = false;
     const currentKey = this.state.selectedTechnician
-    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
+    database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
       snap.forEach(function(childSnap){
         if(childSnap.key == currentKey){
           console.log(currentKey, "equals", childSnap.key)
@@ -165,7 +165,7 @@ export default class AdminPage extends Component {
     e.preventDefault();
     console.log(this.state.selectedTechnician);
     console.log("this is the return value of the function", this.isTechInConcert())
-    database.ref('festival17').child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
+    database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
       name: this.state.technicianMap.get(this.state.selectedTechnician),
     })
   }
@@ -212,7 +212,7 @@ export default class AdminPage extends Component {
           does_exist = true
           }
           // trengs dette?
-          /*database.ref('festival17').child('concerts').update({
+          /*database.ref(this.props.state.festival).child('concerts').update({
             name: this.state.currentConcertNameInput,
             day: this.state.currentConcertDayInput,
             genre: this.state.currentConcertGenreInput,
@@ -220,18 +220,18 @@ export default class AdminPage extends Component {
           })*/
         }
         if (does_exist){
-            database.ref('festival17').child('artists').child(this.state.artists[i].id).update({
+            database.ref(this.props.state.festival).child('artists').child(this.state.artists[i].id).update({
               name: this.state.currentConcertNameInput,
               contact_info: this.state.currentConcertContactInfo,
               sales_number: this.state.currentConcertSalesNumber,
         })
       } else{
-          database.ref('festival17').child('artists').push({
+          database.ref(this.props.state.festival).child('artists').push({
             name: this.state.currentConcertNameInput,
             contact_info: this.state.currentConcertContactInfo,
             sales_number: this.state.currentConcertSalesNumber,
           })
-          database.ref('festival17').child('concerts').push({
+          database.ref(this.props.state.festival).child('concerts').push({
             name: this.state.currentConcertNameInput,
             day: this.state.currentConcertDayInput,
             genre: this.state.currentConcertGenreInput,
@@ -255,7 +255,7 @@ export default class AdminPage extends Component {
   }
 
   searchConcertsFor(query, value) {
-    return database.ref('festival17').child('concerts').once('value').then(concertsSnapshot => {
+    return database.ref(this.props.state.festival).child('concerts').once('value').then(concertsSnapshot => {
       return concertsSnapshot.forEach(concertSnapshot => {
         if (concertSnapshot.val()[query] == value) {
           this.match = concertSnapshot;

@@ -40,7 +40,7 @@ export default class BandBooking extends Component {
     console.log(previousRequests);
 
     //get requests from database
-    database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+    database.ref(this.props.state.festival).child('requests').on('child_added', requestSnapshot => {
       var vals = requestSnapshot.val();
       previousRequests.push({
         artist:vals.artist,
@@ -61,7 +61,7 @@ export default class BandBooking extends Component {
     let previousArtistsOptions = this.state.artistOptions;
 
     //get artists from database
-    database.ref('festival17').child('artists').on('child_added', snap => {
+    database.ref(this.props.state.festival).child('artists').on('child_added', snap => {
       var vals = snap.val();
 
       previousArtists.push({

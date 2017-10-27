@@ -105,6 +105,7 @@ export default class NavComponent extends Component {
 
 
         var loggedInAs = "Not logged in"
+        var festivalName = this.props.festivalName
 
 
         if (this.state.user) {
@@ -115,7 +116,7 @@ export default class NavComponent extends Component {
         return(
             <div className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
-                <h2>Arrangørsoftware for IT1901 [Logged in as: <Link to='/login'>{loggedInAs}</Link>]</h2>
+                <h2>Arrangørsoftware for {festivalName} [Logged in as: <Link to='/login'>{loggedInAs}</Link>]</h2>
                 <nav>
                     <div className="wideDiv">
                         {this.state.viewableLinks}
