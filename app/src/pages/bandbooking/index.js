@@ -12,6 +12,7 @@ export default class BandBooking extends Component {
     super(props);
     let artistMap = new Map();
     this.state = {
+
       artists: [],
       artistOptions: [],
       selectedArtist:"",
@@ -40,7 +41,7 @@ export default class BandBooking extends Component {
     console.log(previousRequests);
 
     //get requests from database
-    database.ref('festival17').child('requests').on('child_added', requestSnapshot => {
+    database.ref(this.props.state.festival).child('requests').on('child_added', requestSnapshot => {
       var vals = requestSnapshot.val();
       previousRequests.push({
         artist:vals.artist,
@@ -61,7 +62,7 @@ export default class BandBooking extends Component {
     let previousArtistsOptions = this.state.artistOptions;
 
     //get artists from database
-    database.ref('festival17').child('artists').on('child_added', snap => {
+    database.ref(this.props.state.festival).child('artists').on('child_added', snap => {
       var vals = snap.val();
 
       previousArtists.push({
@@ -88,9 +89,11 @@ export default class BandBooking extends Component {
         artists: previousArtists,
         artistOptions: previousArtistsOptions,
         artistMap: previousArtistMap,
+        selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
       })
     })
   }
+  
 
   handleChange(e) {
     this.setState({
@@ -109,27 +112,27 @@ export default class BandBooking extends Component {
     }
 
     //Push requesten inn i databasen
-    database.ref("festival17").child("requests").push(data)
-    database.ref("festival17").child("artists").child(this.state.selectedArtist).update({status: "pending"});
+    database.ref(this.props.state.festival).child("requests").push(data)
+    database.ref(this.props.state.festival).child("artists").child(this.state.selectedArtist).update({status: "pending"});
     console.log(this.state.requests);
   }
 
-  handleAccept(key) {
+  handleAccept(key,artist) {
     console.log("accept");
-    console.log(JSON.stringify(key));
-    database.ref("festival17").child("requests").child(key).update({status: "accepted"});
+    database.ref(this.props.state.festival).child("requests").child(key).update({status: "accepted"});
     window.location.reload();
   }
 
-  handleDecline(key) {
+  handleDecline(key,artist) {
     console.log("decline");
-    database.ref("festival17").child("requests").child(key).update({status: "declined"});
+    database.ref(this.props.state.festival).child("requests").child(key).update({status: "declined"});
+    database.ref(this.props.state.festival).child("artists").child(artist).update({status: ""});
     window.location.reload();
   }
   
   handleDelete(key) {
     console.log("Deleted");
-    database.ref("festival17").child("requests").child(key).remove();
+    database.ref(this.props.state.festival).child("requests").child(key).remove();
     window.location.reload();
   }
 
@@ -193,8 +196,8 @@ export default class BandBooking extends Component {
                       <td>{requests.price}</td>
                       <td>{requests.status}</td>
                       <td>
-                        <button onClick={() =>this.handleAccept(requests.key)}> Accept </button>
-                        <button onClick={() =>this.handleDecline(requests.key)}> Reject </button>
+                        <button onClick={() =>this.handleAccept(requests.key, requests.artist)}> Accept </button>
+                        <button onClick={() =>this.handleDecline(requests.key, requests.artist)}> Reject </button>
                       </td>
                     </tr>
                     )

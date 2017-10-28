@@ -10,6 +10,8 @@ export default class ArtistList extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+            festival:props.festival,
+
             id: props.id,
             name: props.name, 
             followers: props.followers, 
@@ -28,7 +30,7 @@ export default class ArtistList extends Component {
         const data = {
             //name: "nils",
         }
-        database.ref("festival17").child("artists").child(key).update(data)    
+        database.ref(this.state.festival).child("artists").child(key).update(data)    
     }
 
     setColorCode(status){

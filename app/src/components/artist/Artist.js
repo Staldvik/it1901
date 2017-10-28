@@ -9,7 +9,9 @@ export default class Artist extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { //Kommentarer er tenkt datatype fra objektdiagrammet
+        this.state = { 
+            festival:props.festival,
+            
             name: props.name, //String
             info: props.info, //String
             popularity: props.popularity, //Int
@@ -39,7 +41,7 @@ export default class Artist extends Component {
             genres: genres,
             uri: uri,
         }
-        database.ref("festival17").child("artists").push(data)    
+        database.ref(this.state.festival).child("artists").push(data)    
     }
 
 
