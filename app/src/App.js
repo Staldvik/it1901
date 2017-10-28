@@ -90,10 +90,21 @@ class App extends Component {
     })
 
     this.enter = this.enter.bind(this) //to enter the selected festival
+    this.exit = this.exit.bind(this) //to enter the selected festival
+
+    console.log(this.state.isFestivalSelected)
   }
 
   componentDidMount() {
     
+  }
+
+  exit(){
+    database.ref("isFestivalSelected").set("false")
+    console.log("exited festival")
+    this.setState({
+      isFestivalSelected: false,
+    })
   }
 
   enter(festival,name){
@@ -102,7 +113,7 @@ class App extends Component {
     database.ref("isFestivalSelected").set("true")
     console.log("switched to festival: ", name)
     this.setState({
-      festivalSelected: true,
+      isFestivalSelected: true,
     })
 
     database.ref("isFestivalSelected").once("value", snap => {
@@ -189,8 +200,7 @@ class App extends Component {
     if (this.state.user === null) {
       return <div>Loading</div>
     }
-
-    if (! this.state.isFestivalSelected) {
+    if (! this.state.isFestivalSelected){
       return <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
     }
 
@@ -207,15 +217,16 @@ class App extends Component {
       )}/>
     )
 
+    
     return (
       <div className="App">
         <div className="navbar-container">
-          <NavComponent user={this.state.user} festivalName={this.state.festivalName}/>
+          <NavComponent user={this.state.user} festivalName={this.state.festivalName} exit={this.exit}/>
         </div>
 
         <div className="content-container">
           <Switch>
-            <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
+            <Route exact path="/" render={(props)=><Login {...props} state={this.state}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
 
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
@@ -234,6 +245,7 @@ class App extends Component {
       </div>
     );
   }
+  
 }
 
 export default App;

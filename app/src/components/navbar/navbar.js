@@ -19,7 +19,6 @@ export default class NavComponent extends Component {
         }
 
         this.adminLinks = [
-            <Link id="navLink" to='/'>Home</Link>,
             <Link id="navLink" to='/concerts'>Concerts</Link>,
             <Link id="navLink" to='/search'>Artist Search</Link>,
             <Link id="navLink" to='/artists'>My Artists</Link>,
@@ -30,22 +29,18 @@ export default class NavComponent extends Component {
             <Link id="navLink" to='/calendar'>Booking Calendar</Link>,
             <Link id="navLink" to='/admin'>Admin Page</Link>,
             <Link id="navLink" to='/manager'>Manager Site</Link>,
-            <Link id="navLink" to='/pr'>Pr Site</Link>,
+            <Link id="navLink" to='/pr'>Public Relations</Link>,
         ]
         this.managerLinks = [
-            <Link id="navLink" to='/'>Home</Link>,
-            <Link id="navLink" to='/manager'>Manager Site</Link>,
+            <Link id="navLink" to='/manager'>My Concert Offers</Link>,
         ]
         this.prLinks = [
-            <Link id="navLink" to='/'>Home</Link>,
-            <Link id="navLink" to='/pr'>Pr Site</Link>,
+            <Link id="navLink" to='/pr'>Public Relations</Link>,
         ]
         this.technicianLinks = [
-            <Link id="navLink" to='/'>Home</Link>,
             <Link id="navLink" to='/concerts'>Concerts</Link>,
         ]
         this.bookingLinks = [
-            <Link id="navLink" to='/'>Home</Link>,
             <Link id="navLink" to='/search'>Artist Search</Link>,
             <Link id="navLink" to='/artists'>My Artists</Link>,
             <Link id="navLink" to='/bandbooking'>Band Booking</Link>,
@@ -53,6 +48,8 @@ export default class NavComponent extends Component {
             <Link id="navLink" to='/banddatabase'>Band Database</Link>,
             <Link id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
+
+        this.exit = this.exit.bind(this) //exit and go to festival selection page        
     }
 
     componentDidMount() {
@@ -102,6 +99,10 @@ export default class NavComponent extends Component {
         return previousViewableLinks
     }
 
+    exit(){
+        this.props.exit();
+    }
+
     render() {
 
 
@@ -117,7 +118,12 @@ export default class NavComponent extends Component {
         return(
             <div className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
-                <h2>Arrangørsoftware for {festivalName} [Logged in as: <Link to='/login'>{loggedInAs}</Link>]</h2>
+                <div id="navbarInfo">
+                    <div id="left">
+                        <button class="" onClick={() => this.exit()}><Link to='/'>Exit</Link></button></div>
+                    <div id="right">[{loggedInAs}] <Link to='/login'> Logout</Link></div>
+                    <div id="center"><h2>{festivalName}</h2></div>
+                </div>
                 <nav>
                     <div className="wideDiv">
                         {this.state.viewableLinks}
