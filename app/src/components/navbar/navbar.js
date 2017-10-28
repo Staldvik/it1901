@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom';
 import './navbar.css';
 import logo from '../../static/img/festival.png'
 
-// Firebase
-import database, {firebaseApp} from '../../database';
-
-// Roles
-import {auth, roles} from '../../roles';
-
 export default class NavComponent extends Component {
 
     constructor(props) {

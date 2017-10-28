@@ -185,7 +185,7 @@ export default class BandBooking extends Component {
             </thead>
             <tbody>
               {this.state.requests.map((requests) => {
-                if (requests.status == "pending") {
+                if (requests.status === "pending") {
                     return(
                     <tr className="pendingRequests">
                       <td>{this.state.artistMap.get(requests.artist)}</td>
@@ -199,20 +199,20 @@ export default class BandBooking extends Component {
                     </tr>
                     )
                   }
-                  if (requests.status == "accepted") {
-                    return(
-                    <tr className="acceptedRequests">
-                      <td>{this.state.artistMap.get(requests.artist)}</td>
-                      <td>{requests.day}</td>
-                      <td>{requests.price}</td>
-                      <td>{requests.status}</td>
-                      <td>
-                        
-                      </td>
-                    </tr>
-                    )
-                  }
-                })
+                if (requests.status === "accepted") {
+                  return(
+                  <tr className="acceptedRequests">
+                    <td>{this.state.artistMap.get(requests.artist)}</td>
+                    <td>{requests.day}</td>
+                    <td>{requests.price}</td>
+                    <td>{requests.status}</td>
+                    <td>
+                      
+                    </td>
+                  </tr>
+                  )
+                }
+              })
 
               }
             </tbody>
@@ -232,7 +232,7 @@ export default class BandBooking extends Component {
             </thead>
             <tbody className="declinedRequests">
               {this.state.requests.map((requests) => {
-                if (requests.status == "declined") {
+                if (requests.status === "declined") {
                     return(
                     <tr>
                       <td>{this.state.artistMap.get(requests.artist)}</td>
