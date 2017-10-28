@@ -25,8 +25,7 @@ export default class CreateFestival extends Component {
 
 
     createFestival(name){
-        database.ref().push( //creating the strucuture of the database.
-            {name:name})
+       this.props.create(name);
     }
 
   
@@ -36,7 +35,7 @@ export default class CreateFestival extends Component {
     return(
         <div>
             <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange}/>
-            <button type="submit" onClick={() => this.createFestival(this.state.name)}> Create </button>
+            <button type="button" onClick={() => this.createFestival(this.state.name)}> Create </button>
         </div>
     )
     }

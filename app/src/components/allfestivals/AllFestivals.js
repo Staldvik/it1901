@@ -26,10 +26,12 @@ export default class AllFestivals extends Component {
         let previousFestivals = this.state.festivals;
 
         database.ref().on('child_added', snap => {
-            previousFestivals.push({
-                id: snap.key,
-                name: snap.val().name,
-            })
+            if (snap.val().name){ //only render the festivals, do this by checking if it has name object in database
+                previousFestivals.push({
+                    id: snap.key,
+                    name: snap.val().name,
+                })
+            }
 
             this.setState({
                 festivals: previousFestivals,
@@ -40,7 +42,7 @@ export default class AllFestivals extends Component {
 
     render() {
         return (
-            <div class="festivalButtons">
+            <div id="festivalButtons">
                {this.state.festivals.map((festival) => {
                     return(<Festival enter={this.enter} festival={festival.id} name={festival.name}/>)
                 })}

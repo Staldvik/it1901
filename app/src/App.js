@@ -116,7 +116,7 @@ class App extends Component {
       isFestivalSelected: true,
     })
 
-    database.ref("isFestivalSelected").once("value", snap => {
+    database.ref("isFestivalSelected").on("value", snap => {
       let bool = snap.val();
       console.log("heuhuehuafhhefhaefaufueuafuehu", festival)
       this.setState({

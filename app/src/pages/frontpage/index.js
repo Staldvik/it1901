@@ -15,10 +15,16 @@ export default class FrontPage extends Component {
             selectedFestival:""
         }
         this.enter = this.enter.bind(this)
+        this.create = this.create.bind(this)
     }
 
     enter(festival,name){
       this.props.enter(festival,name)
+    }
+
+    create(name){
+      database.ref().push( //creating the strucuture of the database.
+        {name:name})
     }
 
 
@@ -26,11 +32,13 @@ export default class FrontPage extends Component {
     return (
     <div className="App">
      
-      <h3>Create new festival:</h3>
-      <form><CreateFestival/></form>
+      <h2>Festival Organizer</h2>
+      <form><CreateFestival create={this.create}/></form>
       
-      <h3>All festivals:</h3>
+      <h3>Existing Festivals</h3>
       <AllFestivals enter={this.enter}/>
+
+
      </div>
      )}
 

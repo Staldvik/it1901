@@ -21,7 +21,7 @@ export default class Festival extends Component {
 
     render() {
         return (
-            <button class="festivalSelector" onClick={() => 
+            <button id="festivalSelector" onClick={() => 
                 this.enterFestival(this.state.festival,this.state.name)}>{this.state.name}</button>
         )
     }

@@ -1,0 +1,11 @@
+#festivalSelector{
+  width:25%;
+  padding:40px;
+
+  background: rgb(18, 211, 153);
+  color: white;
+  font-size: 2em;
+  display: block;
+  align-content: center;
+  margin: auto;
+}
