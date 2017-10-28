@@ -116,7 +116,7 @@ handleSubmit(event) {
   //Sletter requesten fra databasen.
   //Burde kanskje etter hvert bli sendt en melding tilbake til bookingsjef om at de ikke vil spille der
   handleDeclineConcert(artist,key) {
-    database.ref("festival17").child("requests").child(key).remove();
+    database.ref(this.props.state.festival).child("requests").child(key).remove();
     database.ref(this.props.state.festival).child('artists').child(artist).update({status:"declined"})
     window.location.reload();
   }
@@ -128,9 +128,9 @@ handleSubmit(event) {
       price: price,
       status: "booked"
     }
-    database.ref("festival17").child("concerts").push(data);
-    alert("Takk!\n" + artist + " spiller nå på " + day);
-    database.ref("festival17").child("requests").child(key).remove(); //remove from requests
+    database.ref(this.props.state.festival).child("concerts").push(data);
+    alert(artist + " spiller nå på " + day);
+    database.ref(this.props.state.festival).child("requests").child(key).remove(); //remove from requests
     database.ref(this.props.state.festival).child('artists').child(artist).update({status:"booked"}) //setter artist status til booked 
 
     window.location.reload();

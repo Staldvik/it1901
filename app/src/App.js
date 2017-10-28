@@ -198,7 +198,7 @@ class App extends Component {
   render() {
 
     if (this.state.user === null) {
-      return <div>Loading</div>
+      return <div>Fancy loading animated graphic</div>
     }
     if (! this.state.isFestivalSelected){
       return <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
