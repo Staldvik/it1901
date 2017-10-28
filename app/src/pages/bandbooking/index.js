@@ -89,6 +89,7 @@ export default class BandBooking extends Component {
         artists: previousArtists,
         artistOptions: previousArtistsOptions,
         artistMap: previousArtistMap,
+        selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
       })
     })
   }
