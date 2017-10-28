@@ -61,7 +61,6 @@ export default class AdminPage extends Component {
     this.pushTech = this.pushTech.bind(this);
     this.pushRole = this.pushRole.bind(this);
     this.handleSubmitTech = this.handleSubmitTech.bind(this);
-    this.handleSubmitConcert = this.handleSubmitConcert.bind(this);
     this.searchConcertsFor = this.searchConcertsFor.bind(this);
     this.isTechInConcert = this.isTechInConcert.bind(this);
   }
@@ -179,17 +178,8 @@ export default class AdminPage extends Component {
 
   handleSubmitTech(e) {
     e.preventDefault();
-    //regner ut index for ny tekniker til alltid å være en høyere enn den høyeste.
-    //Dermed hindrer man overskriving hvis teknikere er fjernet
-    let indices = []
-    for(var key of this.state.technicianMap.keys()){
-      indices.push(parseInt(key)); //key må være en int for å finne max
-      }
-    var maxIndex = indices.reduce(function(a, b) {
-      return Math.max(a, b);
-    });
 
-    database.ref("festival17").child('technicians').child(maxIndex+1).set({
+    database.ref(this.props.state.festival).child('technicians').push({
       name: this.state.currentTechnicianNameInput
     })
     this.setState({ //setter input boksen tilbake til tom
@@ -197,62 +187,8 @@ export default class AdminPage extends Component {
     })
   }
 
-  handleSubmitConcert(e) {
-    e.preventDefault();
-    console.log(this.state.artists)
-    console.log(this.state.artists[0].id)
-    if (this.state.currentConcertNameInput.length > 2 && this.state.currentConcertGenreInput.length > 2 && !isNaN(this.state.currentConcertPriceInput)) {
-      var data = {
-        name: this.state.currentConcertNameInput,
-        day: this.state.currentConcertDayInput,
-      }
-      let does_exist = false
-      for (var i = 0; i < this.state.artists.length; i++){
-        if(data.name === this.state.artists[i].name){
-          does_exist = true
-          }
-          // trengs dette?
-          /*database.ref(this.props.state.festival).child('concerts').update({
-            name: this.state.currentConcertNameInput,
-            day: this.state.currentConcertDayInput,
-            genre: this.state.currentConcertGenreInput,
-            price: this.state.currentConcertPriceInput,
-          })*/
-        }
-        if (does_exist){
-            database.ref(this.props.state.festival).child('artists').child(this.state.artists[i].id).update({
-              name: this.state.currentConcertNameInput,
-              contact_info: this.state.currentConcertContactInfo,
-              sales_number: this.state.currentConcertSalesNumber,
-        })
-      } else{
-          database.ref(this.props.state.festival).child('artists').push({
-            name: this.state.currentConcertNameInput,
-            contact_info: this.state.currentConcertContactInfo,
-            sales_number: this.state.currentConcertSalesNumber,
-          })
-          database.ref(this.props.state.festival).child('concerts').push({
-            name: this.state.currentConcertNameInput,
-            day: this.state.currentConcertDayInput,
-            genre: this.state.currentConcertGenreInput,
-            price: this.state.currentConcertPriceInput,
-          })
-      }
-      }
+  
 
-
-     else {
-      alert("need more info")
-    }
-    this.setState({ //setter input boksen tilbake til tom
-      currentConcertNameInput: "",
-      currentConcertDayInput: "Day1",
-      currentConcertPriceInput: "",
-      currentConcertGenreInput: "",
-      currentConcertContactInfo: "",
-      currentConcertSalesNumber: "",
-    })
-  }
 
   searchConcertsFor(query, value) {
     return database.ref(this.props.state.festival).child('concerts').once('value').then(concertsSnapshot => {
@@ -292,24 +228,7 @@ export default class AdminPage extends Component {
           <button onClick={this.pushTech}>Submit</button>
         </form>
 
-        <form>
-          <h3> Denne formen er for å pushe en konsert inn i databasen </h3>
-          <input type="text" name="currentConcertNameInput" placeholder="Name" value={this.state.currentConcertNameInput} onChange={this.handleChange}/>
-          <input type="text" name="currentConcertGenreInput" placeholder="Genre" value={this.state.currentConcertGenreInput} onChange={this.handleChange}/>
-          <input type="number" name="currentConcertPriceInput" placeholder="Price" value={this.state.currentConcertPriceInput} onChange={this.handleChange}/>
-          <input type="text" name="currentConcertContactInfo" placeholder="Contact Info" value={this.state.currentConcertContactInfo} onChange={this.handleChange}/>
-          <input type="text" name="currentConcertSalesNumber" placeholder="Sales Number" value={this.state.currentConcertSalesNumber} onChange={this.handleChange}/>
-          <select name="currentConcertDayInput" onChange={this.handleChange}>
-            <option value="day1">Dag 1</option>
-            <option value="day2">Dag 2</option>
-            <option value="day3">Dag 3</option>
-            <option value="day4">Dag 4</option>
-            <option value="day5">Dag 5</option>
-            <option value="day6">Dag 6</option>
-            <option value="day7">Dag 7</option>
-          </select>
-          <button onClick={this.handleSubmitConcert}> Submit</button>
-        </form>
+       
 
         <form>
           <h3> Denne formen er for å legge til rettigheter på bruker </h3>

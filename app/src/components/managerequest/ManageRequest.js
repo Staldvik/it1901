@@ -31,9 +31,10 @@ export default class ManageRequest extends Component {
         );
       }
 
-    accept(artist, day, price, key, technicalrequirements, rider) {
+    accept(artist, name, day, price, key, technicalrequirements, rider) {
         var data = {
           artist: artist,
+          name: name,
           day: day,
           price: price,
           status: "booked",
@@ -68,6 +69,7 @@ export default class ManageRequest extends Component {
                 <td> <input name="rider" type="text" value={this.state.rider} onChange={this.handleChange}/></td> 
                 <td> <button onClick={() => this.accept(
                         this.state.artist,
+                        this.state.name,
                         this.state.day,
                         this.state.price,
                         this.state.requestKey,
