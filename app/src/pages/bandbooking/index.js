@@ -117,16 +117,16 @@ export default class BandBooking extends Component {
     console.log(this.state.requests);
   }
 
-  handleAccept(key) {
+  handleAccept(key,artist) {
     console.log("accept");
-    console.log(JSON.stringify(key));
     database.ref(this.props.state.festival).child("requests").child(key).update({status: "accepted"});
     window.location.reload();
   }
 
-  handleDecline(key) {
+  handleDecline(key,artist) {
     console.log("decline");
     database.ref(this.props.state.festival).child("requests").child(key).update({status: "declined"});
+    database.ref(this.props.state.festival).child("artists").child(artist).update({status: ""});
     window.location.reload();
   }
   
@@ -196,8 +196,8 @@ export default class BandBooking extends Component {
                       <td>{requests.price}</td>
                       <td>{requests.status}</td>
                       <td>
-                        <button onClick={() =>this.handleAccept(requests.key)}> Accept </button>
-                        <button onClick={() =>this.handleDecline(requests.key)}> Reject </button>
+                        <button onClick={() =>this.handleAccept(requests.key, requests.artist)}> Accept </button>
+                        <button onClick={() =>this.handleDecline(requests.key, requests.artist)}> Reject </button>
                       </td>
                     </tr>
                     )
