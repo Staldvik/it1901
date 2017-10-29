@@ -24,6 +24,7 @@ import Search from './pages/search';
 import Login from './pages/login';
 import PrSite from './pages/pr_site';
 import FrontPage from './pages/frontpage';
+import HomePage from './pages/homepage';
 
 class App extends Component {
 
@@ -41,16 +42,24 @@ class App extends Component {
     this.roleMap = new Map()
   }
 
-  componentWillMount() {
-    // Get user from firebase Auth
-    console.log("Running auth")
+  // Callback kalles som en funksjon når database-søket er ferdig.
+  // Dermed kan man sende inn en funksjon som skal kjøres når updateRoleMap blir ferdig.
+  updateRoleMap(callback) {
     database.ref('users').once("value", users => {
       users.forEach(user => {
           console.log(user.val().displayName)
           this.roleMap.set(user.key, user.val().roles)
       })
     })
-    .then(() => {
+    .then(
+      callback()
+    )
+  }
+
+  componentWillMount() {
+    // Get user from firebase Auth
+    console.log("Running auth")
+    this.updateRoleMap(() => {
       firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
           // Logged in
@@ -142,23 +151,27 @@ class App extends Component {
   }
 
   isCorrectRole = path => {
+    if (this.state.user === null) {return false}
+
     console.log("isCorrectRole is checking", path, "And user is", this.state.user)
     var rolesForUser = this.roleMap.get(this.state.user.uid)
     console.log("while roles for user is",rolesForUser)
 
-    if (rolesForUser === undefined) {return false}
+    // Mulig rolemap ikke er oppdatert?
+    if (rolesForUser === undefined) {
+      this.updateRoleMap(() => {
+        rolesForUser = this.roleMap.get(this.state.user.uid)
+        if (rolesForUser === undefined) {
+          return false
+        }
+      })
+    }
 
     // Admin har tilgang til alt
     if (rolesForUser.admin === true) {return true}
 
     // Sjekk path
     switch(path) {
-
-        case "/":
-          return true
-
-        case "/login":
-          return true
 
         case "/bandbooking":
             return rolesForUser.booking === true
@@ -226,7 +239,7 @@ class App extends Component {
 
         <div className="content-container">
           <Switch>
-            <Route exact path="/" render={(props)=><Login {...props} state={this.state}/>}/>
+            <Route exact path="/" render={(props)=><HomePage {...props} state={this.state}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
 
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
