@@ -149,7 +149,7 @@ class App extends Component {
     if (rolesForUser === undefined) {return false}
 
     // Admin har tilgang til alt
-    if (rolesForUser.admin === true) {console.log("User is admin so returned true"); return true}
+    if (rolesForUser.admin === true) {return true}
 
     // Sjekk path
     switch(path) {
@@ -197,9 +197,9 @@ class App extends Component {
 
   render() {
 
-    if (this.state.user === null) {
+    /* if (this.state.user === null) {
       return <div>Fancy loading animated graphic</div>
-    }
+    } */
     if (! this.state.isFestivalSelected){
       return <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
     }

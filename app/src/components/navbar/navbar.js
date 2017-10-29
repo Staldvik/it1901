@@ -61,36 +61,40 @@ export default class NavComponent extends Component {
 
     // Om den ikke mottar user, bruk this.state.user
     getCorrectNav(user = this.state.user) {
-        var previousViewableLinks = this.state.viewableLinks;
-        var displayName = user.email.split('@')[0]
-        
-        switch(displayName){
-
-            case "manager":
-                previousViewableLinks = this.managerLinks
-                break;
-
-            case "admin":
-                previousViewableLinks = this.adminLinks
-                break;
-
-            case "pr":
-                previousViewableLinks = this.prLinks
-                break;
+        if (user !== null) {
+            var previousViewableLinks = this.state.viewableLinks;
+            var displayName = user.email.split('@')[0]
             
-            case "tekniker":
-                previousViewableLinks = this.technicianLinks
-                break;
-
-            case "booking":
-                previousViewableLinks = this.bookingLinks
-                break;
-
-            default:
-                previousViewableLinks = []
-                break;
+            switch(displayName){
+    
+                case "manager":
+                    previousViewableLinks = this.managerLinks
+                    break;
+    
+                case "admin":
+                    previousViewableLinks = this.adminLinks
+                    break;
+    
+                case "pr":
+                    previousViewableLinks = this.prLinks
+                    break;
+                
+                case "tekniker":
+                    previousViewableLinks = this.technicianLinks
+                    break;
+    
+                case "booking":
+                    previousViewableLinks = this.bookingLinks
+                    break;
+    
+                default:
+                    previousViewableLinks = []
+                    break;
+            }
+            return previousViewableLinks
+        } else {
+            return []
         }
-        return previousViewableLinks
     }
 
     exit(){
