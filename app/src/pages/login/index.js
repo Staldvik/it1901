@@ -9,8 +9,17 @@ import Scene from '../../components/scene/Scene'
 import database, {firebaseApp} from '../../database';
 
 // React Router
-import {auth, roles} from '../../roles';
 import {Redirect} from 'react-router-dom';
+
+// Material
+import {
+  TextField,
+  RaisedButton,
+  Tab,Tabs,
+
+
+} 
+from 'material-ui';
 
 
 
@@ -180,8 +189,48 @@ class Login extends Component {
     }
 
     return (
+      <div>
 
-      <div className="App">
+        <hgroup>
+          <h2>Login</h2>
+        </hgroup>
+
+        <Tabs style={"max-width: 50%"}>
+          <Tab label="Login" >
+            <div>
+              <h2>Login</h2>
+              <TextField
+                floatingLabelText="Username"
+                /><br />
+              <TextField
+                hintText="Password Field"
+                floatingLabelText="Password"
+                type="password"
+              /><br />
+      
+              <span> 
+                <RaisedButton label="Sign In" backgroundColor="lightgreen" />
+                <RaisedButton label="Log Out" backgroundColor="lightgreen" />
+                <RaisedButton label="Sign Up" backgroundColor="lightgreen" />
+              </span>
+            </div>
+          </Tab>
+          <Tab label="Sign Up" >
+            <div>
+              <h2>Tab Two</h2>
+              <p>
+                This is another example tab.
+              </p>
+            </div>
+          </Tab>
+        </Tabs>     
+      
+      </div>
+
+
+
+
+      /* <div className="App">
 
         <h1 className="App-intro">
           Login/Signup
@@ -220,7 +269,7 @@ class Login extends Component {
 
         </form>
       </div>
-      </div>
+      </div> */
     );
   }
 }

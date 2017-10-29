@@ -210,12 +210,9 @@ class App extends Component {
 
   render() {
 
-    /* if (this.state.user === null) {
-      return <div>Fancy loading animated graphic</div>
-    } */
     if (! this.state.isFestivalSelected){
       return <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
-    }
+    } 
 
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
       <Route {...rest} render={props => (
