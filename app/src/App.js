@@ -32,8 +32,8 @@ class App extends Component {
     super();
 
     this.state = {
-      festival: 'festival16', //this state will allow you to select which festival
-      festivalName: "festival16", //just use this as a default
+      festival: 'festival17', //this state will allow you to select which festival
+      festivalName: "festival17", //just use this as a default
       isFestivalSelected: false,
       message: "Hello from App",
       user: null
@@ -60,6 +60,7 @@ class App extends Component {
     // Get user from firebase Auth
     console.log("Running auth")
     this.updateRoleMap(() => {
+      // Dette kjøres når updateRoleMap() er ferdig
       firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
           // Logged in
@@ -73,28 +74,6 @@ class App extends Component {
             user: null
           })
         }
-      })
-    })
-
-    database.ref("isFestivalSelected").once("value", snap => {
-      let bool = snap.val();
-      this.setState({
-        isFestivalSelected: bool,
-      })
-    })
-
-    database.ref("selectedFestival").once("value", snap => {
-      let festival = snap.val();
-      
-      this.setState({
-        festival: festival,
-      })
-    })
-
-    database.ref("selectedFestivalName").once("value", snap => {
-      let festivalName = snap.val();
-      this.setState({
-        festivalName: festivalName,
       })
     })
 
@@ -117,37 +96,12 @@ class App extends Component {
   }
 
   enter(festival,name){
-    database.ref("selectedFestival").set(festival)
-    database.ref("selectedFestivalName").set(name)
-    database.ref("isFestivalSelected").set("true")
-    console.log("switched to festival: ", name)
+    console.log("switched to festival", name, "with key:",festival)
     this.setState({
       isFestivalSelected: true,
+      festival: festival,
+      festivalName: name,
     })
-
-    database.ref("isFestivalSelected").on("value", snap => {
-      let bool = snap.val();
-      console.log("heuhuehuafhhefhaefaufueuafuehu", festival)
-      this.setState({
-        isFestivalSelected: bool,
-      })
-    })
-
-    database.ref("selectedFestival").once("value", snap => {
-      let festival = snap.val();
-      console.log("heuhuehuafhhefhaefaufueuafuehu", festival)
-      this.setState({
-        festival: festival,
-      })
-    })
-
-    database.ref("selectedFestivalName").once("value", snap => {
-      let festivalName = snap.val();
-      this.setState({
-        festivalName: festivalName,
-      })
-    })
-    
   }
 
   isCorrectRole = path => {
@@ -159,9 +113,12 @@ class App extends Component {
 
     // Mulig rolemap ikke er oppdatert?
     if (rolesForUser === undefined) {
+      // I så fall oppdater
       this.updateRoleMap(() => {
         rolesForUser = this.roleMap.get(this.state.user.uid)
+        // Om fortsatt ikke returner false, mulig en feil har skjedd?
         if (rolesForUser === undefined) {
+          console.log("Roles for user still undefined!")
           return false
         }
       })
@@ -211,7 +168,8 @@ class App extends Component {
   render() {
 
     if (! this.state.isFestivalSelected){
-      return <Route exact path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
+      console.log("No festival. Redirecting to Frontpage")
+      return <Route path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
     } 
 
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (

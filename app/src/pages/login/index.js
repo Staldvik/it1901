@@ -189,7 +189,7 @@ class Login extends Component {
     }
 
     return (
-      <div>
+      <div className="login-container">
 
         <hgroup>
           <h2>Login</h2>
