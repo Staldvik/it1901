@@ -13,6 +13,7 @@ export default class NavComponent extends Component {
         }
 
         this.adminLinks = [
+            <Link key="setup" id="navLink" to='/setup'>Setup</Link>,
             <Link key="concerts" id="navLink" to='/concerts'>Concerts</Link>,
             <Link key="search" id="navLink" to='/search'>Artist Search</Link>,
             <Link key="artists" id="navLink" to='/artists'>My Artists</Link>,
@@ -24,6 +25,7 @@ export default class NavComponent extends Component {
             <Link key="admin" id="navLink" to='/admin'>Admin Page</Link>,
             <Link key="manager" id="navLink" to='/manager'>Manager Site</Link>,
             <Link key="pr" id="navLink" to='/pr'>Public Relations</Link>,
+            
         ]
         this.managerLinks = [
             <Link key="manager" id="navLink" to='/manager'>My Concert Offers</Link>,

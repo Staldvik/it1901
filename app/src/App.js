@@ -25,6 +25,7 @@ import Login from './pages/login';
 import PrSite from './pages/pr_site';
 import FrontPage from './pages/frontpage';
 import HomePage from './pages/homepage';
+import Setup from './pages/setup';
 
 class App extends Component {
 
@@ -152,6 +153,9 @@ class App extends Component {
 
         case "/search":
             return rolesForUser.booking === true
+        
+        case "/setup":
+            return rolesForUser.booking === true
 
         case "/manager":
             return rolesForUser.manager === true
@@ -198,6 +202,7 @@ class App extends Component {
             <Route exact path="/" render={(props)=><HomePage {...props} state={this.state}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
 
+            <PrivateRoute path="/setup" component={Setup}/>
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
             <PrivateRoute path="/previousbands" component={PreviousBands}/>
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
