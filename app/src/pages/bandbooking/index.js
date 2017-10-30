@@ -117,23 +117,44 @@ export default class BandBooking extends Component {
     console.log(this.state.requests);
   }
 
-  handleAccept(key,artist) {
-    console.log("accept");
-    database.ref(this.props.state.festival).child("requests").child(key).update({status: "accepted"});
-    window.location.reload();
+  handleAccept(request) {
+    database.ref(this.props.state.festival).child("requests").child(request.key).update({status: "accepted"});
+
+    // Kan dette gjøres bedre?
+    var previousRequests = this.state.requests;
+    previousRequests.map(item => {
+      if (item === request) {
+        item.status = "accepted"
+      }
+    })
+    this.setState({
+      requests: previousRequests
+    })
   }
 
-  handleDecline(key,artist) {
-    console.log("decline");
-    database.ref(this.props.state.festival).child("requests").child(key).update({status: "declined"});
-    database.ref(this.props.state.festival).child("artists").child(artist).update({status: ""});
-    window.location.reload();
+  handleDecline(request) {
+    database.ref(this.props.state.festival).child("requests").child(request.key).update({status: "declined"});
+    database.ref(this.props.state.festival).child("artists").child(request.artist).update({status: ""});
+
+    // Kan dette gjøres bedre?
+    var previousRequests = this.state.requests;
+    previousRequests.map(item => {
+      if (item === request) {
+        item.status = "declined"
+      }
+    })
+    this.setState({
+      requests: previousRequests
+    })
   }
   
-  handleDelete(key) {
-    console.log("Deleted");
-    database.ref(this.props.state.festival).child("requests").child(key).remove();
-    window.location.reload();
+  handleDelete(request) {
+    database.ref(this.props.state.festival).child("requests").child(request.key).remove();
+    this.setState({
+      // Fjerner request fra this.state.requests og rendrer tabellen på nytt. 
+      // Dermed slipper vi å force page refresh
+      requests: this.state.requests.filter(item => item !== request)
+    })
   }
 
   handleCopyEmail(e) {
@@ -187,28 +208,28 @@ export default class BandBooking extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.requests.map((requests) => {
-                if (requests.status === "pending") {
+              {this.state.requests.map((request) => {
+                if (request.status === "pending") {
                     return(
                     <tr className="pendingRequests">
-                      <td>{this.state.artistMap.get(requests.artist)}</td>
-                      <td>{requests.day}</td>
-                      <td>{requests.price}</td>
-                      <td>{requests.status}</td>
+                      <td>{this.state.artistMap.get(request.artist)}</td>
+                      <td>{request.day}</td>
+                      <td>{request.price}</td>
+                      <td>{request.status}</td>
                       <td>
-                        <button onClick={() =>this.handleAccept(requests.key, requests.artist)}> Accept </button>
-                        <button onClick={() =>this.handleDecline(requests.key, requests.artist)}> Reject </button>
+                        <button onClick={() =>this.handleAccept(request)}> Accept </button>
+                        <button onClick={() =>this.handleDecline(request)}> Reject </button>
                       </td>
                     </tr>
                     )
                   }
-                if (requests.status === "accepted") {
+                if (request.status === "accepted") {
                   return(
                   <tr className="acceptedRequests">
-                    <td>{this.state.artistMap.get(requests.artist)}</td>
-                    <td>{requests.day}</td>
-                    <td>{requests.price}</td>
-                    <td>{requests.status}</td>
+                    <td>{this.state.artistMap.get(request.artist)}</td>
+                    <td>{request.day}</td>
+                    <td>{request.price}</td>
+                    <td>{request.status}</td>
                     <td>
                       
                     </td>
@@ -234,15 +255,15 @@ export default class BandBooking extends Component {
               </tr>
             </thead>
             <tbody className="declinedRequests">
-              {this.state.requests.map((requests) => {
-                if (requests.status === "declined") {
+              {this.state.requests.map((request) => {
+                if (request.status === "declined") {
                     return(
                     <tr>
-                      <td>{this.state.artistMap.get(requests.artist)}</td>
-                      <td>{requests.day}</td>
-                      <td>{requests.price}</td>
-                      <td>{requests.status}</td>
-                      <td><button onClick={() =>this.handleDelete(requests.key)}> Delete </button></td>
+                      <td>{this.state.artistMap.get(request.artist)}</td>
+                      <td>{request.day}</td>
+                      <td>{request.price}</td>
+                      <td>{request.status}</td>
+                      <td><button onClick={() =>this.handleDelete(request)}> Delete </button></td>
                     </tr>
                     )
                   }

@@ -16,7 +16,7 @@ import {
   TextField,
   RaisedButton,
   Tab,Tabs,
-
+  DropDownMenu, MenuItem,
 
 } 
 from 'material-ui';
@@ -51,7 +51,7 @@ class Login extends Component {
     database.ref('users').once('value', usersSnapshot => {
       usersSnapshot.forEach(userSnapshot => {
         previousLoginOptions.push(
-          <option value={userSnapshot.val().email} key={userSnapshot.key}>{userSnapshot.val().displayName}</option> 
+          <MenuItem value={userSnapshot.val().email} key={userSnapshot.key} primaryText={userSnapshot.val().displayName} /> 
         )
 
         if (! previousSelectedLogin) {
@@ -91,7 +91,8 @@ class Login extends Component {
       console.log(errorCode, errorMessage)
       this.setState({
         errorCode: errorCode,
-        errorMessage: errorMessage
+        errorMessage: errorMessage,
+        password: "",
       })
     })
   }
@@ -158,6 +159,12 @@ class Login extends Component {
 
   }
 
+  handleDropDown = (event, index, value) => {
+    this.setState({
+      selectedLogin: value
+    })
+  }
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 
@@ -193,6 +200,7 @@ class Login extends Component {
 
         <hgroup>
           <h2>Login</h2>
+          <h4>{error}</h4>
         </hgroup>
 
         <Tabs style={"max-width: 50%"}>
@@ -200,27 +208,60 @@ class Login extends Component {
             <div>
               <h2>Login</h2>
               <TextField
-                floatingLabelText="Username"
+                floatingLabelText="Email"
+                onChange={this.handleChange}
+                value={this.state.email}
+                name="email"
                 /><br />
               <TextField
                 hintText="Password Field"
                 floatingLabelText="Password"
                 type="password"
+                onChange={this.handleChange}
+                value={this.state.password}
+                name="password"
               /><br />
       
               <span> 
-                <RaisedButton label="Sign In" backgroundColor="lightgreen" />
-                <RaisedButton label="Log Out" backgroundColor="lightgreen" />
-                <RaisedButton label="Sign Up" backgroundColor="lightgreen" />
+                <RaisedButton label="Sign In" backgroundColor="lightgreen" onClick={this.handleSignin}/>
+                <RaisedButton label="Sign Out" backgroundColor="lightgreen" onClick={this.handleSignout}/>
               </span>
             </div>
           </Tab>
           <Tab label="Sign Up" >
             <div>
-              <h2>Tab Two</h2>
-              <p>
-                This is another example tab.
-              </p>
+              <h2>Sign Up</h2>
+              <TextField
+                floatingLabelText="Email"
+                name="email"
+                onChange={this.handleChange}
+                value={this.state.email}
+                /><br />
+              <TextField
+                floatingLabelText="Password"
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              /><br />
+              <TextField
+                floatingLabelText="Password"
+                type="password"
+                name="password"
+                value={this.state.password}
+              /><br />
+      
+              <span>
+                <RaisedButton label="Sign Up" backgroundColor="lightgreen" onClick={this.handleSignup} />
+              </span>
+            </div>
+          </Tab>
+          <Tab label="Choose User (TEMP?)">
+            <div>
+              <DropDownMenu name="selectedLogin" value={this.state.selectedLogin} onChange={this.handleDropDown}>
+                {this.state.loginOptions}
+              </DropDownMenu>
+              <RaisedButton label="Change to" backgroundColor="lightgreen" onClick={this.changeUser}/>
             </div>
           </Tab>
         </Tabs>     

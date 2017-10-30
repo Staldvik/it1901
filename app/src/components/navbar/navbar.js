@@ -13,34 +13,34 @@ export default class NavComponent extends Component {
         }
 
         this.adminLinks = [
-            <Link id="navLink" to='/concerts'>Concerts</Link>,
-            <Link id="navLink" to='/search'>Artist Search</Link>,
-            <Link id="navLink" to='/artists'>My Artists</Link>,
-            <Link id="navLink" to='/bandbooking'>Band Booking</Link>,
-            <Link id="navLink" to='/previousbands'>TeknikerTest</Link>,
-            <Link id="navLink" to='/banddatabase'>Band Database</Link>,
-            <Link id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
-            <Link id="navLink" to='/calendar'>Booking Calendar</Link>,
-            <Link id="navLink" to='/admin'>Admin Page</Link>,
-            <Link id="navLink" to='/manager'>Manager Site</Link>,
-            <Link id="navLink" to='/pr'>Public Relations</Link>,
+            <Link key="concerts" id="navLink" to='/concerts'>Concerts</Link>,
+            <Link key="search" id="navLink" to='/search'>Artist Search</Link>,
+            <Link key="artists" id="navLink" to='/artists'>My Artists</Link>,
+            <Link key="bandbooking" id="navLink" to='/bandbooking'>Band Booking</Link>,
+            <Link key="previousbands" id="navLink" to='/previousbands'>TeknikerTest</Link>,
+            <Link key="banddatabase" id="navLink" to='/banddatabase'>Band Database</Link>,
+            <Link key="pricecalculator" id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
+            <Link key="calendar" id="navLink" to='/calendar'>Booking Calendar</Link>,
+            <Link key="admin" id="navLink" to='/admin'>Admin Page</Link>,
+            <Link key="manager" id="navLink" to='/manager'>Manager Site</Link>,
+            <Link key="pr" id="navLink" to='/pr'>Public Relations</Link>,
         ]
         this.managerLinks = [
-            <Link id="navLink" to='/manager'>My Concert Offers</Link>,
+            <Link key="manager" id="navLink" to='/manager'>My Concert Offers</Link>,
         ]
         this.prLinks = [
-            <Link id="navLink" to='/pr'>Public Relations</Link>,
+            <Link key="pr" id="navLink" to='/pr'>Public Relations</Link>,
         ]
         this.technicianLinks = [
-            <Link id="navLink" to='/concerts'>Concerts</Link>,
+            <Link key="concerts" id="navLink" to='/concerts'>Concerts</Link>,
         ]
         this.bookingLinks = [
-            <Link id="navLink" to='/search'>Artist Search</Link>,
-            <Link id="navLink" to='/artists'>My Artists</Link>,
-            <Link id="navLink" to='/bandbooking'>Band Booking</Link>,
-            <Link id="navLink" to='/previousbands'>TeknikerTest</Link>,
-            <Link id="navLink" to='/banddatabase'>Band Database</Link>,
-            <Link id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
+            <Link key="search" id="navLink" to='/search'>Artist Search</Link>,
+            <Link key="artists" id="navLink" to='/artists'>My Artists</Link>,
+            <Link key="bandbooking" id="navLink" to='/bandbooking'>Band Booking</Link>,
+            <Link key="previousbands" id="navLink" to='/previousbands'>TeknikerTest</Link>,
+            <Link key="banddatabase" id="navLink" to='/banddatabase'>Band Database</Link>,
+            <Link key="pricecalculator" id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
 
         this.exit = this.exit.bind(this) //exit and go to festival selection page        
@@ -83,7 +83,11 @@ export default class NavComponent extends Component {
                     previousViewableLinks = this.technicianLinks
                     break;
     
-                case "booking":
+                case "booking.manager":
+                    previousViewableLinks = this.bookingLinks
+                    break;
+
+                case "booking.responsible":
                     previousViewableLinks = this.bookingLinks
                     break;
     

@@ -28,8 +28,8 @@ import HomePage from './pages/homepage';
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       festival: 'festival17', //this state will allow you to select which festival
@@ -88,7 +88,6 @@ class App extends Component {
   }
 
   exit(){
-    database.ref("isFestivalSelected").set("false")
     console.log("exited festival")
     this.setState({
       isFestivalSelected: false,
@@ -109,7 +108,7 @@ class App extends Component {
 
     console.log("isCorrectRole is checking", path, "And user is", this.state.user)
     var rolesForUser = this.roleMap.get(this.state.user.uid)
-    console.log("while roles for user is",rolesForUser)
+    console.log("roles for user is",rolesForUser)
 
     // Mulig rolemap ikke er oppdatert?
     if (rolesForUser === undefined) {
@@ -131,7 +130,7 @@ class App extends Component {
     switch(path) {
 
         case "/bandbooking":
-            return rolesForUser.booking === true
+            return rolesForUser.booking === true 
 
         case "/previousbands":
             return rolesForUser.booking === true
@@ -170,7 +169,9 @@ class App extends Component {
     if (! this.state.isFestivalSelected){
       console.log("No festival. Redirecting to Frontpage")
       return <Route path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
-    } 
+    } else if (!this.state.user && window.location.pathname !== "/login") {
+      return <Redirect to="/login" />
+    }
 
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
       <Route {...rest} render={props => (

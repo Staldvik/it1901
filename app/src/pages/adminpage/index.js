@@ -42,13 +42,12 @@ export default class AdminPage extends Component {
       selectedRole: "",
       selectedUser: "",
       userOptions: [],
-      //TODO: bookingans og bookingsjef ikke delt
       roleOptions: [
         <option value="admin" key="admin">admin</option>,
         <option value="servering" key="servering">servering</option>,
         <option value="band" key="band">band</option>,
-        <option value="booking" key="bookingansvarlig">bookingansvarlig</option>,
-        <option value="booking" key="bookingsjef">bookingsjef</option>,
+        <option value="booking-responsible" key="bookingansvarlig">bookingansvarlig</option>,
+        <option value="booking-manager" key="bookingsjef">bookingsjef</option>,
         <option value="tekniker" key="tekniker">tekniker</option>,
         <option value="manager" key="manager">manager</option>,
         <option value="pr-ansvarlig" key="pr-ansvarlig">pr-ansvarlig</option>
@@ -172,9 +171,18 @@ export default class AdminPage extends Component {
 
   pushRole(e) {
     e.preventDefault();
-    database.ref('users').child(this.state.selectedUser).child("roles").update({
-      [this.state.selectedRole]: true
-    })
+
+    if (this.state.selectedRole === "booking-responsible" || this.state.selectedRole === "booking-manager") {
+      database.ref('users').child(this.state.selectedUser).child("roles").update({
+        [this.state.selectedRole]: true,
+        "booking": true,
+      })
+    } else {
+      database.ref('users').child(this.state.selectedUser).child("roles").update({
+        [this.state.selectedRole]: true
+      })
+    }
+    
   }
 
   handleSubmitTech(e) {
