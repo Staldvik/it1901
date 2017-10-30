@@ -1,9 +1,9 @@
 //LASTFM KEY
-/* 
+/*
 Application name:	Festival App
 API key:	4a8a0fe142d2a436d9a80d3e460ec1eb
 Shared secret:	66c6a14111b6faf09afe1df9e78df5bc
-Registered to	aasmusta 
+Registered to	aasmusta
 */
 
 
@@ -31,8 +31,8 @@ export default class Search extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.loadInfo = this.loadInfo.bind(this);
-    
-    
+
+
     this.spotifyApi = new SpotifyWebApi({
       redirectUri : 'http://localhost:3000/callback'
     });
@@ -54,7 +54,7 @@ export default class Search extends Component {
   componentWillMount() {
     this.fetchToken();
   }
-  
+
   fetchToken() {
     var myHeaders = new Headers();
     var myInit = { method: 'GET',
@@ -96,7 +96,7 @@ export default class Search extends Component {
             this.lastfm.getArtistInfo({
               artist: artist.name,
               lang: 'nob',
-              callback: function(err, result) { 
+              callback: function(err, result) {
                 if (err) {console.log(err)}
                 else {
                 summary = result.artistInfo.bio.summary;
@@ -122,7 +122,7 @@ export default class Search extends Component {
       var summary = "";
       this.lastfm.getArtistInfo({
         artist: artist.name,
-        callback: function(result) { 
+        callback: function(result) {
           summary = result.artistInfo.bio.summary
           artist.summary = summary
         }
