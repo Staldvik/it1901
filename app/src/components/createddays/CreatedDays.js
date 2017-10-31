@@ -11,25 +11,30 @@ export default class CreatedDays extends Component {
         super(props);
         this.state = { 
             festival:props.festival,
-            day:props.day,
-            key:props.key,
+            day:props.day, //name/date of day
+            key:props.id, //key in firebase, must call it id...
 
             slots: [],
+            start:"",
+            end:"",
+
+            deleted:false,
         }
         this.handleChange = this.handleChange.bind(this);
+        this.addSlot = this.addSlot.bind(this);
         
     }
 
     componentWillMount() {
-        var prevSlots = this.state.slots;
+        let prevSlots = this.state.slots
         
-        
-            database.ref(this.props.state.festival).child('program').child("slots").on('child_added', snap => {
+            database.ref(this.state.festival).child('program').child(this.state.key).child("slots").on('child_added', snap => {
               var vals = snap.val();
         
               prevSlots.push({
                 id: snap.key,
-                date:vals.date,
+                start: vals.start,
+                end:vals.end,
               })
         
               this.setState({
@@ -38,6 +43,29 @@ export default class CreatedDays extends Component {
             })
        
       }
+
+    addSlot(start,end){
+        if(start ==="" || end ===""){
+            alert("please input start and end time")
+        }
+        else{
+            database.ref(this.state.festival).child('program').child(this.state.key).child("slots").push(
+                {start:start,
+                end: end,
+                }
+            )
+        }
+    }
+
+    removeDay(key){
+        database.ref(this.state.festival).child('program').child(key).remove()
+
+        this.setState({ //nice way to hide deleted elements
+            deleted: true,
+          })
+    }
+
+    
 
     handleChange(e) {
         this.setState({
@@ -48,23 +76,52 @@ export default class CreatedDays extends Component {
 
 
     render() {
-        return (
-            <table>
-                <tr>
-                    <th>{this.state.day}</th>
-                </tr>
-                
-                {this.state.slots.map((slot) => {
-                  return(<Slots
-                    date={slot.date}
-                    key={slot.id}
-                  />
-                  )
-                })
-                }
 
-            </table>
-            
+        if(this.state.deleted){ //nice way to hide deleted elements
+            return(null)
+         }
+
+        return (
+                <table id="programTable">
+                    <thead>
+                        <input name="start" placeholder="19" size={2} type="text" value={this.state.start} onChange={this.handleChange}/>
+                        -
+                        <input name="end" placeholder="21" size={2} type="text" value={this.state.end} onChange={this.handleChange}/>
+                        <button onClick={() => this.addSlot(
+                                    this.state.start,
+                                    this.state.end,
+                                 )}> Add Time </button>
+
+                        <tr>
+                            <th>
+                                {this.state.day} 
+                                     
+                            </th> 
+                            <th>
+                                <button className="removeX" onClick={() => this.removeDay(
+                                    this.state.key
+                                )}>X</button> 
+                            </th> 
+                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.slots.map((slot) => {
+                            return(<Slots
+                            festival={this.state.festival}
+                            dayKey={this.state.key}
+                            id={slot.id}
+                            start={slot.start}
+                            end={slot.end}
+                            />
+                        )
+                        })
+                        }
+                    </tbody>
+                    
+                </table>
+                
+
         )
     }
 }

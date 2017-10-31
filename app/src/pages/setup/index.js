@@ -7,6 +7,7 @@ import database from '../../database'
 import CreateScene from '../../components/createscene/CreateScene'
 import CreateDay from '../../components/createday/CreateDay'
 import CreatedDays from '../../components/createddays/CreatedDays'
+import SceneList from '../../components/scenelist/SceneList'
 
 
 export default class Setup extends Component {
@@ -16,6 +17,7 @@ export default class Setup extends Component {
 
     this.state = {
       days: [],
+      scenes: [],
     }
 
   }
@@ -34,6 +36,23 @@ export default class Setup extends Component {
     
           this.setState({
             days: prevDays,
+          })
+        })
+
+
+    var prevScenes = this.state.scenes;
+    
+        database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
+          var vals = snap.val();
+          prevScenes.push({
+            id: snap.key,
+            name: vals.name,
+            capacity: vals.capacity,
+            cost: vals.cost,
+          })
+    
+          this.setState({
+            scenes: prevScenes,
           })
         })
    
@@ -68,13 +87,21 @@ export default class Setup extends Component {
                   <th>Name</th>
                   <th>Capacity</th>
                   <th>Cost</th>
-                  <th>Edit</th>
+                  
               </tr>
             </thead>
             <tbody>
-              <tr>
-                  <p>will list all scenes...</p>
-              </tr>
+              {this.state.scenes.map((scene) => {
+                  return(<SceneList
+                    festival={this.props.state.festival}
+                    id={scene.id}
+                    name={scene.name}
+                    capacity={scene.capacity}
+                    cost={scene.cost}
+                  />
+                  )
+                })
+                }
 
             </tbody>
           </table>
@@ -87,16 +114,16 @@ export default class Setup extends Component {
             </table>
           
           <h2>Program</h2>
-              
+
                 {this.state.days.map((day) => {
                   return(<CreatedDays
+                    festival={this.props.state.festival}
                     day={day.date}
-                    key={day.id}
+                    id={day.id}
                   />
                   )
                 })
                 }
-             
         
 
 
