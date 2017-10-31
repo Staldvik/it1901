@@ -5,6 +5,8 @@ import './setup.css';
 import database from '../../database'
 
 import CreateScene from '../../components/createscene/CreateScene'
+import CreateDay from '../../components/createday/CreateDay'
+import CreatedDays from '../../components/createddays/CreatedDays'
 
 
 export default class Setup extends Component {
@@ -13,11 +15,27 @@ export default class Setup extends Component {
     super(props);
 
     this.state = {
+      days: [],
     }
 
   }
 
   componentWillMount() {
+    var prevDays = this.state.days;
+    
+    
+        database.ref(this.props.state.festival).child('program').on('child_added', snap => {
+          var vals = snap.val();
+    
+          prevDays.push({
+            id: snap.key,
+            date:vals.date,
+          })
+    
+          this.setState({
+            days: prevDays,
+          })
+        })
    
   }
 
@@ -60,6 +78,26 @@ export default class Setup extends Component {
 
             </tbody>
           </table>
+
+
+          <h2>Add Day</h2>
+            <table>
+            <CreateDay
+              festival={this.props.state.festival}/>
+            </table>
+          
+          <h2>Program</h2>
+              
+                {this.state.days.map((day) => {
+                  return(<CreatedDays
+                    day={day.date}
+                    key={day.id}
+                  />
+                  )
+                })
+                }
+             
+        
 
 
         </div>
