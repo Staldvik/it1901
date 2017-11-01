@@ -21,6 +21,10 @@ export default class BandBooking extends Component {
       currentArtistNameInput: "",
       currentPriceInput: "",
       currentConcertDayInput: "day1",
+      
+      sceneOptions: [],
+      selectedScene:"",
+
       requests: [],
       currentArtistAccepted: "ARTISTACCEPTED",
       currentPriceAccepted: "",
@@ -59,6 +63,7 @@ export default class BandBooking extends Component {
     
 
     let previousArtists = this.state.artists;
+
     let previousArtistsOptions = this.state.artistOptions;
 
     //get artists from database
@@ -91,6 +96,23 @@ export default class BandBooking extends Component {
         artistMap: previousArtistMap,
         selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
       })
+
+     
+      //Create Scene Select Options 
+      let prevSceneOptions = this.state.sceneOptions;
+      
+          //get artists from database
+          database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
+            var vals = snap.val();
+      
+            prevSceneOptions.push(
+              <option value={snap.key} key={snap.key}> {vals.name} ({vals.capacity}) </option>
+            )
+            this.setState({
+              sceneOptions: prevSceneOptions,
+              selectedScene: prevSceneOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+            })
+          })
     })
   }
   
@@ -179,15 +201,12 @@ export default class BandBooking extends Component {
           <select name="selectedArtist" onChange={this.handleChange} value={this.state.selectedArtist}>
             {this.state.artistOptions}
           </select>
-          <input name="currentPriceInput" type="number" value={this.state.currentPriceInput} onChange={this.handleChange} placeholder="price" />
-          <select name="currentConcertDayInput" id="day" value={this.state.currentConcertDayInput} onChange={this.handleChange}>
-            <option value="day1">Dag 1</option>
-            <option value="day2">Dag 2</option>
-            <option value="day3">Dag 3</option>
-            <option value="day4">Dag 4</option>
-            <option value="day5">Dag 5</option>
-            <option value="day6">Dag 6</option>
-            <option value="day7">Dag 7</option>
+          <input name="currentPriceInput" type="number" value={this.state.currentPriceInput} onChange={this.handleChange} placeholder="Price offer" />
+          <select name="selectedScene" value={this.state.selectedScene} onChange={this.handleChange}>
+              {this.state.sceneOptions}
+          </select>
+          <select name="selectedTime" value={this.state.selectedTime} onChange={this.handleChange}>
+              {this.state.timeOptions}
           </select>
           <button onClick={this.handleSubmitRequest}>Submit</button>
         </form>
