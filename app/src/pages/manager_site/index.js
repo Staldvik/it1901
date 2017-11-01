@@ -38,16 +38,23 @@ export default class ManagerSite extends Component {
   var previousRequests = this.state.requests;
   database.ref(this.props.state.festival).child('requests').on('child_added', requestSnapshot => {
     var vals = requestSnapshot.val();
-    previousRequests.push({
-      artist: vals.artist,
-      price:vals.price,
-      day:vals.day,
-      status:vals.status,
-      key:requestSnapshot.key,
-    })
-
+    if (vals.status === "accepted") {
+      previousRequests.push({
+        artist: vals.artist,
+        price:vals.price,
+        day:vals.day,
+        status:vals.status,
+        key:requestSnapshot.key,
+      })
+    }
     this.setState({
-      requestedStatus: previousRequests,
+      requests: previousRequests,
+    })
+  })
+
+  database.ref(this.props.state.festival).child('requests').on('child_removed', changedSnapshot => {
+    this.setState({
+      requests: this.state.requests.filter(item => item.key !== changedSnapshot.key)
     })
   })
  }
@@ -85,19 +92,18 @@ render() {
               </thead>
               <tbody className="managerRequests">
                 {this.state.requests.map((requests) => {
-                  if (requests.status == "accepted") {
-                    return(<ManageRequest
-                      festival={this.props.state.festival}
+                  return(<ManageRequest
+                    festival={this.props.state.festival}
 
-                      requestKey={requests.key}
-                      artist={requests.artist}
-                      name={this.state.artistMap.get(requests.artist)}
-                      day={requests.day}
-                      price={requests.price}
-                      
-                     />
-                    )
-                    }
+                    requestKey={requests.key}
+                    artist={requests.artist}
+                    name={this.state.artistMap.get(requests.artist)}
+                    day={requests.day}
+                    price={requests.price}
+                    key={requests.key}
+                    
+                    />
+                  )
                   })
 
                 }

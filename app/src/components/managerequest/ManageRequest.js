@@ -52,7 +52,9 @@ export default class ManageRequest extends Component {
       decline(artist,key) {
         database.ref(this.state.festival).child("requests").child(key).remove();
         database.ref(this.state.festival).child('artists').child(artist).update({status:"declined"})
-        window.location.reload();
+        .then(() => {
+            this.forceUpdate();
+        })
       }
     
 
