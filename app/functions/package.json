@@ -3,10 +3,16 @@
   "description": "Cloud Functions for Firebase",
   "dependencies": {
     "cors": "^2.8.4",
+    "crypto": "^1.0.1",
     "express": "^4.16.2",
     "firebase-admin": "~5.2.1",
     "firebase-functions": "^0.6.2",
-    "spotify-web-api-node": "^2.5.0"
+    "jquery": "*",
+    "jsdom": "*",
+    "querystring": "^0.2.0",
+    "simple-lastfm": "^1.0.5",
+    "spotify-web-api-node": "^2.5.0",
+    "xml2js": "^0.4.19"
   },
   "private": true
 }

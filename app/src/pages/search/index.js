@@ -53,6 +53,7 @@ export default class Search extends Component {
 
   componentWillMount() {
     this.fetchToken();
+    this.loadInfo();
   }
   
   fetchToken() {
@@ -117,17 +118,15 @@ export default class Search extends Component {
   }
 
   loadInfo() {
-    var previousArtists = this.state.artists;
-    previousArtists.map(artist => {
-      var summary = "";
-      this.lastfm.getArtistInfo({
-        artist: artist.name,
-        callback: function(result) { 
-          summary = result.artistInfo.bio.summary
-          artist.summary = summary
-        }
-      })
-      this.setState({artists:previousArtists})
+    var artistBioSum = "";
+    var artistPic = "";
+    this.lastfm.getArtistInfo({
+      artist: "Astrid S",
+      callback: function(result) {
+          artistBioSum = result.artistInfo.bio.summary
+          artistPic = result.artistInfo.image[0]['#']
+          console.log(artistBioSum, artistPic)
+      }
     })
   }
 
