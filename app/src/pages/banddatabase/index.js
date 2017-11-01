@@ -6,6 +6,16 @@ import './style.css';
 
 import database from '../../database';
 
+import defaultArtistPic from '../../static/img/defaultArtistPic.jpg';
+
+// Material
+import {
+  GridList, GridTile,
+  IconButton,
+
+} 
+from 'material-ui';
+
 export default class BandDatabase extends Component {
 
   constructor() {
@@ -95,6 +105,18 @@ export default class BandDatabase extends Component {
   }
 
   render() {
+    const styles = {
+      root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+      },
+      gridList: {
+        width: '50%',
+        height: 'auto',
+        overflowY: 'auto',
+      },
+    };
     return (
       <div className="App">
         <h1>
@@ -112,9 +134,12 @@ export default class BandDatabase extends Component {
           </select>
         </form>
 
-        <div>
-          {
-            // Går gjennom alle konsertene i this.state.concerts som concert
+
+        
+
+        <div style={styles.root}>
+            {
+              // Går gjennom alle konsertene i this.state.concerts som concert
             this.state.concerts.map(concert => {
               var match = false;
 
@@ -145,15 +170,31 @@ export default class BandDatabase extends Component {
               if (match) {
                 var sceneLocation = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().location;
                 var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity;
+                var vals = concert.val();
                 return(
-                <div key={concert.key}>
-                  <h1> {String(concert.ref.parent.parent.key)} </h1>
-                  <Concert name={concert.val().name} sales={concert.val().sales} genre={concert.val().genre} key={concert.key} 
-                  sceneCapacity={sceneCapacity} sceneLocation={sceneLocation}/>
-                </div>
-              )
+                  // Nå returnerer den en gridlist for hver match, ikkje bra!
+                  // TODO: Fikse dette, evt hele matche-prosessen
+                  // TODO: Scene påvirker ikke match
+                  <GridList
+                  cols={2}
+                  cellHeight={200}
+                  padding={1}
+                  style={styles.gridList}
+                  >
+                    <GridTile
+                      key={concert.key}
+                      title={vals.name}
+                      actionPosition="left"
+                      titlePosition="top"
+                      titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+                      cols={2}
+                      rows={1}
+                    >
+                    <img src={vals.pic ? vals.pic : defaultArtistPic} />
+                    </GridTile>
+                  </GridList>
+                )
               }
-              
             })
           }
         </div>
