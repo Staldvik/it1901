@@ -17,7 +17,8 @@ export default class Artist extends Component {
             popularity: props.popularity, //Int
             followers: props.followers, //Int
             genres: props.genres,
-            uri: props.uri
+            uri: props.uri,
+            pic: props.pic
             /* earlierConcerts: props.earlierConcerts, //List
             concertNeeds: props.concertNeeds, // String //kanskje cost hentes herifra. Også ting som antall mikrofoner og instrumenter
             cost: props.cost, // Int
@@ -32,7 +33,8 @@ export default class Artist extends Component {
         }
     }
 
-    addArtist(name,followers,popularity,genres,uri){
+    addArtist(name,followers,popularity,genres,uri,pic){
+        console.log()
         console.log(genres)
         const data = {
             name: name,
@@ -40,6 +42,7 @@ export default class Artist extends Component {
             popularity: popularity, 
             genres: genres,
             uri: uri,
+            pic: pic,
         }
         database.ref(this.state.festival).child("artists").push(data)    
     }
@@ -67,7 +70,8 @@ export default class Artist extends Component {
                         this.state.followers, 
                         this.state.popularity,
                         genres,
-                        this.state.uri
+                        this.state.uri,
+                        this.state.pic
                     )}> Add </button>
                 </td>
             </tr>

@@ -66,7 +66,7 @@ exports.addNewUser = functions.auth.user().onCreate(event => {
 
 
 
-
+/* 
 // Last fm.
 // Used to fetch bio and picture of artist
 
@@ -81,16 +81,10 @@ exports.addArtistInfo = functions.database.ref("festival17/artists/{artist}").on
     var artistBioSum = "";
     var artistPic = "";
     var name = event.data.val().name
-    lastfm.getArtistInfo({
-        artist: name,
-        callback: function(result) {
-            artistBioSum = result.artistInfo.bio.summary
-            artistPic = result.artistInfo.image[2]['#']
-        }
-    })
+    
 
     return admin.database().ref('festival17').child('artists').child(event.params.artist).update({
         summary: artistBioSum,
         pic: artistPic,
     });
-})
+}) */

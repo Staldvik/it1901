@@ -30,17 +30,11 @@ export default class Search extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.loadInfo = this.loadInfo.bind(this);
     
     
     this.spotifyApi = new SpotifyWebApi({
       redirectUri : 'http://localhost:3000/callback'
     });
-
-    /* this.lastfmApi = new LastfmWebApi({
-      'api_key' : '4a8a0fe142d2a436d9a80d3e460ec1eb',
-      'secret' : '66c6a14111b6faf09afe1df9e78df5bc'
-    }); */
 
     this.lastfm = new Lastfm({
       api_key: '4a8a0fe142d2a436d9a80d3e460ec1eb',
@@ -53,7 +47,6 @@ export default class Search extends Component {
 
   componentWillMount() {
     this.fetchToken();
-    this.loadInfo();
   }
   
   fetchToken() {
@@ -92,40 +85,10 @@ export default class Search extends Component {
           console.error(err)
         })
         .then(artistsToShow => {
-          artistsToShow.map(artist => {
-            var summary = ""
-            this.lastfm.getArtistInfo({
-              artist: artist.name,
-              lang: 'nob',
-              callback: function(err, result) { 
-                if (err) {console.log(err)}
-                else {
-                summary = result.artistInfo.bio.summary;
-                artist.summary = summary;
-                }
-              }
-            })
-          })
-          return artistsToShow
-        })
-        .then(artistsToShow => {
           this.setState({artists:artistsToShow});
         })
       } else {
         this.setState({artists:[]})
-      }
-    })
-  }
-
-  loadInfo() {
-    var artistBioSum = "";
-    var artistPic = "";
-    this.lastfm.getArtistInfo({
-      artist: "Astrid S",
-      callback: function(result) {
-          artistBioSum = result.artistInfo.bio.summary
-          artistPic = result.artistInfo.image[0]['#']
-          console.log(artistBioSum, artistPic)
       }
     })
   }
@@ -156,7 +119,8 @@ export default class Search extends Component {
             {
               this.state.artists.map(artist => {
                 return (
-                  <Artist festival={this.props.state.festival} name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri}/>
+                  <Artist festival={this.props.state.festival} name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri}
+                  pic={artist.images[0].url}/>
                 )
               })
             }
