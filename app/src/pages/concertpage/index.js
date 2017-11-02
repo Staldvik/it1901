@@ -73,47 +73,67 @@ export default class ConcertPage extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>
-          Concerts
-        </h1>
-        <p> Alle konsertene til teknikeren funnet i databasen </p>
-        <div className="select">
-          <select onChange={this.handleChange} value={this.state.selectedTech}>
-            {this.state.opts}
-          </select>
+      <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Album example</h1>
+          <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+          <p>
+            <a href="#" class="btn btn-primary">Main call to action</a>
+            <a href="#" class="btn btn-secondary">Secondary action</a>
+          </p>
         </div>
-        <div className="concertsBody">
-          {
-            // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
-            this.state.concerts.map((concert) => {
-              let match = false;
+      </section>
 
-              // Sjekk om alle skal vises
-              if (this.state.selectedTech == "showAll") {
-                match = true;
-              }
+      <div class="album text-muted">
+        <div class="container">
 
-              // Hvis ikke, sjekk om konserten har noen teknikere på seg
-              else if (concert.technicians != undefined) {
-                console.log(this.state.selectedTech)
-                if (concert.technicians[this.state.selectedTech] != undefined) {
-                  match = true;
-                }
+          <div class="row">
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
 
-              }
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
 
-              if (match) {
-                return (
-                  <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day} technicians={concert.technicians}
-                  technicians={concert.technicianNames} technicalInfo={concert.technicalInfo}/>
-                )
-              }
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+            <div class="card">
+              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
 
-            })
-          }
         </div>
       </div>
+
+    </main>
     );
   }
 }

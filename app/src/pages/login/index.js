@@ -11,15 +11,7 @@ import database, {firebaseApp} from '../../database';
 // React Router
 import {Redirect} from 'react-router-dom';
 
-// Material
-import {
-  TextField,
-  RaisedButton,
-  Tab,Tabs,
-  DropDownMenu, MenuItem,
 
-} 
-from 'material-ui';
 
 
 
@@ -51,7 +43,7 @@ class Login extends Component {
     database.ref('users').once('value', usersSnapshot => {
       usersSnapshot.forEach(userSnapshot => {
         previousLoginOptions.push(
-          <MenuItem value={userSnapshot.val().email} key={userSnapshot.key} primaryText={userSnapshot.val().displayName} /> 
+          <option value={userSnapshot.val().email} key={userSnapshot.key}>{userSnapshot.val().displayName} </option> 
         )
 
         if (! previousSelectedLogin) {
@@ -196,82 +188,7 @@ class Login extends Component {
     }
 
     return (
-      <div className="login-container">
-
-        <hgroup>
-          <h2>Login</h2>
-          <h4>{error}</h4>
-        </hgroup>
-
-        <Tabs style={"max-width: 50%"}>
-          <Tab label="Login" >
-            <div>
-              <h2>Login</h2>
-              <TextField
-                floatingLabelText="Email"
-                onChange={this.handleChange}
-                value={this.state.email}
-                name="email"
-                /><br />
-              <TextField
-                hintText="Password Field"
-                floatingLabelText="Password"
-                type="password"
-                onChange={this.handleChange}
-                value={this.state.password}
-                name="password"
-              /><br />
-      
-              <span> 
-                <RaisedButton label="Sign In" backgroundColor="lightgreen" onClick={this.handleSignin}/>
-                <RaisedButton label="Sign Out" backgroundColor="lightgreen" onClick={this.handleSignout}/>
-              </span>
-            </div>
-          </Tab>
-          <Tab label="Sign Up" >
-            <div>
-              <h2>Sign Up</h2>
-              <TextField
-                floatingLabelText="Email"
-                name="email"
-                onChange={this.handleChange}
-                value={this.state.email}
-                /><br />
-              <TextField
-                floatingLabelText="Password"
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-              /><br />
-              <TextField
-                floatingLabelText="Password"
-                type="password"
-                name="password"
-                value={this.state.password}
-              /><br />
-      
-              <span>
-                <RaisedButton label="Sign Up" backgroundColor="lightgreen" onClick={this.handleSignup} />
-              </span>
-            </div>
-          </Tab>
-          <Tab label="Choose User (TEMP?)">
-            <div>
-              <DropDownMenu name="selectedLogin" value={this.state.selectedLogin} onChange={this.handleDropDown}>
-                {this.state.loginOptions}
-              </DropDownMenu>
-              <RaisedButton label="Change to" backgroundColor="lightgreen" onClick={this.changeUser}/>
-            </div>
-          </Tab>
-        </Tabs>     
-      
-      </div>
-
-
-
-
-      /* <div className="App">
+      <div className="App">
 
         <h1 className="App-intro">
           Login/Signup
@@ -285,7 +202,8 @@ class Login extends Component {
           redirected
         }
 
-        <form className="Login-form">
+        <form className="form-signin">
+          <h2 className="form-header">Vennligst logg inn</h2>
           <label>
             Email:
             <input name="email" type="email" value={this.state.email} onChange={this.handleChange} />
@@ -310,7 +228,7 @@ class Login extends Component {
 
         </form>
       </div>
-      </div> */
+      </div>
     );
   }
 }
