@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './style.css';
 import Concert from '../../components/concert/Concert'
+import template from '../../static/img/defaultArtistPic.jpg'
 
 //firebase
 import database from '../../database'
@@ -73,67 +74,39 @@ export default class ConcertPage extends Component {
 
   render() {
     return (
-      <main role="main">
+      <div>
 
-      <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Album example</h1>
-          <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+      <section className="jumbotron text-center">
+        <div className="container">
+          <h1 className="jumbotron-heading">Konserter</h1>
+          <p className="lead text-muted">Her kan man filtrere konsertene etter tekniker</p>
           <p>
-            <a href="#" class="btn btn-primary">Main call to action</a>
-            <a href="#" class="btn btn-secondary">Secondary action</a>
+            <a href="#" className="btn btn-primary">Dette skal være en dropdown</a>
+            <a href="#" className="btn btn-secondary">Dette kan være noe annet</a>
           </p>
         </div>
       </section>
 
-      <div class="album text-muted">
-        <div class="container">
+      <div className="album text-muted">
+        <div className="container">
 
-          <div class="row">
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280?theme=thumb" alt="Card image cap"/>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
+          <div className="row">
+            {
+              this.state.concerts.map(concert => {
+                return(
+                  <div className="card">
+                    <img src={template} alt="Card image cap"/>
+                    <p className="card-text">{concert.name}</p>
+                  </div>
+                )
+              })
+            }
           </div>
 
         </div>
       </div>
 
-    </main>
+    </div>
     );
   }
 }

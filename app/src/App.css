@@ -28,3 +28,8 @@
   margin: 0 auto;
   max-width: 320px;
 }
+
+.content-container {
+  margin: 0 auto;
+  max-width: 80%;
+}
