@@ -13,36 +13,36 @@ export default class NavComponent extends Component {
         }
 
         this.adminLinks = [
-            <Link key="setup" id="navLink" to='/setup'>Setup</Link>,
-            <Link key="concerts" id="navLink" to='/concerts'>Concerts</Link>,
-            <Link key="search" id="navLink" to='/search'>Artist Search</Link>,
-            <Link key="artists" id="navLink" to='/artists'>My Artists</Link>,
-            <Link key="bandbooking" id="navLink" to='/bandbooking'>Band Booking</Link>,
-            <Link key="previousbands" id="navLink" to='/previousbands'>TeknikerTest</Link>,
-            <Link key="banddatabase" id="navLink" to='/banddatabase'>Band Database</Link>,
-            <Link key="pricecalculator" id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
-            <Link key="calendar" id="navLink" to='/calendar'>Booking Calendar</Link>,
-            <Link key="admin" id="navLink" to='/admin'>Admin Page</Link>,
-            <Link key="manager" id="navLink" to='/manager'>Manager Site</Link>,
-            <Link key="pr" id="navLink" to='/pr'>Public Relations</Link>,
+            <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
+            <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
+            <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
+            <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
+            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Band Booking</Link>,
+            <Link key="previousbands" className="nav-link" to='/previousbands'>TeknikerTest</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Band Database</Link>,
+            <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
+            <Link key="calendar" className="nav-link" to='/calendar'>Booking Calendar</Link>,
+            <Link key="admin" className="nav-link" to='/admin'>Admin Page</Link>,
+            <Link key="manager" className="nav-link" to='/manager'>Manager Site</Link>,
+            <Link key="pr" className="nav-link" to='/pr'>Public Relations</Link>,
             
         ]
         this.managerLinks = [
-            <Link key="manager" id="navLink" to='/manager'>My Concert Offers</Link>,
+            <Link key="manager" className="nav-link" to='/manager'>My Concert Offers</Link>,
         ]
         this.prLinks = [
-            <Link key="pr" id="navLink" to='/pr'>Public Relations</Link>,
+            <Link key="pr" className="nav-link" to='/pr'>Public Relations</Link>,
         ]
         this.technicianLinks = [
-            <Link key="concerts" id="navLink" to='/concerts'>Concerts</Link>,
+            <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
         ]
         this.bookingLinks = [
-            <Link key="search" id="navLink" to='/search'>Artist Search</Link>,
-            <Link key="artists" id="navLink" to='/artists'>My Artists</Link>,
-            <Link key="bandbooking" id="navLink" to='/bandbooking'>Band Booking</Link>,
-            <Link key="previousbands" id="navLink" to='/previousbands'>TeknikerTest</Link>,
-            <Link key="banddatabase" id="navLink" to='/banddatabase'>Band Database</Link>,
-            <Link key="pricecalculator" id="navLink" to='/pricecalculator'>Ticket Price Calculator</Link>,
+            <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
+            <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
+            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Band Booking</Link>,
+            <Link key="previousbands" className="nav-link" to='/previousbands'>TeknikerTest</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Band Database</Link>,
+            <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
 
         this.exit = this.exit.bind(this) //exit and go to festival selection page        
@@ -120,20 +120,32 @@ export default class NavComponent extends Component {
 
 
         return(
-            <div className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <div id="navbarInfo">
-                    <div id="left">
-                        <button class="" onClick={() => this.exit()}><Link to='/'>Exit</Link></button></div>
-                    <div id="right">[{loggedInAs}] <Link to='/login'> Logout</Link></div>
-                    <div id="center"><h2>{festivalName}</h2></div>
+            <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+                <a className="navbar-brand" href="#">{festivalName}</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <div className="collapse navbar-collapse" id="navbarsExample04">
+                    <ul className="navbar-nav mr-auto">
+                        {
+                            this.state.viewableLinks.map(link => {
+                                return (
+                                    <li className="nav-item active">
+                                        {link}
+                                    </li>
+                                )
+                            })
+                        }
+                        <li className="nav-item active">
+                        <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <form className="form-inline my-2 my-md-0">
+                        <input className="form-control" type="text" placeholder="Search"/>
+                    </form>
                 </div>
-                <nav>
-                    <div className="wideDiv">
-                        {this.state.viewableLinks}
-                    </div>
-                </nav>
-            </div>
+            </nav>
         )
     }
 }
