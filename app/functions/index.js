@@ -25,18 +25,38 @@ const app = express();
 
 
 // SPOTIFY TOKEN //
+// TODO: Ikke refresh token om det ikke er nødvendig
+var spotifyToken = ""
+var now = new Date();
+var expires = new Date();
 app.use(cors);
 app.get('', (req, res) => {
-    // Retrieve an access token.
-    spotifyApi.clientCredentialsGrant()
-    .then(data => {
-        // Send token as JSON
-        res.json({token: data.body['access_token']});
+    now = new Date()
+    // Hvis tiden går ut om under 10 minutter (600000 ms) eller spotifyToken ikke er satt
+    if (now.getTime()+600000 > expires.getTime() || spotifyToken === "") {
+        // Retrieve an access token.
+        spotifyApi.clientCredentialsGrant()
+        .then(data => {
+            // Spotify Token
+            spotifyToken = data.body['access_token']
+            // Sekunder til token går ut
+            var expiresIn = data.body['expires_in']
+            // Lag ny "Date" for når token går ut. expiresIn er oppgitt i sekunder.
+            expires = new Date(now.getTime + expiresIn*1000)
 
-    // If error log it.
-    }, err => {
-        console.log('Something went wrong when retrieving an access token', err);
-    });
+            // Send token som JSON
+            res.json({token: spotifyToken});
+
+        // If error log it.
+        }, err => {
+            console.log('Something went wrong when retrieving an access token', err);
+        });
+    // Hvis tiden ikke går ut om under 10 minutter
+    } else {
+        // Bare send den man har
+        res.json({token: spotifyToken})
+    }
+    
 });
 
 exports.spotifyToken = functions.https.onRequest(app);
