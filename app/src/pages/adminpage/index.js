@@ -143,29 +143,47 @@ export default class AdminPage extends Component {
 
 
 
-  isTechInConcert(){ //sjekker om en tekniker allerede er i en konsert
-    console.log("is technician already in concert");
-    let bool = false;
-    const currentKey = this.state.selectedTechnician
-    database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').once('value', function(snap) {
-      snap.forEach(function(childSnap){
-        if(childSnap.key == currentKey){
-          console.log(currentKey, "equals", childSnap.key)
-          bool = true
-          console.log("this is the result after comparison", bool)
-      }
-      bool= bool;
+  isTechInConcert() { 
+    console.log("Running check: is tech already in concert?");
+    var isInConcert = false;
+    var currentTechKey = this.state.selectedTechnician;
+
+    // Returnerer en Promise. Når then() kjøres sendes isInConcert gjennom denne Promisen
+    return database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').once('value', techSnap => {
+      techSnap.forEach(technician => {
+        // Hvis denne teknikeren i konserten er den vi ser etter, er den i konserten
+        if (technician.key === currentTechKey) {
+          isInConcert = true
+        }
+      })
     })
+    // Når databasegreiene er ferdig, returner isInConcert gjennom Promisen
+    .then(() => {
+      return isInConcert
     })
-    return bool;
   }
 
   pushTech(e) {
     e.preventDefault();
-    console.log(this.state.selectedTechnician);
-    console.log("this is the return value of the function", this.isTechInConcert())
-    database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
-      name: this.state.technicianMap.get(this.state.selectedTechnician),
+
+    // Kjør isTechInConcert, denne returnerer en Promise.
+    // Promisen vi får tilbake kan vi kalle .then() på. then() kjøres når Promisen blir "resolved" altså returnerer noe.
+    // Da får man også med variabelen(e) som ble returnert i Promisen.
+    this.isTechInConcert()
+    .then(isInConcert => {
+
+      // Hvis ikke i konsert:
+      // TODO: Feedback til bruker
+      if (!isInConcert) {
+        database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
+          name: this.state.technicianMap.get(this.state.selectedTechnician),
+        })
+
+      // Hvis i konsert:
+      // TODO: Feedback til bruker
+      } else {
+        console.log("Technician was already in concert")
+      }
     })
   }
 

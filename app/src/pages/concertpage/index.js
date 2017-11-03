@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 
 import './style.css';
-import Concert from '../../components/concert/Concert'
+import template from '../../static/img/defaultArtistPic.jpg'
 
 //firebase
 import database from '../../database'
 
 export default class ConcertPage extends Component {
-  // static propTypes = {}
-  // static defaultProps = {}
-
+  
   constructor() {
     super();
 
@@ -17,6 +15,7 @@ export default class ConcertPage extends Component {
       concerts: [],
       opts: [<option value="showAll" key="showAll"> show all </option>],
       selectedTech: "showAll",
+      technicianNames: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -43,6 +42,12 @@ export default class ConcertPage extends Component {
         technicians: vals.technicians,
         technicianNames: prevTechnicianNames,
         technicalInfo: vals.technicalInfo,
+        pic: vals.pic,
+      })
+      this.setState({
+        concerts: previousConcerts,
+        selectedTech: previousSelectedTech,
+        technicianNames: prevTechnicianNames,
       })
     })
 
@@ -50,10 +55,8 @@ export default class ConcertPage extends Component {
       previousOpts.push(
         <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {"ID "+technicianSnapshot.key+": " + technicianSnapshot.val().name} </option>
       )
-      this.setState({
-        concerts: previousConcerts,
+      this.setState({        
         opts: previousOpts,
-        selectedTech: previousSelectedTech,
       })
     })
   }
@@ -73,31 +76,35 @@ export default class ConcertPage extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>
-          Concerts
-        </h1>
-        <p> Alle konsertene til teknikeren funnet i databasen </p>
-        <div className="select">
-          <select onChange={this.handleChange} value={this.state.selectedTech}>
-            {this.state.opts}
-          </select>
-        </div>
-        <div className="concertsBody">
-          {
-            // Går gjennom alle konsertene den finner i concerts-arrayet og returnerer en ny Concert-component fra hver av disse.
-            this.state.concerts.map((concert) => {
-              let match = false;
+      <div className="container">
 
+        <section className="jumbotron text-center">
+          <div className="container">
+            <h1 className="jumbotron-heading">Konserter</h1>
+            <p className="lead text-muted">Her kan man filtrere konsertene etter tekniker</p>
+            <p>
+              <a href="#" className="btn btn-primary">Dette kan være en dropdown</a>
+              <a href="#" className="btn btn-secondary">Dette kan være noe annet</a>
+            </p>
+          </div>
+        </section>    
+
+
+
+
+        <div id="accordion" role="tablist">
+          {
+            this.state.concerts.map((concert, concertNum) => {
+              let match = false;
+              
               // Sjekk om alle skal vises
-              if (this.state.selectedTech == "showAll") {
+              if (this.state.selectedTech === "showAll") {
                 match = true;
               }
 
               // Hvis ikke, sjekk om konserten har noen teknikere på seg
-              else if (concert.technicians != undefined) {
-                console.log(this.state.selectedTech)
-                if (concert.technicians[this.state.selectedTech] != undefined) {
+              else if (concert.technicians !== undefined) {
+                if (concert.technicians[this.state.selectedTech] !== undefined) {
                   match = true;
                 }
 
@@ -105,13 +112,37 @@ export default class ConcertPage extends Component {
 
               if (match) {
                 return (
-                  <Concert name={concert.name} price={concert.price} sales={concert.sales} genre={concert.genre} key={concert.key} day={concert.day} technicians={concert.technicians}
-                  technicians={concert.technicianNames} technicalInfo={concert.technicalInfo}/>
-                )
-              }
-
-            })
-          }
+                <div className="card" key={concert.key}>
+                  <div className="card-header" role="tab" id={"heading"+concertNum}>
+                    <h5 className="mb-0">
+                      <a data-toggle="collapse" href={"#collapse"+concertNum} aria-expanded="false" aria-controls={"collapse"+concertNum}>
+                        {concert.name}
+                      </a>
+                    </h5>
+                  </div>
+              
+                  <div id={"collapse"+concertNum} className="collapse" role="tabpanel" aria-labelledby={"heading"+concertNum}>
+                    <div className="card-body">
+                      <h6>{concert.day}</h6>
+                      <img src={concert.pic ? concert.pic : template} className="rounded float-left" alt="Bilde av artist"/>
+                      <ul className="list-group float-right">
+                        <h6> Teknikere på denne konserten </h6>
+                        {
+                          concert.technicianNames.map(tech => {
+                            console.log("Tech", tech)
+                            return (
+                              <li className="list-group-item"> {tech} </li>
+                            )
+                          })
+                        }
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+          })
+        }
         </div>
       </div>
     );

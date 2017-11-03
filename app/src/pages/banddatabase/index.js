@@ -8,13 +8,7 @@ import database from '../../database';
 
 import defaultArtistPic from '../../static/img/defaultArtistPic.jpg';
 
-// Material
-import {
-  GridList, GridTile,
-  IconButton,
 
-} 
-from 'material-ui';
 
 export default class BandDatabase extends Component {
 
@@ -59,13 +53,14 @@ export default class BandDatabase extends Component {
     var previousSceneOptions = this.state.sceneOptions;
 
 
-    // Gå gjennom alle festivalene
+    // Gå gjennom hele databasen
     database.ref().once('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
-        // Hvis festivalen != festival17 og ikke er en av de andre keysene som er kommet:
-        if (! ((festivalSnapshot.key === "festival17") || (festivalSnapshot.key.slice(0,8) != "festival"))) {
+        // TODO: Hvis festival, altså pushet inn og ikke custom key. Denne kan brukes når vi sletter hele databasen før release.
+        //if (festivalSnapshot.key.startsWith("-")) {
 
+        if (festivalSnapshot.key !== "users" && festivalSnapshot.key !== "cloudFunctions") {
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
 
@@ -91,9 +86,10 @@ export default class BandDatabase extends Component {
               <option value={sceneSnapshot.key} key={sceneSnapshot.key}> {sceneSnapshot.val().location} - {sceneSnapshot.ref.parent.parent.key} </option> 
             )
           })
-
         }
       })
+    })
+    .then(() => {
       this.setState({
         genreOptions: previousGenreOptions,
         genres: previousGenres,
@@ -105,24 +101,12 @@ export default class BandDatabase extends Component {
   }
 
   render() {
-    const styles = {
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-      },
-      gridList: {
-        width: '50%',
-        height: 'auto',
-        overflowY: 'auto',
-      },
-    };
     return (
       <div className="App">
         <h1>
-          Band Database
+          Konsertdatabase
         </h1>
-        <p> Her kan man sjekke alle tidligere konserter innen en sjanger </p>
+        <p> Her kan man sjekke alle konserter som ligger i vår database </p>
 
         <form>
           <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
@@ -137,7 +121,7 @@ export default class BandDatabase extends Component {
 
         
 
-        <div style={styles.root}>
+        <div>
             {
               // Går gjennom alle konsertene i this.state.concerts som concert
             this.state.concerts.map(concert => {
@@ -168,31 +152,22 @@ export default class BandDatabase extends Component {
               }
 
               if (match) {
+                try {
                 var sceneLocation = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().location;
                 var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity;
+                } catch (err) {
+                  console.log("this.state.scenes gives undefined") 
+                  var sceneLocation = "Ikke Oppgitt"
+                  var sceneCapacity = "Ikke Oppgitt"
+                }
                 var vals = concert.val();
                 return(
-                  // Nå returnerer den en gridlist for hver match, ikkje bra!
-                  // TODO: Fikse dette, evt hele matche-prosessen
                   // TODO: Scene påvirker ikke match
-                  <GridList
-                  cols={2}
-                  cellHeight={200}
-                  padding={1}
-                  style={styles.gridList}
-                  >
-                    <GridTile
-                      key={concert.key}
-                      title={vals.name}
-                      actionPosition="left"
-                      titlePosition="top"
-                      titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                      cols={2}
-                      rows={1}
-                    >
-                    <img src={vals.pic ? vals.pic : defaultArtistPic} />
-                    </GridTile>
-                  </GridList>
+                  // TODO: Kanskje gjøre om på hele matche-prosessen 
+
+                    <div key={concert.key}>
+                      <Concert name={vals.name} genre={vals.genre} />
+                    </div>
                 )
               }
             })

@@ -44,7 +44,7 @@ export default class AllFestivals extends Component {
         return (
             <div id="festivalButtons">
                {this.state.festivals.map((festival) => {
-                    return(<Festival enter={this.enter} festival={festival.id} name={festival.name}/>)
+                    return(<Festival enter={this.enter} festival={festival.id} name={festival.name} key={festival.id}/>)
                 })}
              </div>
         )

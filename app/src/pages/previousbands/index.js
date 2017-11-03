@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import './style.css';
 import database from '../../database';
-import Concert from '../../components/concert/Concert';
-import Technician from '../../components/technician/Technician'
 
 export default class PreviousBands extends Component {
   constructor() {

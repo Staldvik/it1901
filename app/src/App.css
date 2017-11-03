@@ -28,3 +28,9 @@
   margin: 0 auto;
   max-width: 320px;
 }
+
+.container {
+  /* TODO: fiks så den justeres etter navbar? */
+  margin: 100px auto;
+  max-width: 80%;
+}
