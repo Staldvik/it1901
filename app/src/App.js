@@ -192,12 +192,10 @@ class App extends Component {
 
     
     return (
-      <div className="App">
-        <div className="navbar-container">
-          <NavComponent user={this.state.user} festivalName={this.state.festivalName} exit={this.exit}/>
-        </div>
+      <div>
+        <NavComponent user={this.state.user} festivalName={this.state.festivalName} exit={this.exit}/>
 
-        <div className="content-container">
+        <div className="container" id="mainContainer">
           <Switch>
             <Route exact path="/" render={(props)=><HomePage {...props} state={this.state}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>

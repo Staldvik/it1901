@@ -12,6 +12,7 @@ export default class NavComponent extends Component {
             viewableLinks: []
         }
 
+        // TODO gå vekk fra å ikke vise linken, til å ha den disabled
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
             <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
@@ -120,8 +121,8 @@ export default class NavComponent extends Component {
 
 
         return(
-            <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                <a className="navbar-brand" href="#">{festivalName}</a>
+            <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+                <a className="navbar-brand" href="#" onClick={this.exit}>{festivalName}</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -137,9 +138,6 @@ export default class NavComponent extends Component {
                                 )
                             })
                         }
-                        <li className="nav-item active">
-                        <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-                        </li>
                     </ul>
                     <form className="form-inline my-2 my-md-0">
                         <input className="form-control" type="text" placeholder="Search"/>
