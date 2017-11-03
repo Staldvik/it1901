@@ -20,10 +20,17 @@ export default class BandBooking extends Component {
 
       currentArtistNameInput: "",
       currentPriceInput: "",
-      currentConcertDayInput: "day1",
+      
       
       sceneOptions: [],
       selectedScene:"",
+
+      dayOptions: [],
+      selectedDay:"",
+
+      timeOptions: [],
+      selectedTime:"",
+      
 
       requests: [],
       currentArtistAccepted: "ARTISTACCEPTED",
@@ -37,6 +44,8 @@ export default class BandBooking extends Component {
     this.handleAccept = this.handleAccept.bind(this);
     this.handleDecline = this.handleDecline.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleChangeDay = this.handleChangeDay.bind(this);
+    
   }
 
   //kjøres når siden/komponenten lastes
@@ -96,13 +105,13 @@ export default class BandBooking extends Component {
         artistMap: previousArtistMap,
         selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
       })
+    })
 
-     
       //Create Scene Select Options 
-      let prevSceneOptions = this.state.sceneOptions;
+    let prevSceneOptions = this.state.sceneOptions;
       
-          //get artists from database
-          database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
+        //get scenes from database
+        database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
             var vals = snap.val();
       
             prevSceneOptions.push(
@@ -112,8 +121,50 @@ export default class BandBooking extends Component {
               sceneOptions: prevSceneOptions,
               selectedScene: prevSceneOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
             })
+        })
+      
+      let prevDayOptions = this.state.dayOptions;
+        
+          //get days from database
+          database.ref(this.props.state.festival).child('program').on('child_added', snap => {
+              var vals = snap.val();
+        
+              prevDayOptions.push(
+                <option value={snap.key} key={snap.key}> {vals.date} </option>
+              )
+              this.setState({
+                dayOptions: prevDayOptions,
+                selectedDay: prevDayOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+              })
+
+              
+
           })
-    })
+
+          
+
+      
+      
+   
+  }
+
+  componentDidMount(){
+    let prevTimeOptions = [];
+
+        //get times from database
+        database.ref(this.props.state.festival).child('program').child(this.state.selectedDay).child("slots").on('child_added', snap => {
+            var vals = snap.val();
+      
+            prevTimeOptions.push(
+              <option value={snap.key} key={snap.key}>{vals.start}-{vals.end}</option>
+            )
+            this.setState({
+              timeOptions: prevTimeOptions,
+              selectedTime: prevTimeOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+            })
+        })
+    
+
   }
   
 
@@ -122,6 +173,44 @@ export default class BandBooking extends Component {
       [e.target.name]: e.target.value
     })
   }
+
+
+  //We need a seperate function when a state change is dependent on another state change,
+  //since state is not not necessarily a synchronous operation
+  //see: https://stackoverflow.com/questions/41043419/reactjs-onclick-state-change-one-step-behind
+  //I solved it by getting the selectedDay variable directly and not depend on the state. Took some time to figure out...!
+  handleChangeDay(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+
+    let selectedDay = e.target.value //note that this is not the state, because the state is not set so we can not depend on it when accessing the database
+
+    let prevTimeOptions = [];
+    
+            //get times from database
+            database.ref(this.props.state.festival).child('program').child(selectedDay).child("slots").on('child_added', snap => {
+                var vals = snap.val();
+                console.log(vals.start, "-", vals.end)
+          
+                prevTimeOptions.push(
+                  <option value={snap.key} key={snap.key}>{vals.start}-{vals.end}</option>
+                )
+
+                this.setState({
+                  selectedTime: prevTimeOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+                  //Cannot be set outside the callback in case a scene has no timeslot. 
+                  })
+               
+            })
+            this.setState({
+              timeOptions: prevTimeOptions, //must be set outside the snap callback in case a scene has no timeslots.
+            })
+            
+  }
+  
+
+  
 
   handleSubmitRequest(e) {
     e.preventDefault(); //prevents page from reloading
@@ -205,7 +294,10 @@ export default class BandBooking extends Component {
           <select name="selectedScene" value={this.state.selectedScene} onChange={this.handleChange}>
               {this.state.sceneOptions}
           </select>
-          <select name="selectedTime" value={this.state.selectedTime} onChange={this.handleChange}>
+          <select name="selectedDay" value={this.state.selectedDay} onChange={this.handleChangeDay}>
+              {this.state.dayOptions}
+          </select>
+          <select name="selectedTime" value={this.state.selectedTime} onChange={this.handleChange} >
               {this.state.timeOptions}
           </select>
           <button onClick={this.handleSubmitRequest}>Submit</button>
