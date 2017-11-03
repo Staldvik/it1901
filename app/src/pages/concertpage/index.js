@@ -7,13 +7,8 @@ import template from '../../static/img/defaultArtistPic.jpg'
 //firebase
 import database from '../../database'
 
-//Accordion
-import {Accordion, AccordionItem} from 'react-sanfona';
-
 export default class ConcertPage extends Component {
-  // static propTypes = {}
-  // static defaultProps = {}
-
+  
   constructor() {
     super();
 
@@ -47,6 +42,7 @@ export default class ConcertPage extends Component {
         technicians: vals.technicians,
         technicianNames: prevTechnicianNames,
         technicalInfo: vals.technicalInfo,
+        pic: vals.pic,
       })
     })
 
@@ -77,7 +73,7 @@ export default class ConcertPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
 
         <section className="jumbotron text-center">
           <div className="container">
@@ -88,23 +84,7 @@ export default class ConcertPage extends Component {
               <a href="#" className="btn btn-secondary">Dette kan være noe annet</a>
             </p>
           </div>
-        </section>
-
-        {/* <Accordion>
-          {
-            this.state.concerts.map(concert => {
-              return (
-                <AccordionItem title={`Concert "+concert.name}`} className="react-sanfona-item">
-                  <div>
-                    {`Item "+concert} content`}
-                  </div>
-                </AccordionItem>
-              )
-            })
-          }
-
-        </Accordion> */}
-        
+        </section>    
 
 
 
@@ -112,20 +92,21 @@ export default class ConcertPage extends Component {
         <div id="accordion" role="tablist">
           {
             this.state.concerts.map((concert, concertNum) => {
-              console.log("heading"+concertNum, concertNum)
+              console.log(concert.pic)
+
               return(
                 <div className="card" key={concert.key}>
                   <div className="card-header" role="tab" id={"heading"+concertNum}>
                     <h5 className="mb-0">
                       <a data-toggle="collapse" href={"#collapse"+concertNum} aria-expanded="false" aria-controls={"collapse"+concertNum}>
-                        {concert.name}
+                        {concert.name} {concert.day}
                       </a>
                     </h5>
                   </div>
               
                   <div id={"collapse"+concertNum} className="collapse" role="tabpanel" aria-labelledby={"heading"+concertNum}>
                     <div className="card-body">
-                      Hello
+                      {concert.genre}
                     </div>
                   </div>
                 </div>

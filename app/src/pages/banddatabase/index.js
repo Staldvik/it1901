@@ -53,12 +53,12 @@ export default class BandDatabase extends Component {
     var previousSceneOptions = this.state.sceneOptions;
 
 
-    // Gå gjennom alle festivalene
+    // Gå gjennom hele databasen
     database.ref().once('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
-        // Hvis festivalen != festival17 og ikke er en av de andre keysene som er kommet:
-        if (! ((festivalSnapshot.key === "festival17") || (festivalSnapshot.key.slice(0,8) != "festival"))) {
+        // Hvis festival
+        if (festivalSnapshot.key !== "users") {
 
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
@@ -85,9 +85,10 @@ export default class BandDatabase extends Component {
               <option value={sceneSnapshot.key} key={sceneSnapshot.key}> {sceneSnapshot.val().location} - {sceneSnapshot.ref.parent.parent.key} </option> 
             )
           })
-
         }
       })
+    })
+    .then(() => {
       this.setState({
         genreOptions: previousGenreOptions,
         genres: previousGenres,
@@ -99,24 +100,12 @@ export default class BandDatabase extends Component {
   }
 
   render() {
-    const styles = {
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-      },
-      gridList: {
-        width: '50%',
-        height: 'auto',
-        overflowY: 'auto',
-      },
-    };
     return (
       <div className="App">
         <h1>
-          Band Database
+          Konsertdatabase
         </h1>
-        <p> Her kan man sjekke alle tidligere konserter innen en sjanger </p>
+        <p> Her kan man sjekke alle konserter som ligger i vår database </p>
 
         <form>
           <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
@@ -162,16 +151,21 @@ export default class BandDatabase extends Component {
               }
 
               if (match) {
+                try {
                 var sceneLocation = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().location;
                 var sceneCapacity = this.state.scenes[this.state.sceneMap.get(concert.val().scene)].val().capacity;
+                } catch (err) {
+                  console.log("this.state.scenes gives undefined") 
+                  var sceneLocation = "Ikke Oppgitt"
+                  var sceneCapacity = "Ikke Oppgitt"
+                }
                 var vals = concert.val();
                 return(
-                  // Nå returnerer den en gridlist for hver match, ikkje bra!
-                  // TODO: Fikse dette, evt hele matche-prosessen
                   // TODO: Scene påvirker ikke match
+                  // TODO: Kanskje gjøre om på hele matche-prosessen 
 
-                    <div>
-                      <Concert name={concert.name} />
+                    <div key={concert.key}>
+                      <Concert name={vals.name} genre={vals.genre} />
                     </div>
                 )
               }
