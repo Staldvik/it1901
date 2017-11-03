@@ -16,6 +16,7 @@ export default class ConcertPage extends Component {
       concerts: [],
       opts: [<option value="showAll" key="showAll"> show all </option>],
       selectedTech: "showAll",
+      technicianNames: []
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,16 +45,19 @@ export default class ConcertPage extends Component {
         technicalInfo: vals.technicalInfo,
         pic: vals.pic,
       })
+      this.setState({
+        concerts: previousConcerts,
+        selectedTech: previousSelectedTech,
+        technicianNames: prevTechnicianNames,
+      })
     })
 
     database.ref(this.props.state.festival).child('technicians').orderByChild('ID').on('child_added', technicianSnapshot => {
       previousOpts.push(
         <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {"ID "+technicianSnapshot.key+": " + technicianSnapshot.val().name} </option>
       )
-      this.setState({
-        concerts: previousConcerts,
+      this.setState({        
         opts: previousOpts,
-        selectedTech: previousSelectedTech,
       })
     })
   }
@@ -92,27 +96,54 @@ export default class ConcertPage extends Component {
         <div id="accordion" role="tablist">
           {
             this.state.concerts.map((concert, concertNum) => {
-              console.log(concert.pic)
+              let match = false;
+              
+              // Sjekk om alle skal vises
+              if (this.state.selectedTech == "showAll") {
+                match = true;
+              }
 
-              return(
+              // Hvis ikke, sjekk om konserten har noen teknikere på seg
+              else if (concert.technicians != undefined) {
+                if (concert.technicians[this.state.selectedTech] != undefined) {
+                  match = true;
+                }
+
+              }
+
+              if (match) {
+                return (
                 <div className="card" key={concert.key}>
                   <div className="card-header" role="tab" id={"heading"+concertNum}>
                     <h5 className="mb-0">
                       <a data-toggle="collapse" href={"#collapse"+concertNum} aria-expanded="false" aria-controls={"collapse"+concertNum}>
-                        {concert.name} {concert.day}
+                        {concert.name}
                       </a>
                     </h5>
                   </div>
               
                   <div id={"collapse"+concertNum} className="collapse" role="tabpanel" aria-labelledby={"heading"+concertNum}>
                     <div className="card-body">
-                      {concert.genre}
+                      <h6>{concert.day}</h6>
+                      <img src={concert.pic ? concert.pic : template} className="rounded float-left" alt="Bilde av artist"/>
+                      <ul className="list-group float-right">
+                        <h6> Teknikere på denne konserten </h6>
+                        {
+                          concert.technicianNames.map(tech => {
+                            console.log("Tech", tech)
+                            return (
+                              <li className="list-group-item"> {tech} </li>
+                            )
+                          })
+                        }
+                      </ul>
                     </div>
                   </div>
                 </div>
               )
-            })
-          }
+            }
+          })
+        }
         </div>
       </div>
     );

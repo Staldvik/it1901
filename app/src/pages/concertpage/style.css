@@ -1,0 +1,8 @@
+.card-body img {
+    max-width: 200px;
+    margin: 10px;
+}
+
+.card-body ul {
+    max-width: 400px;
+}
