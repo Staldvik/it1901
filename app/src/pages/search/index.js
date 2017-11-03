@@ -58,10 +58,14 @@ export default class Search extends Component {
                    cache: 'default' };
     var myRequest = new Request('https://us-central1-festival-180609.cloudfunctions.net/spotifyToken/', myInit);
     fetch(myRequest).then(response => {
-      response.json().then(file => {
+      response.json()
+      .then(file => {
         console.log("Token is", file["token"]);
         this.spotifyApi.setAccessToken(file["token"]);
         this.setState({hasToken: true});
+      })
+      .catch(error => {
+        console.log("An error occured fetching token", error)
       })
     })
   }
@@ -72,13 +76,12 @@ export default class Search extends Component {
       [e.target.name]: e.target.value
     },
     () => {
-      if (this.state.currentSearchInput.length > 1) {
+      if (this.state.currentSearchInput.length > 1 && this.state.hasToken) {
         this.spotifyApi.searchArtists(this.state.currentSearchInput)
         .then(data => {
           var artistsToShow = []
           data.body.artists.items.map(artist => {
             if (artist.popularity > 5 && artist.followers.total > 1000) {
-              artist.summary = "NO INFO"
               artistsToShow.push(artist)
             }
           })
@@ -133,7 +136,7 @@ export default class Search extends Component {
                 
                 return (
                   <Artist festival={this.props.state.festival} name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri}
-                  pic={url}/>
+                  pic={url} key={artist.uri}/>
                 )
               })
             }
