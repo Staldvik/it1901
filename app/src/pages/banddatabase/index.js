@@ -57,9 +57,10 @@ export default class BandDatabase extends Component {
     database.ref().once('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
-        // Hvis festival
-        if (festivalSnapshot.key !== "users") {
+        // TODO: Hvis festival, altså pushet inn og ikke custom key. Denne kan brukes når vi sletter hele databasen før release.
+        //if (festivalSnapshot.key.startsWith("-")) {
 
+        if (festivalSnapshot.key !== "users" && festivalSnapshot.key !== "cloudFunctions") {
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
 

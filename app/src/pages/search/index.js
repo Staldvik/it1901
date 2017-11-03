@@ -27,6 +27,7 @@ export default class Search extends Component {
     this.state = {
       currentSearchInput: "",
       artists: [],
+      hasToken: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -60,6 +61,7 @@ export default class Search extends Component {
       response.json().then(file => {
         console.log("Token is", file["token"]);
         this.spotifyApi.setAccessToken(file["token"]);
+        this.setState({hasToken: true});
       })
     })
   }

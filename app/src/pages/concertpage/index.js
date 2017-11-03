@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import './style.css';
-import Concert from '../../components/concert/Concert'
 import template from '../../static/img/defaultArtistPic.jpg'
 
 //firebase
@@ -99,13 +98,13 @@ export default class ConcertPage extends Component {
               let match = false;
               
               // Sjekk om alle skal vises
-              if (this.state.selectedTech == "showAll") {
+              if (this.state.selectedTech === "showAll") {
                 match = true;
               }
 
               // Hvis ikke, sjekk om konserten har noen teknikere på seg
-              else if (concert.technicians != undefined) {
-                if (concert.technicians[this.state.selectedTech] != undefined) {
+              else if (concert.technicians !== undefined) {
+                if (concert.technicians[this.state.selectedTech] !== undefined) {
                   match = true;
                 }
 
