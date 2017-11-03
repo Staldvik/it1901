@@ -11,6 +11,9 @@ export default class BandBooking extends Component {
   constructor(props) {
     super(props);
     let artistMap = new Map();
+    let sceneMap = new Map();
+    let dateMap = new Map();
+    let timeMap = new Map();
     this.state = {
 
       artists: [],
@@ -30,6 +33,10 @@ export default class BandBooking extends Component {
 
       timeOptions: [],
       selectedTime:"",
+
+      sceneMap: sceneMap, //to get name of scenes by key
+      dateMap: dateMap, //to get date/day by key
+      timeMap: timeMap, //to get time by key
       
 
       requests: [],
@@ -59,7 +66,9 @@ export default class BandBooking extends Component {
       previousRequests.push({
         artist:vals.artist,
         price:vals.price,
-        day:vals.day,
+        scene:vals.scene,
+        date:vals.date,
+        time:vals.time,
         status:vals.status, //Kan ha tre tilstander: pending, accepted eller declined.
         key: requestSnapshot.key
       })
@@ -109,10 +118,13 @@ export default class BandBooking extends Component {
 
       //Create Scene Select Options 
     let prevSceneOptions = this.state.sceneOptions;
+    let prevSceneMap = this.state.sceneMap;
       
         //get scenes from database
         database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
             var vals = snap.val();
+            
+            prevSceneMap.set(snap.key, vals.name) //map to get name of scene from key
       
             prevSceneOptions.push(
               <option value={snap.key} key={snap.key}> {vals.name} ({vals.capacity}) </option>
@@ -120,22 +132,39 @@ export default class BandBooking extends Component {
             this.setState({
               sceneOptions: prevSceneOptions,
               selectedScene: prevSceneOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+              sceneMap: prevSceneMap,
             })
         })
       
       let prevDayOptions = this.state.dayOptions;
+      let prevDateMap = this.state.dateMap;
+      let prevTimeMap = this.state.timeMap;
         
           //get days from database
           database.ref(this.props.state.festival).child('program').on('child_added', snap => {
+              
+              //Add the times to the times map to get them by key
+                database.ref(this.props.state.festival).child('program').child(snap.key).child("slots").on('child_added', time => {
+                      prevTimeMap.set(time.key, time.val().start + "-" + time.val().end)
+                      console.log(time.val().start)
+                      this.setState({
+                        timeMap: prevTimeMap
+                      })
+                  })
+              
               var vals = snap.val();
-        
+
+              prevDateMap.set(snap.key, vals.date) //map to get dates by key
+
               prevDayOptions.push(
                 <option value={snap.key} key={snap.key}> {vals.date} </option>
               )
               this.setState({
                 dayOptions: prevDayOptions,
                 selectedDay: prevDayOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+                dateMap: prevDateMap,
               })
+
 
               
 
@@ -150,10 +179,11 @@ export default class BandBooking extends Component {
 
   componentDidMount(){
     let prevTimeOptions = [];
-
         //get times from database
         database.ref(this.props.state.festival).child('program').child(this.state.selectedDay).child("slots").on('child_added', snap => {
             var vals = snap.val();
+
+           
       
             prevTimeOptions.push(
               <option value={snap.key} key={snap.key}>{vals.start}-{vals.end}</option>
@@ -218,7 +248,9 @@ export default class BandBooking extends Component {
     var data = {
       artist: this.state.selectedArtist, //key of artist in firebase
       price: this.state.currentPriceInput,
-      day: this.state.currentConcertDayInput,
+      scene: this.state.selectedScene,
+      date: this.state.selectedDay,
+      time: this.state.selectedTime,
       status: "pending",
     }
 
@@ -312,10 +344,10 @@ export default class BandBooking extends Component {
             <thead>
               <tr>
                   <th>Artist</th>
-                  <th>Day</th>
                   <th>Price</th>
+                  <th>Scene</th>
+                  <th>Date</th>
                   <th>Status</th>
-                  <th>Approve</th>
               </tr>
             </thead>
             <tbody>
@@ -324,8 +356,12 @@ export default class BandBooking extends Component {
                     return(
                     <tr className="pendingRequests">
                       <td>{this.state.artistMap.get(request.artist)}</td>
-                      <td>{request.day}</td>
                       <td>{request.price}</td>
+                      <td>{this.state.sceneMap.get(request.scene)}</td>
+                      <td>{this.state.dateMap.get(request.date)} 
+                          {" "}
+                          ({this.state.timeMap.get(request.time)})
+                      </td>
                       <td>{request.status}</td>
                       <td>
                         <button onClick={() =>this.handleAccept(request)}> Accept </button>
@@ -337,15 +373,17 @@ export default class BandBooking extends Component {
                 if (request.status === "accepted") {
                   return(
                   <tr className="acceptedRequests">
-                    <td>{this.state.artistMap.get(request.artist)}</td>
-                    <td>{request.day}</td>
-                    <td>{request.price}</td>
-                    <td>{request.status}</td>
-                    <td>
-                      
-                    </td>
-                  </tr>
-                  )
+                   <td>{this.state.artistMap.get(request.artist)}</td>
+                   <td>{request.price}</td>
+                   <td>{this.state.sceneMap.get(request.scene)}</td>
+                   <td>{this.state.dateMap.get(request.date)} 
+                       {" "}
+                       ({this.state.timeMap.get(request.time)})
+                   </td>
+                   <td>{request.status}</td>
+                   
+                 </tr>
+                 )
                 }
               })
 
@@ -359,10 +397,10 @@ export default class BandBooking extends Component {
             <thead>
               <tr>
                   <th>Artist</th>
-                  <th>Day</th>
                   <th>Price</th>
+                  <th>Scene</th>
+                  <th>Date</th>
                   <th>Status</th>
-                  <th>Delete</th>
               </tr>
             </thead>
             <tbody className="declinedRequests">
@@ -371,8 +409,12 @@ export default class BandBooking extends Component {
                     return(
                     <tr>
                       <td>{this.state.artistMap.get(request.artist)}</td>
-                      <td>{request.day}</td>
                       <td>{request.price}</td>
+                      <td>{this.state.sceneMap.get(request.scene)}</td>
+                      <td>{this.state.dateMap.get(request.date)} 
+                          {" "}
+                          ({this.state.timeMap.get(request.time)})
+                      </td>
                       <td>{request.status}</td>
                       <td><button onClick={() =>this.handleDelete(request)}> Delete </button></td>
                     </tr>
