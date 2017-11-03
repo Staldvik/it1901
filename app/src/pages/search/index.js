@@ -94,11 +94,12 @@ export default class Search extends Component {
   }
 
   render(){
+    
     return(
       <div className="App">
         
 
-        <h1> Let's search </h1>
+        <h1> Søk etter artist her </h1>
 
         <form>
           <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
@@ -109,18 +110,28 @@ export default class Search extends Component {
             <thead>
               <tr>
                   <th>Artist</th>
-                  <th>Followers</th>
-                  <th>Popularity (0-100)</th>
-                  <th>Genres</th>
+                  <th>Følgere</th>
+                  <th>Popularitet (0-100)</th>
+                  <th>Sjangre</th>
                   <th>Spotify</th>
-                  <th>Add</th>
+                  <th>Legg til</th>
               </tr>
             </thead>
             {
               this.state.artists.map(artist => {
+                var url = ""
+
+                try {
+                  if (artist.images[0].url) {
+                    url = artist.images[0].url
+                  }
+                 } catch (TypeError) {
+                  console.log("Can't read property url of undefined")
+                }
+                
                 return (
                   <Artist festival={this.props.state.festival} name={artist.name} popularity={artist.popularity} followers={artist.followers.total} genres={artist.genres} uri={artist.uri}
-                  pic={artist.images[0].url}/>
+                  pic={url}/>
                 )
               })
             }

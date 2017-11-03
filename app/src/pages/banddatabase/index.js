@@ -8,13 +8,7 @@ import database from '../../database';
 
 import defaultArtistPic from '../../static/img/defaultArtistPic.jpg';
 
-// Material
-import {
-  GridList, GridTile,
-  IconButton,
 
-} 
-from 'material-ui';
 
 export default class BandDatabase extends Component {
 
@@ -137,7 +131,7 @@ export default class BandDatabase extends Component {
 
         
 
-        <div style={styles.root}>
+        <div>
             {
               // Går gjennom alle konsertene i this.state.concerts som concert
             this.state.concerts.map(concert => {
@@ -175,24 +169,10 @@ export default class BandDatabase extends Component {
                   // Nå returnerer den en gridlist for hver match, ikkje bra!
                   // TODO: Fikse dette, evt hele matche-prosessen
                   // TODO: Scene påvirker ikke match
-                  <GridList
-                  cols={2}
-                  cellHeight={200}
-                  padding={1}
-                  style={styles.gridList}
-                  >
-                    <GridTile
-                      key={concert.key}
-                      title={vals.name}
-                      actionPosition="left"
-                      titlePosition="top"
-                      titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-                      cols={2}
-                      rows={1}
-                    >
-                    <img src={vals.pic ? vals.pic : defaultArtistPic} />
-                    </GridTile>
-                  </GridList>
+
+                    <div>
+                      <Concert name={concert.name} />
+                    </div>
                 )
               }
             })

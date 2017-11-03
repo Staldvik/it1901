@@ -7,6 +7,9 @@ import template from '../../static/img/defaultArtistPic.jpg'
 //firebase
 import database from '../../database'
 
+//Accordion
+import {Accordion, AccordionItem} from 'react-sanfona';
+
 export default class ConcertPage extends Component {
   // static propTypes = {}
   // static defaultProps = {}
@@ -76,37 +79,61 @@ export default class ConcertPage extends Component {
     return (
       <div>
 
-      <section className="jumbotron text-center">
-        <div className="container">
-          <h1 className="jumbotron-heading">Konserter</h1>
-          <p className="lead text-muted">Her kan man filtrere konsertene etter tekniker</p>
-          <p>
-            <a href="#" className="btn btn-primary">Dette skal være en dropdown</a>
-            <a href="#" className="btn btn-secondary">Dette kan være noe annet</a>
-          </p>
-        </div>
-      </section>
-
-      <div className="album text-muted">
-        <div className="container">
-
-          <div className="row">
-            {
-              this.state.concerts.map(concert => {
-                return(
-                  <div className="card">
-                    <img src={template} alt="Card image cap"/>
-                    <p className="card-text">{concert.name}</p>
-                  </div>
-                )
-              })
-            }
+        <section className="jumbotron text-center">
+          <div className="container">
+            <h1 className="jumbotron-heading">Konserter</h1>
+            <p className="lead text-muted">Her kan man filtrere konsertene etter tekniker</p>
+            <p>
+              <a href="#" className="btn btn-primary">Dette kan være en dropdown</a>
+              <a href="#" className="btn btn-secondary">Dette kan være noe annet</a>
+            </p>
           </div>
+        </section>
 
+        {/* <Accordion>
+          {
+            this.state.concerts.map(concert => {
+              return (
+                <AccordionItem title={`Concert "+concert.name}`} className="react-sanfona-item">
+                  <div>
+                    {`Item "+concert} content`}
+                  </div>
+                </AccordionItem>
+              )
+            })
+          }
+
+        </Accordion> */}
+        
+
+
+
+
+        <div id="accordion" role="tablist">
+          {
+            this.state.concerts.map((concert, concertNum) => {
+              console.log("heading"+concertNum, concertNum)
+              return(
+                <div className="card" key={concert.key}>
+                  <div className="card-header" role="tab" id={"heading"+concertNum}>
+                    <h5 className="mb-0">
+                      <a data-toggle="collapse" href={"#collapse"+concertNum} aria-expanded="false" aria-controls={"collapse"+concertNum}>
+                        {concert.name}
+                      </a>
+                    </h5>
+                  </div>
+              
+                  <div id={"collapse"+concertNum} className="collapse" role="tabpanel" aria-labelledby={"heading"+concertNum}>
+                    <div className="card-body">
+                      Hello
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          }
         </div>
       </div>
-
-    </div>
     );
   }
 }
