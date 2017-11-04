@@ -11,11 +11,17 @@ export default class ManageRequest extends Component {
             festival:props.festival,
             requestKey: props.requestKey,
             artist: props.artist,
+            scene: props.scene,
             name: props.name,
-            day: props.day,
+            date: props.date,
+            time:props.time,
             price:props.price,
             technicalrequirements: "",
-            rider: ""
+            rider: "",
+
+            dateDisplay: props.dateDisplay,
+            timeDisplay: props.timeDisplay,
+            sceneDisplay: props.sceneDisplay,
             
         }
         this.handleChange = this.handleChange.bind(this);
@@ -31,23 +37,27 @@ export default class ManageRequest extends Component {
         );
       }
 
-    accept(artist, name, day, price, key, technicalrequirements, rider) {
+    accept(artist, name, scene, date, time, price, key, technicalrequirements, rider) {
         var data = {
           artist: artist,
           name: name,
-          day: day,
+          scene: scene,
+          date: date,
+          time: time,
           price: price,
           status: "booked",
           requirements: technicalrequirements,
           rider: rider,
         }
         database.ref(this.state.festival).child("concerts").push(data);
-        alert(this.state.name + " will play on " + day + "\n"
-                + "requirements: " + technicalrequirements + "\n"
-                + "rider: " + rider);
         database.ref(this.state.festival).child("requests").child(key).remove(); //remove from requests
         database.ref(this.state.festival).child('artists').child(artist).update({status:"booked"}) //setter artist status til booked 
-      }
+        
+        alert(this.state.name + " booked on " + this.state.sceneDisplay + "\n"
+        + this.state.dateDisplay + " (" + this.state.timeDisplay + ")" + "\n"
+        + "requirements: " + technicalrequirements + "\n"
+        + "rider: " + rider);
+        }
 
       decline(artist,key) {
         database.ref(this.state.festival).child("requests").child(key).remove();
@@ -65,18 +75,27 @@ export default class ManageRequest extends Component {
         return (
             <tr>
                 <td> {this.state.name} </td>
-                <td> {this.state.day} </td>
                 <td> {this.state.price} </td>
+                <td> {this.state.sceneDisplay} </td>
+                <td> {this.state.dateDisplay} 
+                     {" "}
+                     ({this.state.timeDisplay}) 
+                </td>
+            
+                
                 <td> <input name="technicalrequirements" type="text" size={50} value={this.state.technicalrequirements} onChange={this.handleChange}/></td>
                 <td> <input name="rider" type="text" value={this.state.rider} onChange={this.handleChange}/></td> 
                 <td> <button onClick={() => this.accept(
                         this.state.artist,
                         this.state.name,
-                        this.state.day,
+                        this.state.scene,
+                        this.state.date,
+                        this.state.time,
                         this.state.price,
                         this.state.requestKey,
                         this.state.technicalrequirements,
-                        this.state.rider
+                        this.state.rider,
+                        
                     )}> Accept </button>
                     
                     <button onClick={() => this.decline(

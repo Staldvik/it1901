@@ -12,10 +12,18 @@ export default class ManagerSite extends Component {
     super(props);
 
     let artistMap = new Map();
+    let sceneMap = new Map();
+    let dateMap = new Map();
+    let timeMap = new Map();
 
     this.state = {
       requests: [],
-      artistMap: artistMap
+      
+      artistMap: artistMap,
+      sceneMap: sceneMap,
+      dateMap:dateMap,
+      timeMap:timeMap,
+
 
     };
     
@@ -42,7 +50,9 @@ export default class ManagerSite extends Component {
       previousRequests.push({
         artist: vals.artist,
         price:vals.price,
-        day:vals.day,
+        scene: vals.scene,
+        date:vals.date,
+        time:vals.time,
         status:vals.status,
         key:requestSnapshot.key,
       })
@@ -57,6 +67,46 @@ export default class ManagerSite extends Component {
       requests: this.state.requests.filter(item => item.key !== changedSnapshot.key)
     })
   })
+
+  
+  let prevDateMap = this.state.dateMap;
+  let prevTimeMap = this.state.timeMap;
+    
+      //get days from database
+      database.ref(this.props.state.festival).child('program').on('child_added', snap => {
+          
+          //Add the times to the times map to get them by key
+            database.ref(this.props.state.festival).child('program').child(snap.key).child("slots").on('child_added', time => {
+                  prevTimeMap.set(time.key, time.val().start + "-" + time.val().end)
+                  this.setState({
+                    timeMap: prevTimeMap
+                  })
+              })
+          
+          var vals = snap.val();
+
+          prevDateMap.set(snap.key, vals.date) //map to get dates by key
+ 
+          this.setState({
+            dateMap: prevDateMap,
+          })
+      })
+  
+  
+  let prevSceneMap = this.state.sceneMap;
+  
+    //get scenes from database
+    database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
+        var vals = snap.val();
+        
+        prevSceneMap.set(snap.key, vals.name +" "+ "(" + vals.capacity + ")") //map to get name of scene from key
+
+        this.setState({
+          sceneMap: prevSceneMap,
+        })
+    })
+
+
  }
 
 handleChange(e) {
@@ -83,11 +133,12 @@ render() {
               <thead>
                 <tr>
                     <th>Artist</th>
-                    <th>Day</th>
                     <th>Price</th>
+                    <th>Scene (capacity)</th>
+                    <th>Date</th>
                     <th>Technical Requirements</th>
                     <th>Rider</th>
-                    <th>Approve</th>
+                   
                 </tr>
               </thead>
               <tbody className="managerRequests">
@@ -97,10 +148,16 @@ render() {
 
                     requestKey={requests.key}
                     artist={requests.artist}
+                    scene={requests.scene}
                     name={this.state.artistMap.get(requests.artist)}
-                    day={requests.day}
+                    date={requests.date}
+                    time={requests.time}
                     price={requests.price}
                     key={requests.key}
+
+                    dateDisplay={this.state.dateMap.get(requests.date)}
+                    timeDisplay={this.state.timeMap.get(requests.time)}
+                    sceneDisplay={this.state.sceneMap.get(requests.scene)}
                     
                     />
                   )
