@@ -100,7 +100,8 @@ export default class AdminPage extends Component {
         technicianMap: previousTechnicianMap,
         currentTechnicianConcert: "",
         currentTechnicianNameInput: "",
-        currentTechnicianIdInput: ""
+        currentTechnicianIdInput: "",
+        selectedTechnician: techSnapshot.key //set the selected to the one last added to prevent error if none i selected
       })
     })
 
@@ -179,9 +180,10 @@ export default class AdminPage extends Component {
           name: this.state.technicianMap.get(this.state.selectedTechnician),
         })
 
-      // Hvis i konsert:
-      // TODO: Feedback til bruker
+        alert(this.state.technicianMap.get(this.state.selectedTechnician) + " assigned to work on that concert")
+
       } else {
+        alert(this.state.technicianMap.get(this.state.selectedTechnician) + " is already assigned to that concert")
         console.log("Technician was already in concert")
       }
     })
