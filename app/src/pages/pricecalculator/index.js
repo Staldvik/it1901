@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
-
-
+import database from '../../database'
 import './style.css';
 
 export default class PriceCalculator extends Component {
 
   constructor(props) {
     super(props);
+    let sceneCost = new Map();
+    let sceneCapacity = new Map();
 
     this.state = {
-      bandCost: "", //payment to band for playing 
+      artistCost: 0, //payment to artist for playing 
       sceneCost: "", //all costs related to rigging and paying staff
       otherCost: 0, //other costs with the concert
       sceneCapacity: "",
       ticketSales: "", // number of tickets sold
       profitMargin: 0, 
+
+
+      sceneOptions: [],
+      selectedScene:"",
+      sceneCost: sceneCost,
+      sceneCapacity: sceneCapacity,
     }
 
     //bind functions to the component
@@ -25,16 +32,45 @@ export default class PriceCalculator extends Component {
     this.calculateTotalCost = this.calculateTotalCost.bind(this);
   }
 
+  componentWillMount(){
+    let prevSceneOptions = this.state.sceneOptions;
+    let prevSceneCost = this.state.sceneCost;
+    let prevSceneCapacity = this.state.sceneCapacity;
+    
+      //get scenes from database
+      database.ref(this.props.state.festival).child('scenes').on('child_added', snap => {
+          var vals = snap.val();
+          console.log(snap.key)
+          
+          prevSceneCapacity.set(snap.key, vals.capacity) //map to get name of scene from key
+          prevSceneCost.set(snap.key, vals.cost) //map to get name of scene from key
+          
+          prevSceneOptions.push(
+            <option value={snap.key} key={snap.key}> {vals.name} </option>
+          )
+          this.setState({
+            sceneOptions: prevSceneOptions,
+            selectedScene: prevSceneOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+            sceneCapacity: prevSceneCapacity,
+            sceneCost: prevSceneCost,
+           
+          })
+      })
+
+  }
+
 
     handleChange(e) {
-      this.setState({
-        [e.target.name]: e.target.value,
-      })
+   
+        this.setState({
+          [e.target.name]: e.target.value,
+        })
+      console.log(e.target.name + " set to " + e.target.value)
   
     }
 
     calculateCapacitySold(){
-      let sceneCapacity = parseInt(this.state.sceneCapacity)
+      let sceneCapacity = parseInt(this.state.sceneCapacity.get(this.state.selectedScene))
       let ticketSales = parseInt(this.state.ticketSales)
       if(ticketSales > sceneCapacity){
         return "Ticket sales must be within scene capacity";
@@ -43,15 +79,15 @@ export default class PriceCalculator extends Component {
     }
 
     calculateTotalCost(){
-      let bandCost = parseInt(this.state.bandCost)
-      let sceneCost = parseInt(this.state.sceneCost)
+      let artistCost = parseInt(this.state.artistCost)
+      let sceneCost = parseInt(this.state.sceneCost.get(this.state.selectedScene))
       let otherCost = parseInt(this.state.otherCost)
-      let totalCost = bandCost + sceneCost + otherCost;
+      let totalCost = artistCost + sceneCost + otherCost;
       return totalCost
     }
 
     calculatePrice(){
-      let sceneCapacity = parseInt(this.state.sceneCapacity)
+      let sceneCapacity = parseInt(this.state.sceneCapacity.get(this.state.selectedScene))
       let ticketSales = parseInt(this.state.ticketSales)
       let profitMargin = parseInt(this.state.profitMargin)
       
@@ -66,7 +102,7 @@ export default class PriceCalculator extends Component {
     }
 
     styleResult(){
-      let sceneCapacity = parseInt(this.state.sceneCapacity)
+      let sceneCapacity = parseInt(this.state.sceneCapacity.get(this.state.selectedScene))
       let ticketSales = parseInt(this.state.ticketSales)
       
       const validStyle = {
@@ -100,32 +136,33 @@ export default class PriceCalculator extends Component {
         </h1>
         
         <form id="ticketPriceCalculator">
-          <section>
-            <h4>Costs:</h4>
-            <label form="ticketPriceCalculator">Scene Cost </label>
-            <input name="sceneCost" type="number" value={this.state.sceneCost} onChange={this.handleChange}/> <br></br>
-            <label form="ticketPriceCalculator">Band Cost </label>
-            <input name="bandCost" type="number" value={this.state.bandCost} onChange={this.handleChange}/> <br></br>
-            <label form="ticketPriceCalculator">Other Cost </label>
+        <select name="selectedScene" value={this.state.selectedScene} onChange={this.handleChange}>
+              {this.state.sceneOptions}
+            </select>
+            <div style={divStyle}>Capacity: {this.state.sceneCapacity.get(this.state.selectedScene)}</div>
+            <div style={divStyle}>Scene Cost: {this.state.sceneCost.get(this.state.selectedScene)}</div>
+
+          <section> 
+            <label form="ticketPriceCalculator"> Profit Margin </label>
+            <input name="profitMargin" type="number" value={this.state.profitMargin} onChange={this.handleChange}/><br></br>
+          </section> 
+          
+          
+          <section>  
+            <label form="ticketPriceCalculator"> Artist Cost </label>
+            <input name="artistCost" type="number" value={this.state.artistCost} onChange={this.handleChange}/> <br></br>
+            <label form="ticketPriceCalculator"> Other Cost </label>
             <input name="otherCost" type="number" value={this.state.otherCost} onChange={this.handleChange}/> <br></br>
           </section>
           
           <section>
-            <h4>Income:</h4>
-            Scene capacity: <input name="sceneCapacity" type="number" value={this.state.sceneCapacity} onChange={this.handleChange}/><br></br>
-            Ticket Sales: <input name="ticketSales" type="number" value={this.state.ticketSales} onChange={this.handleChange}/><br></br>
-            <input name="ticketSales" type="range" min="0" max={this.state.sceneCapacity} step={this.state.sceneCapacity/10} value={this.state.ticketSales} onChange={this.handleChange}/>
+           <label form="ticketPriceCalculator"> Ticket Sales</label>
+            <input name="ticketSales" type="number" value={this.state.ticketSales} onChange={this.handleChange}/><br></br>
+            <input name="ticketSales" type="range" min="0" max={this.state.sceneCapacity.get(this.state.selectedScene)} step={this.state.sceneCapacity.get(this.state.selectedScene)/10} value={this.state.ticketSales} onChange={this.handleChange}/>
             <div style={divStyle}>{capacitySold}</div>
           </section>
-          
-          <section> 
-            <h4>Variables:</h4>
-            Profit Margin: <input name="profitMargin" type="number" value={this.state.profitMargin} onChange={this.handleChange}/><br></br>
-          </section> 
-
             <br></br>
-            <br></br>
-            <h2>Ticket Price Estimate</h2>
+            <h4>Ticket Price Estimate</h4>
             <div style={divStyle}>{ticketPrice}</div>
            
         </form>
