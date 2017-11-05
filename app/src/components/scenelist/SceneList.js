@@ -20,10 +20,12 @@ export default class SceneList extends Component {
 
 
     delete(key){
-        database.ref(this.state.festival).child('scenes').child(key).remove()
-        this.setState({
-           deleted: true,
-        })
+        if(window.confirm("Are you sure you want to remove the scene?\n\nRemoving a scene from a festival will affect all concerts on that day")){
+            database.ref(this.state.festival).child('scenes').child(key).remove()
+            this.setState({
+            deleted: true,
+            })
+        }
     }
 
 

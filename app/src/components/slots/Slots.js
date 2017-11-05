@@ -23,11 +23,13 @@ export default class Slots extends Component {
     }
 
     removeSlot(key){
+        if(window.confirm("Are you sure you want to remove this timeslot?\n\nRemoving a timeslot from a festival will affect all concerts on that timeslot")){
         database.ref(this.state.festival).child('program').child(this.state.dayKey).child("slots").child(key).remove()
         
         this.setState({
             deleted:true,
           })
+        }
     }
 
 

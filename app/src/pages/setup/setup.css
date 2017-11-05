@@ -1,5 +1,16 @@
-#programTable{
+#programTable{ 
   display: inline;
+  text-align: center;
   margin:0;
   border-style: none;
+  
+}
+
+.setupTable{
+  margin-bottom: 40px;
+}
+
+#setupPage{
+  text-align: center;
+  
 }
