@@ -12,20 +12,23 @@ export default class NavComponent extends Component {
             viewableLinks: []
         }
 
-        // TODO gå vekk fra å ikke vise linken, til å ha den disabled
+        // TODO: gå vekk fra å ikke vise linken, til å ha den disabled
+        // TODO: fikse linker til å stemme med navn/funksjon
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
-            <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
-            <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
-            <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
-            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Band Booking</Link>,
+            <Link key="concerts" className="nav-link" to='/concerts'>Konserter</Link>,
+            <Link key="search" className="nav-link" to='/search'>Artistsøk</Link>,
+            <Link key="artists" className="nav-link" to='/artists'>Artister</Link>,
+            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Bandbooking</Link>,
             <Link key="previousbands" className="nav-link" to='/previousbands'>TeknikerTest</Link>,
-            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Band Database</Link>,
-            <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
-            <Link key="calendar" className="nav-link" to='/calendar'>Booking Calendar</Link>,
-            <Link key="admin" className="nav-link" to='/admin'>Admin Page</Link>,
-            <Link key="manager" className="nav-link" to='/manager'>Manager Site</Link>,
-            <Link key="pr" className="nav-link" to='/pr'>Public Relations</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Tidligere konserter</Link>,
+            <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Priskalkulator</Link>,
+            <Link key="calendar" className="nav-link" to='/calendar'>Bookingkalender</Link>,
+
+            // TODO: Kanskje ha "Min side" eller noe
+            <Link key="admin" className="nav-link" to='/admin'>Admin</Link>,
+            <Link key="manager" className="nav-link" to='/manager'>Manager</Link>,
+            <Link key="pr" className="nav-link" to='/pr'>PR</Link>,
             
         ]
         this.managerLinks = [

@@ -78,14 +78,7 @@ class Login extends Component {
       this.setState({redirectToReferrer: true})
     })
     .catch(error => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage)
-      this.setState({
-        errorCode: errorCode,
-        errorMessage: errorMessage,
-        password: "",
-      })
+      this.handleError(error);
     })
   }
 

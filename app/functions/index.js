@@ -27,18 +27,19 @@ const app = express();
 // SPOTIFY TOKEN //
 // TODO: Ikke refresh token om det ikke er nødvendig
 var spotifyToken = ""
-var now = new Date();
 var expires = 0;
 app.use(cors);
 app.get('', (req, res) => {
-    now = new Date()
+    var now = new Date()
     // Hent expires fra databasen
-    admin.database().ref().child('cloudFunctions').child("expires").once("value", expiresSnap => {
-        expires = expiresSnap.val()
+    admin.database().ref().child('cloudFunctions').once("value", cloudSnap => {
+        spotifyToken = cloudSnap.val().token;
+        expires = cloudSnap.val().expires;
     })
     .then(() => {
         // Hvis tiden går ut om under 10 minutter (600000 ms) eller spotifyToken ikke er satt
-        if (now.getTime()+600000 > expires || spotifyToken === "") {
+        console.log("Checking", now.getTime()+600000, "vs", expires, "and token is", spotifyToken)
+        if (now.getTime()+600000 > expires || spotifyToken === undefined) {
             console.log("Fetching new Token")
             // Retrieve an access token.
             spotifyApi.clientCredentialsGrant()
@@ -50,9 +51,10 @@ app.get('', (req, res) => {
                 // Lag ny "Date" for når token går ut. expiresIn er oppgitt i sekunder.
                 expires = new Date((now.getTime() + expiresIn*1000))
 
-                // Sett ny expires i databasen
+                // Sett ny expires og token i databasen
                 admin.database().ref().child('cloudFunctions').update({
-                    expires: expires.getTime()
+                    expires: expires.getTime(),
+                    token: spotifyToken
                 })
 
                 // Send token som JSON
