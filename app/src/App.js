@@ -200,6 +200,7 @@ class App extends Component {
             <Route exact path="/" render={(props)=><HomePage {...props} state={this.state}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
 
+            <PrivateRoute path="/home" component={HomePage}/>
             <PrivateRoute path="/setup" component={Setup}/>
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
             <PrivateRoute path="/previousbands" component={PreviousBands}/>
