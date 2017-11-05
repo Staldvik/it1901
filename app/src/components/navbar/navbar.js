@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import './navbar.css';
 import logo from '../../static/img/festival.png'
 
+import {Redirect} from 'react-router-dom';
+
 export default class NavComponent extends Component {
 
     constructor(props) {
@@ -125,7 +127,7 @@ export default class NavComponent extends Component {
 
         return(
             <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-                <a className="navbar-brand" href="#" onClick={this.exit}>{festivalName}</a>
+                <a className="navbar-brand" href="#" onClick={console.log("Todo")}>{festivalName}</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -141,12 +143,22 @@ export default class NavComponent extends Component {
                                 )
                             })
                         }
+                        
                     </ul>
-                    <form className="form-inline my-2 my-md-0">
-                        <input className="form-control" type="text" placeholder="Search"/>
-                    </form>
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {loggedInAs}
+                            </a>
+                            <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+
             </nav>
+            
         )
     }
 }

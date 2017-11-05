@@ -43,7 +43,7 @@ class Login extends Component {
     database.ref('users').once('value', usersSnapshot => {
       usersSnapshot.forEach(userSnapshot => {
         previousLoginOptions.push(
-          <option value={userSnapshot.val().email} key={userSnapshot.key}>{userSnapshot.val().displayName} </option> 
+          <option value={userSnapshot.val().email} key={userSnapshot.key}> {userSnapshot.val().displayName} </option> 
         )
 
         if (! previousSelectedLogin) {
