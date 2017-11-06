@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './style.css';
 import ProgramDays from '../../components/programdays/ProgramDays'
+import ProgramSlots from '../../components/programslots/ProgramSlots'
 
 //firebase
 import database from '../../database'
@@ -35,6 +36,8 @@ export default class HomePage extends Component {
           })
         })
 
+    
+
 
   }
 
@@ -54,24 +57,14 @@ export default class HomePage extends Component {
           </thead>
           
           <tbody>
+            <tr>
                   {this.state.days.map((day) => {
-                        return(<tr> 
-                          <td>
-                          </td>
-                          <td>
-                          </td>
-                          <td>
-                          </td>
-                          <td>
-                          </td>
-                          <td>
-                          </td>
-                          </tr> )
+                        return(<td> 
+                          <ProgramSlots festival={this.props.state.festival} date={day.id}/>
+                          </td>  )
                       })
                   } 
-                
-               
-            
+            </tr>
 
           </tbody>
                     
