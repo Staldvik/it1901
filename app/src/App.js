@@ -35,8 +35,8 @@ class App extends Component {
       festival: 'festival17', //this state will allow you to select which festival
       festivalName: "festival17", //just use this as a default
       isFestivalSelected: false,
-      message: "Hello from App",
-      user: null
+      user: null,
+      username: ""
     }
 
     this.roleMap = new Map()
@@ -84,7 +84,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+    database.ref("users").once("value", usersSnap => {
+      usersSnap.forEach(userSnap => {
+        if (userSnap.key === this.state.user.uid) {
+          this.setState({username: userSnap.val().displayName})
+        }
+      })
+    })
   }
 
   exit(){
@@ -124,7 +130,7 @@ class App extends Component {
     }
 
     // Admin har tilgang til alt
-    if (rolesForUser.admin === true) {return true}
+    if (rolesForUser.admin === true || path === "/home") {return true}
 
     // Sjekk path
     switch(path) {

@@ -18,7 +18,6 @@ export default class NavComponent extends Component {
             loginOptions: [],
         }
 
-        // TODO: gå vekk fra å ikke vise linken, til å ha den disabled
         // TODO: fikse linker til å stemme med navn/funksjon
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
