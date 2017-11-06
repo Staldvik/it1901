@@ -156,7 +156,6 @@ export default class NavComponent extends Component {
           this.setState({
             errorCode:null, 
             errorMessage:null,
-            redirectToReferrer: true,
           })
     
         })

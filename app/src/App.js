@@ -37,7 +37,7 @@ class App extends Component {
       festivalName: "festival17", //just use this as a default
       isFestivalSelected: false,
       user: null,
-      username: ""
+      username: "Not logged in"
     }
 
     this.roleMap = new Map()
@@ -143,10 +143,10 @@ class App extends Component {
     switch(path) {
 
         case "/bandbooking":
-            return rolesForUser.booking === true 
+            return rolesForUser.booking === true && rolesForUser["booking-manager"] === true
         
         case "/bandbookingresponsible":
-            return rolesForUser.booking === true 
+            return rolesForUser.booking === true && rolesForUser["booking-responsible"] === true
 
         case "/banddatabase":
             return rolesForUser.booking === true
@@ -186,7 +186,7 @@ class App extends Component {
       console.log("No festival. Redirecting to Frontpage")
       return <Route path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
     } else if (!this.state.user && window.location.pathname !== "/login") {
-      return <Redirect to="/login" />
+      return <Redirect to="/home" />
     }
 
     const PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (
@@ -195,7 +195,7 @@ class App extends Component {
           <Component {...props} state={this.state}/>
         ) : (
           <Redirect to={{
-            pathname: '/login',
+            pathname: '/home',
             state: { from: props.location }
           }}/>
         )

@@ -83,19 +83,11 @@ exports.addNewUser = functions.auth.user().onCreate(event => {
     const user = event.data; // The Firebase user.
     const uid = user.uid;
     const email = user.email; // The email of the user.
-    const displayName = email.split('@')[0]
     // [END eventAttributes]
-    .then(() => {
-        return admin.database().ref().child('users').child(uid).update({
+    return admin.database().ref().child('users').child(uid).update({
         email: email,
-        displayName: displayName
-        })
     })
-    .catch((error) => {
-        console.log(error)
-    })
-});
-
+})
 
 
 
