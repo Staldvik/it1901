@@ -38,7 +38,7 @@ export default class CreateDay extends Component {
     render() {
         return (
             <tr>
-                <td> <input name="date" placeholder="date or name of day" type="text" value={this.state.date} onChange={this.handleChange}/></td>
+                <td> <input name="date" placeholder="02.11.2017" type="text" value={this.state.date} onChange={this.handleChange}/></td>
                 <td> <button onClick={() => this.create(
                         this.state.date,
                     )}> Add Day</button>

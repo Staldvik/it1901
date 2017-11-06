@@ -58,11 +58,13 @@ export default class CreatedDays extends Component {
     }
 
     removeDay(key){
+        if(window.confirm("Are you sure you want to remove the day?\n\nRemoving a day from a festival will affect all concerts on that day")){
         database.ref(this.state.festival).child('program').child(key).remove()
 
         this.setState({ //nice way to hide deleted elements
             deleted: true,
           })
+        }
     }
 
     

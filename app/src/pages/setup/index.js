@@ -61,9 +61,9 @@ export default class Setup extends Component {
 
   render() {
       return(
-        <div id="">
+        <div id="setupPage">
           <h2>Create Scenes</h2>
-          <table>
+          <table className="setupTable">
             <thead>
               <tr>
                   <th>Name</th>
@@ -81,7 +81,7 @@ export default class Setup extends Component {
           </table>
 
           <h2>My Scenes</h2>
-          <table>
+          <table className="setupTable">
             <thead>
               <tr>
                   <th>Name</th>
@@ -108,7 +108,7 @@ export default class Setup extends Component {
 
 
           <h2>Add Day</h2>
-            <table>
+            <table className="setupTable">
             <CreateDay
               festival={this.props.state.festival}/>
             </table>

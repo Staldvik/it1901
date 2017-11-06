@@ -125,7 +125,9 @@ export default class NavComponent extends Component {
 
         return(
             <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-                <a className="navbar-brand" href="#" onClick={console.log("Todo")}>{festivalName}</a>
+                 <a id="exitFestivalButton" href="#" onClick={this.exit}>X</a>
+                 <Link className="navbar-brand" key="home" to='/home'>{festivalName}</Link>
+               
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
