@@ -18,7 +18,6 @@ export default class NavComponent extends Component {
             loginOptions: [],
         }
 
-        // TODO: gå vekk fra å ikke vise linken, til å ha den disabled
         // TODO: fikse linker til å stemme med navn/funksjon
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
@@ -29,7 +28,6 @@ export default class NavComponent extends Component {
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Confirm Booking</Link>,
             <Link key="banddatabase" className="nav-link" to='/banddatabase'>Tidligere konserter</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Priskalkulator</Link>,
-            <Link key="calendar" className="nav-link" to='/calendar'>Bookingkalender</Link>,
 
             // TODO: Kanskje ha "Min side" eller noe
             <Link key="admin" className="nav-link" to='/admin'>Admin</Link>,

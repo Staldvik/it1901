@@ -80,6 +80,9 @@ export default class AdminPage extends Component {
       previousConcertOptions.push(
         <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
       )
+      if (this.state.selectedConcert === "") {
+        this.setState({selectedConcert: concertSnapshot.key})
+      }
     })
 
     database.ref(this.props.state.festival).child('technicians').on('child_added', techSnapshot => {
@@ -102,6 +105,7 @@ export default class AdminPage extends Component {
         currentTechnicianNameInput: "",
         currentTechnicianIdInput: "",
         selectedTechnician: techSnapshot.key //set the selected to the one last added to prevent error if none i selected
+
       })
     })
 

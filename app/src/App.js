@@ -15,7 +15,6 @@ import BandBooking from './pages/bandbooking';
 import BandBookingResponsible from './pages/bandbookingresponsible';
 import BandDatabase from './pages/banddatabase';
 import PriceCalculator from './pages/pricecalculator';
-import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
 import Artists from './pages/artists';
 import ManagerSite from './pages/manager_site'
@@ -37,8 +36,8 @@ class App extends Component {
       festival: 'festival17', //this state will allow you to select which festival
       festivalName: "festival17", //just use this as a default
       isFestivalSelected: false,
-      message: "Hello from App",
-      user: null
+      user: null,
+      username: ""
     }
 
     this.roleMap = new Map()
@@ -86,7 +85,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+    database.ref("users").once("value", usersSnap => {
+      usersSnap.forEach(userSnap => {
+        if (userSnap.key === this.state.user.uid) {
+          this.setState({username: userSnap.val().displayName})
+        }
+      })
+    })
   }
 
   exit(){
@@ -126,7 +131,7 @@ class App extends Component {
     }
 
     // Admin har tilgang til alt
-    if (rolesForUser.admin === true) {return true}
+    if (rolesForUser.admin === true || path === "/home") {return true}
 
     // Sjekk path
     switch(path) {
@@ -141,9 +146,6 @@ class App extends Component {
             return rolesForUser.booking === true
 
         case "/pricecalculator":
-            return rolesForUser.booking === true
-
-        case "/calendar":
             return rolesForUser.booking === true
 
         case "/concerts":
@@ -210,7 +212,6 @@ class App extends Component {
             
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
             <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>
-            <PrivateRoute path="/calendar" component={BookingCalendar}/>
             <PrivateRoute path="/concerts" component={ConcertPage}/>
             <PrivateRoute path="/artists" component={Artists}/>
             <PrivateRoute path="/search" component={Search}/>
