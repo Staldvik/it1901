@@ -131,10 +131,6 @@ export default class PriceCalculator extends Component {
       <div className="App">
         
         
-        <h1>
-          Ticket Price Estimation:
-        </h1>
-        
         <form id="ticketPriceCalculator">
         <select name="selectedScene" value={this.state.selectedScene} onChange={this.handleChange}>
               {this.state.sceneOptions}
