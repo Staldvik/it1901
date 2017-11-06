@@ -23,13 +23,13 @@ export default class NavComponent extends Component {
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
             <Link key="technicians" className="nav-link" to='/technicians'>Technicians</Link>,
-            <Link key="concerts" className="nav-link" to='/concerts'>Konserter</Link>,
-            <Link key="search" className="nav-link" to='/search'>Artistsøk</Link>,
-            <Link key="artists" className="nav-link" to='/artists'>Artister</Link>,
+            <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
+            <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
+            <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
             <Link key="bandbookingresponsible" className="nav-link" to='/bandbookingresponsible'>Book Artist</Link>,
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Confirm Booking</Link>,
-            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Tidligere konserter</Link>,
-            <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Priskalkulator</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Previous Concerts</Link>,
+            <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Price Calculator</Link>,
 
             // TODO: Kanskje ha "Min side" eller noe
             <Link key="admin" className="nav-link" to='/admin'>Admin</Link>,
@@ -73,7 +73,7 @@ export default class NavComponent extends Component {
 
     componentDidMount() {
         var previousLoginOptions = this.state.loginOptions
-        database.ref('users').once('value', usersSnapshot => {
+        database.ref('users').orderByChild('displayName').once('value', usersSnapshot => {
             usersSnapshot.forEach(userSnapshot => {
               previousLoginOptions.push(
                 <option id="dropdownItem" onClick={this.changeUser} value={userSnapshot.val().email} key={userSnapshot.key}> {userSnapshot.val().displayName} </option> 
@@ -173,15 +173,15 @@ export default class NavComponent extends Component {
         var festivalName = this.props.festivalName
 
         return(
-            <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
                  <a id="exitFestivalButton" href="#" onClick={this.exit}>X</a>
                  <Link className="navbar-brand" key="home" to='/home'>{festivalName}</Link>
                
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#festivalNavbar" aria-controls="festivalNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarsExample04">
+                <div className="collapse navbar-collapse" id="festivalNavbar">
                     <ul className="navbar-nav mr-auto">
                         {
                             this.state.viewableLinks.map(link => {

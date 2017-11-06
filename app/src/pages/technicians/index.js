@@ -60,11 +60,17 @@ export default class Technicians extends Component {
     // User Form
     var previousUserOptions = this.state.userOptions;
 
+    var firstConcert = ""
     database.ref(this.props.state.festival).child('concerts').on('child_added', concertSnapshot => {
       console.log(concertSnapshot.val().name)
+      console.log(concertSnapshot.key)
       previousConcertOptions.push(
         <option label={concertSnapshot.val().name} value={concertSnapshot.key} key={concertSnapshot.key}> {concertSnapshot.val().name} </option>
+        
       )
+      if (! firstConcert) {
+        firstConcert = concertSnapshot.key
+      }
     })
 
     database.ref(this.props.state.festival).child('technicians').on('child_added', techSnapshot => {
@@ -86,7 +92,8 @@ export default class Technicians extends Component {
         currentTechnicianConcert: "",
         currentTechnicianNameInput: "",
         currentTechnicianIdInput: "",
-        selectedTechnician: techSnapshot.key //set the selected to the one last added to prevent error if none i selected
+        selectedTechnician: techSnapshot.key, //set the selected to the one last added to prevent error if none i selected
+        selectedConcert: firstConcert// Funket ikke: previousConcertOptions[0].value,
       })
     })
 
@@ -125,6 +132,7 @@ export default class Technicians extends Component {
 
   isTechInConcert() { 
     console.log("Running check: is tech already in concert?");
+    console.log("Festivalkey:", this.props.state.festival, "Selected concert:", this.state.selectedConcert)
     var isInConcert = false;
     var currentTechKey = this.state.selectedTechnician;
 
