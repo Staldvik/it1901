@@ -3,3 +3,11 @@
   font-size: 1.5em;
   width: 40px;
 }
+
+#dropdownItem:hover {
+  cursor: pointer;
+}
+
+#navDropdown {
+  margin-right: 20px;
+}
