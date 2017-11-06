@@ -12,6 +12,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 
 //Pages
 import BandBooking from './pages/bandbooking';
+import BandBookingResponsible from './pages/bandbookingresponsible';
 import BandDatabase from './pages/banddatabase';
 import PriceCalculator from './pages/pricecalculator';
 import BookingCalendar from './pages/bookingcalendar';
@@ -25,6 +26,7 @@ import PrSite from './pages/pr_site';
 import FrontPage from './pages/frontpage';
 import HomePage from './pages/homepage';
 import Setup from './pages/setup';
+import Technicians from './pages/technicians';
 
 class App extends Component {
 
@@ -131,6 +133,9 @@ class App extends Component {
 
         case "/bandbooking":
             return rolesForUser.booking === true 
+        
+        case "/bandbookingresponsible":
+            return rolesForUser.booking === true 
 
         case "/banddatabase":
             return rolesForUser.booking === true
@@ -155,7 +160,9 @@ class App extends Component {
 
         case "/manager":
             return rolesForUser.manager === true
-            
+        
+        case "/technicians":
+            return rolesForUser.manager === true
         default:
             return false
 
@@ -199,6 +206,8 @@ class App extends Component {
             <PrivateRoute path="/home" component={HomePage}/>
             <PrivateRoute path="/setup" component={Setup}/>
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
+            <PrivateRoute path="/bandbookingresponsible" component={BandBookingResponsible}/>
+            
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
             <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>
             <PrivateRoute path="/calendar" component={BookingCalendar}/>
@@ -208,6 +217,7 @@ class App extends Component {
             <PrivateRoute path="/pr" component={PrSite}/>
             <PrivateRoute path="/admin" component={AdminPage}/>
             <PrivateRoute path="/manager" component={ManagerSite}/>
+            <PrivateRoute path="/technicians" component={Technicians}/>
           </Switch>
         </div>
       </div>
