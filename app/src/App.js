@@ -65,10 +65,22 @@ class App extends Component {
       firebaseApp.auth().onAuthStateChanged(user => {
         if (user) {
           // Logged in
-          console.log("Changed user")
-          this.setState({
-            user: user
+          database.ref("users").once("value", usersSnap => {
+            usersSnap.forEach(userSnap => {
+              console.log(userSnap.val())
+              console.log(userSnap.key === user.uid)
+              if (userSnap.key === user.uid) {
+                this.setState({username: userSnap.val().displayName})
+              }
+            })
           })
+          .then(() => {     
+            console.log("Changed user")
+            this.setState({
+              user: user
+            })
+          })
+          
         } else {
           // Logged out
           this.setState({
@@ -85,13 +97,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    database.ref("users").once("value", usersSnap => {
-      usersSnap.forEach(userSnap => {
-        if (userSnap.key === this.state.user.uid) {
-          this.setState({username: userSnap.val().displayName})
-        }
-      })
-    })
+    
   }
 
   exit(){
@@ -174,6 +180,7 @@ class App extends Component {
 
 
   render() {
+    console.log("Displayname:", this.state.username)
 
     if (! this.state.isFestivalSelected){
       console.log("No festival. Redirecting to Frontpage")
@@ -198,7 +205,7 @@ class App extends Component {
     
     return (
       <div>
-        <NavComponent user={this.state.user} festivalName={this.state.festivalName} exit={this.exit}/>
+        <NavComponent user={this.state.user} username={this.state.username} festivalName={this.state.festivalName} exit={this.exit}/>
 
         <div className="container" id="mainContainer">
           <Switch>

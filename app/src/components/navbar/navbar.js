@@ -14,6 +14,7 @@ export default class NavComponent extends Component {
         super(props);
         this.state = {
             user: props.user,
+            username: props.username,
             viewableLinks: [],
             loginOptions: [],
         }
@@ -89,6 +90,7 @@ export default class NavComponent extends Component {
 
         this.setState({
             user: nextProps.user,
+            username: nextProps.username,
             viewableLinks: this.getCorrectNav(nextProps.user)
         })
 
@@ -170,12 +172,6 @@ export default class NavComponent extends Component {
         var loggedInAs = "Not logged in"
         var festivalName = this.props.festivalName
 
-
-        if (this.state.user) {
-            loggedInAs = this.state.user.email.split('@')[0]
-        }
-
-
         return(
             <nav className="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
                  <a id="exitFestivalButton" href="#" onClick={this.exit}>X</a>
@@ -201,7 +197,7 @@ export default class NavComponent extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {loggedInAs}
+                                {this.state.username}
                             </a>
                             <div id="navDropdown" className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 {this.state.loginOptions}
