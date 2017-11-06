@@ -14,7 +14,6 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import BandBooking from './pages/bandbooking';
 import BandDatabase from './pages/banddatabase';
 import PriceCalculator from './pages/pricecalculator';
-import BookingCalendar from './pages/bookingcalendar';
 import ConcertPage from './pages/concertpage';
 import Artists from './pages/artists';
 import ManagerSite from './pages/manager_site'
@@ -144,9 +143,6 @@ class App extends Component {
         case "/pricecalculator":
             return rolesForUser.booking === true
 
-        case "/calendar":
-            return rolesForUser.booking === true
-
         case "/concerts":
             return rolesForUser.technician === true || rolesForUser.booking === true
 
@@ -207,7 +203,6 @@ class App extends Component {
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
             <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>
-            <PrivateRoute path="/calendar" component={BookingCalendar}/>
             <PrivateRoute path="/concerts" component={ConcertPage}/>
             <PrivateRoute path="/artists" component={Artists}/>
             <PrivateRoute path="/search" component={Search}/>

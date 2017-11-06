@@ -27,7 +27,6 @@ export default class NavComponent extends Component {
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Bandbooking</Link>,
             <Link key="banddatabase" className="nav-link" to='/banddatabase'>Tidligere konserter</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Priskalkulator</Link>,
-            <Link key="calendar" className="nav-link" to='/calendar'>Bookingkalender</Link>,
 
             // TODO: Kanskje ha "Min side" eller noe
             <Link key="admin" className="nav-link" to='/admin'>Admin</Link>,
