@@ -21,6 +21,7 @@ export default class NavComponent extends Component {
         // TODO: fikse linker til å stemme med navn/funksjon
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
+            <Link key="technicians" className="nav-link" to='/technicians'>Technicians</Link>,
             <Link key="concerts" className="nav-link" to='/concerts'>Konserter</Link>,
             <Link key="search" className="nav-link" to='/search'>Artistsøk</Link>,
             <Link key="artists" className="nav-link" to='/artists'>Artister</Link>,

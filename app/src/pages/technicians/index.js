@@ -199,27 +199,22 @@ export default class Technicians extends Component {
   render() {
     return (
       <div className="App">
-        <h1>
-          Technicians
-        </h1>
-
-        <p> Dette er en haug med former for å legge til forskjellige ting i databasen </p>
 
         <form>
-          <h3> Denne formen er for å pushe en tekniker inn i databasen </h3>
+          <h4> Add Technician</h4>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
-          <button onClick={this.handleSubmitTech}>Submit</button>
+          <button onClick={this.handleSubmitTech}>Add</button>
         </form>
-
+        <br></br>
         <form>
-          <h3> Denne formen er for å pushe en tekniker inn i konserten </h3>
+          <h3> Assign to concert</h3>
           <select name="selectedTechnician" onChange={this.handleChange} value={this.state.selectedTechnician}>
             {this.state.technicianOptions}
           </select>
           <select name="selectedConcert" onChange={this.handleChange} value={this.state.selectedConcert}>
             {this.state.concertOptions}
           </select>
-          <button onClick={this.pushTech}>Submit</button>
+          <button onClick={this.pushTech}>Assign</button>
         </form>
 
       </div>
