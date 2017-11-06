@@ -13,7 +13,7 @@ import {roles, auth} from './roles';
 //Pages
 import App from './App';
 import BandBooking from './pages/bandbooking';
-import PreviousBands from './pages/previousbands';
+import  from './pages/';
 import BandDatabase from './pages/banddatabase';
 import PriceCalculator from './pages/pricecalculator';
 import BookingCalendar from './pages/bookingcalendar';
@@ -44,7 +44,7 @@ const Routes = () => (
         <Route path="/login" component={Login}/>
         
         <PrivateRoute path="/bandbooking" component={BandBooking}/>
-        <PrivateRoute path="/previousbands" component={PreviousBands}/>
+        <PrivateRoute path="/" component={}/>
         <PrivateRoute path="/banddatabase" component={BandDatabase}/>
         <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>
         <PrivateRoute path="/calendar" component={BookingCalendar}/>

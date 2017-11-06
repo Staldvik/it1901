@@ -55,7 +55,7 @@ const auth = {
             case "/bandbooking":
                 return rolesForUser.booking == true
 
-            case "/previousbands":
+            case "/":
                 return rolesForUser.booking == true
 
             case "/banddatabase":
@@ -102,7 +102,7 @@ const auth = {
         case "/bandbooking":
             return rolesForUser.booking == true
 
-        case "/previousbands":
+        case "/":
             return rolesForUser.booking == true
 
         case "/banddatabase":
