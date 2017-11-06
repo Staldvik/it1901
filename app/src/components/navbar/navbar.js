@@ -5,13 +5,17 @@ import logo from '../../static/img/festival.png'
 
 import {Redirect} from 'react-router-dom';
 
+// Firebase
+import database, {firebaseApp} from '../../database';
+
 export default class NavComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             user: props.user,
-            viewableLinks: []
+            viewableLinks: [],
+            loginOptions: [],
         }
 
         // TODO: gå vekk fra å ikke vise linken, til å ha den disabled
@@ -68,11 +72,24 @@ export default class NavComponent extends Component {
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
 
+        
         this.exit = this.exit.bind(this) //exit and go to festival selection page        
     }
 
     componentDidMount() {
-        this.setState({viewableLinks: this.getCorrectNav()})
+        var previousLoginOptions = this.state.loginOptions
+        database.ref('users').once('value', usersSnapshot => {
+            usersSnapshot.forEach(userSnapshot => {
+              previousLoginOptions.push(
+                <option id="dropdownItem" onClick={this.changeUser} value={userSnapshot.val().email} key={userSnapshot.key}> {userSnapshot.val().displayName} </option> 
+              )
+            })
+          }).then(() => {
+            this.setState({
+              loginOptions: previousLoginOptions,
+              viewableLinks: this.getCorrectNav(),
+            })
+          })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -134,6 +151,26 @@ export default class NavComponent extends Component {
         this.props.exit();
     }
 
+    changeUser = event => {
+        event.preventDefault();
+    
+        // Logg inn med epost fra dropdown og passord festival (som er passordet til alle brukere jeg har lagt inn)
+        firebaseApp.auth().signInWithEmailAndPassword(event.target.value, "festival")
+        .then((user) => {
+          console.log("Signed In as", user)
+          this.setState({
+            errorCode:null, 
+            errorMessage:null,
+            redirectToReferrer: true,
+          })
+    
+        })
+        .catch(error => {
+          this.handleError(error);
+        })
+    
+      }
+
     render() {
 
 
@@ -173,8 +210,8 @@ export default class NavComponent extends Component {
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 {loggedInAs}
                             </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                
+                            <div id="navDropdown" className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                {this.state.loginOptions}
                             </div>
                         </li>
                     </ul>
