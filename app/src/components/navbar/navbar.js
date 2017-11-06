@@ -25,7 +25,8 @@ export default class NavComponent extends Component {
             <Link key="concerts" className="nav-link" to='/concerts'>Konserter</Link>,
             <Link key="search" className="nav-link" to='/search'>Artistsøk</Link>,
             <Link key="artists" className="nav-link" to='/artists'>Artister</Link>,
-            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Bandbooking</Link>,
+            <Link key="bandbookingresponsible" className="nav-link" to='/bandbookingresponsible'>Book Artist</Link>,
+            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Confirm Booking</Link>,
             <Link key="banddatabase" className="nav-link" to='/banddatabase'>Tidligere konserter</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Priskalkulator</Link>,
             <Link key="calendar" className="nav-link" to='/calendar'>Bookingkalender</Link>,
@@ -56,19 +57,13 @@ export default class NavComponent extends Component {
         this.bookingResponsibleLinks = [
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
             <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
-            <Link key="bandbooking" className="nav-link" to='/bandbooking'>Band Booking</Link>,
-            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Band Database</Link>,
-            <Link key="bandbooking" className="nav-link" to='/bandbookingresponsible'>Book Artist</Link>,
-            <Link key="previousbands" className="nav-link" to='/previousbands'>TeknikerTest</Link>,
-            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Artist Database</Link>,
+            <Link key="bandbookingresponsible" className="nav-link" to='/bandbookingresponsible'>Book Artist</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
         this.bookingBossLinks = [
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
             <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Confirm Booking</Link>,
-            <Link key="previousbands" className="nav-link" to='/previousbands'>TeknikerTest</Link>,
-            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Artist Database</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
 
