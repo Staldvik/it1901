@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './style.css';
 import database from '../../database'
 
-export default class BandBooking extends Component {
+export default class BandBookingResponsible extends Component {
   // static propTypes = {}
   // static defaultProps = {}
   // state = {}
@@ -312,7 +312,7 @@ export default class BandBooking extends Component {
       <div className="App">
         
         
-        <h1>Book Artist</h1>
+        <h1>Band Booking</h1>
         
         {/*Sendes videre til bookingsjef for godkjenning.*/}
         <h3> Her kan du sende tilbud til manager for et band om de vil spille. </h3>
@@ -363,10 +363,6 @@ export default class BandBooking extends Component {
                           ({this.state.timeMap.get(request.time)})
                       </td>
                       <td>{request.status}</td>
-                      <td>
-                        <button onClick={() =>this.handleAccept(request)}> Accept </button>
-                        <button onClick={() =>this.handleDecline(request)}> Reject </button>
-                      </td>
                     </tr>
                     )
                   }

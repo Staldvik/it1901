@@ -12,6 +12,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 
 //Pages
 import BandBooking from './pages/bandbooking';
+import BandBookingResponsible from './pages/bandbookingresponsible';
 import PreviousBands from './pages/previousbands';
 import BandDatabase from './pages/banddatabase';
 import PriceCalculator from './pages/pricecalculator';
@@ -133,6 +134,9 @@ class App extends Component {
 
         case "/bandbooking":
             return rolesForUser.booking === true 
+        
+        case "/bandbookingresponsible":
+            return rolesForUser.booking === true 
 
         case "/previousbands":
             return rolesForUser.booking === true
@@ -206,6 +210,7 @@ class App extends Component {
             <PrivateRoute path="/home" component={HomePage}/>
             <PrivateRoute path="/setup" component={Setup}/>
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
+            <PrivateRoute path="/bandbookingresponsible" component={BandBookingResponsible}/>
             <PrivateRoute path="/previousbands" component={PreviousBands}/>
             <PrivateRoute path="/banddatabase" component={BandDatabase}/>
             <PrivateRoute path="/pricecalculator" component={PriceCalculator}/>
