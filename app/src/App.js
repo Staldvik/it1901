@@ -84,7 +84,8 @@ class App extends Component {
         } else {
           // Logged out
           this.setState({
-            user: null
+            user: null,
+            username: "Not logged in"
           })
         }
       })
@@ -155,7 +156,7 @@ class App extends Component {
             return rolesForUser.booking === true
 
         case "/concerts":
-            return rolesForUser.technician === true || rolesForUser.booking === true
+            return rolesForUser.technician === true || rolesForUser.booking === true || rolesForUser.organizer === true
 
         case "/artists":
             return rolesForUser.booking === true
@@ -185,7 +186,7 @@ class App extends Component {
     if (! this.state.isFestivalSelected){
       console.log("No festival. Redirecting to Frontpage")
       return <Route path="/" render={(props)=><FrontPage {...props} enter={this.enter}/>}/>
-    } else if (!this.state.user && window.location.pathname !== "/login") {
+    } else if (!this.state.user && window.location.pathname !== "/home") {
       return <Redirect to="/home" />
     }
 
@@ -211,8 +212,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={(props)=><HomePage {...props} state={this.state}/>}/>
             <Route path="/login" render={(props)=><Login {...props} state={this.state}/>}/>
+            <Route path="/home" render={(props) => <HomePage {...props} state={this.state}/>}/>
 
-            <PrivateRoute path="/home" component={HomePage}/>
+
             <PrivateRoute path="/setup" component={Setup}/>
             <PrivateRoute path="/bandbooking" component={BandBooking}/>
             <PrivateRoute path="/bandbookingresponsible" component={BandBookingResponsible}/>
