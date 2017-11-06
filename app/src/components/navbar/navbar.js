@@ -16,6 +16,7 @@ export default class NavComponent extends Component {
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
             <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
+            <Link key="technicians" className="nav-link" to='/technicians'>Technicians</Link>,
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
             <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Band Booking</Link>,
@@ -28,6 +29,14 @@ export default class NavComponent extends Component {
             <Link key="pr" className="nav-link" to='/pr'>Public Relations</Link>,
             
         ]
+        
+        this.organizerLinks = [
+            <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
+            <Link key="technicians" className="nav-link" to='/technicians'>Technicians</Link>,
+            <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
+            
+        ]
+
         this.managerLinks = [
             <Link key="manager" className="nav-link" to='/manager'>My Concert Offers</Link>,
         ]
@@ -76,6 +85,10 @@ export default class NavComponent extends Component {
     
                 case "admin":
                     previousViewableLinks = this.adminLinks
+                    break;
+
+                case "organizer":
+                    previousViewableLinks = this.organizerLinks
                     break;
     
                 case "pr":

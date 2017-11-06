@@ -26,6 +26,7 @@ import PrSite from './pages/pr_site';
 import FrontPage from './pages/frontpage';
 import HomePage from './pages/homepage';
 import Setup from './pages/setup';
+import Technicians from './pages/technicians';
 
 class App extends Component {
 
@@ -159,7 +160,9 @@ class App extends Component {
 
         case "/manager":
             return rolesForUser.manager === true
-            
+        
+        case "/technicians":
+            return rolesForUser.manager === true
         default:
             return false
 
@@ -213,6 +216,7 @@ class App extends Component {
             <PrivateRoute path="/pr" component={PrSite}/>
             <PrivateRoute path="/admin" component={AdminPage}/>
             <PrivateRoute path="/manager" component={ManagerSite}/>
+            <PrivateRoute path="/technicians" component={Technicians}/>
           </Switch>
         </div>
       </div>
