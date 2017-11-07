@@ -165,13 +165,17 @@ class App extends Component {
             return rolesForUser.booking === true
         
         case "/setup":
-            return rolesForUser.booking === true
+            return rolesForUser.booking === true || rolesForUser.organizer === true
 
         case "/manager":
             return rolesForUser.manager === true
         
         case "/technicians":
-            return rolesForUser.manager === true
+            return rolesForUser.organizer === true
+
+        case "/pr":
+            return rolesForUser.organizer === true
+
         default:
             return false
 

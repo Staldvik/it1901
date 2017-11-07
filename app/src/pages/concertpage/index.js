@@ -84,6 +84,7 @@ export default class ConcertPage extends Component {
               {this.state.selectedTechName}
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <option id="dropdownItem" onClick={this.handleChange} value={"showAll:Show All"} key={"showAll"}> Show All </option>
               {this.state.opts}
             </div>
             </div>
