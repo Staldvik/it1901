@@ -14,7 +14,7 @@ admin.initializeApp(functions.config().firebase);
 
 // Gotten from spotify
 var clientId = '88641e06b03f46d886b98db9c58e9935',
-clientSecret = '8b9aa7488fb2456a98d4168dd4b5c2c4';
+clientSecret = '6dab70a629784f9e85acf8cc9d2afb54';
 // Create the api object with the credentials
 var spotifyApi = new SpotifyWebApi({
     clientId : clientId,
@@ -30,6 +30,25 @@ var spotifyToken = ""
 var expires = 0;
 app.use(cors);
 app.get('', (req, res) => {
+    // Kjøres nesten alltid, cloud functions holdes bare åpen i noen sekunder
+    if (spotifyToken !== "") {
+        spotifyApi.clientCredentialsGrant()
+        .then(data => {
+            console.log(data)
+            spotifyToken = data.body['access_token']
+            console.log("Sending", spotifyToken)
+            res.json({token: spotifyToken})
+        })
+    // Men hvis den fortsatt har token i minne, ikke spør om ny
+    } else {
+        res.json({token: spotifyToken})
+    }
+})
+exports.spotifyToken = functions.https.onRequest(app);
+// END OF SPOTIFY TOKEN //
+
+// REVERTING TO OLD METHOD FOR TESTING
+/* app.get('', (req, res) => {
     var now = new Date()
     // Hent expires fra databasen
     admin.database().ref().child('cloudFunctions').once("value", cloudSnap => {
@@ -71,10 +90,8 @@ app.get('', (req, res) => {
             res.json({token: spotifyToken})
         }
     })
-});
+}); */
 
-exports.spotifyToken = functions.https.onRequest(app);
-// END OF SPOTIFY TOKEN //
 
 
 
@@ -89,7 +106,19 @@ exports.addNewUser = functions.auth.user().onCreate(event => {
     })
 })
 
-
+exports.addArtistPic = functions.database.ref("{festival}/concerts/{concert}").onCreate(event => {
+    var artistPic = "";
+    var artistKey = event.data.val().artist
+    
+    admin.database().ref(event.params.festival).child('artists').child(artistKey).once("value", artistSnap => {
+        artistPic = artistSnap.val().pic
+    })
+    .then(() => {
+        admin.database().ref(event.params.festival).child('concerts').child(event.params.concert).update({
+            pic: artistPic
+        })
+    })
+})
 
 /* 
 // Last fm.

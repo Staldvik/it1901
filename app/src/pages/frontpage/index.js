@@ -33,7 +33,7 @@ export default class FrontPage extends Component {
     <div className="App">
      
       <h2>Festival Organizer</h2>
-      <form><CreateFestival create={this.create}/></form>
+      <CreateFestival create={this.create}/>
       
       <h3>Existing Festivals</h3>
       <AllFestivals enter={this.enter}/>

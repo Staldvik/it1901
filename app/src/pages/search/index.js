@@ -104,7 +104,7 @@ export default class Search extends Component {
       <div className="App">
         
 
-        <h1> Søk etter artist her </h1>
+        <h1> Search for an Artist here </h1>
 
         <form>
           <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
@@ -115,11 +115,11 @@ export default class Search extends Component {
             <thead>
               <tr>
                   <th>Artist</th>
-                  <th>Følgere</th>
-                  <th>Popularitet (0-100)</th>
-                  <th>Sjangre</th>
+                  <th>Followers</th>
+                  <th>Popularity (0-100)</th>
+                  <th>Genres</th>
                   <th>Spotify</th>
-                  <th>Legg til</th>
+                  <th>Add to database</th>
               </tr>
             </thead>
             {

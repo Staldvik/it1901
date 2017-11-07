@@ -13,9 +13,9 @@ export default class ConcertPage extends Component {
 
     this.state = {
       concerts: [],
-      opts: [<option value="showAll" key="showAll"> show all </option>],
+      opts: [],
       selectedTech: "showAll",
-      technicianNames: []
+      selectedTechName: "Show All",
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,12 +26,13 @@ export default class ConcertPage extends Component {
     var previousConcerts = this.state.concerts;
     var previousOpts = this.state.opts;
     var previousSelectedTech = this.state.selectedTech;
+    
 
     database.ref(this.props.state.festival).child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
       var prevTechnicianNames = [];
       concertSnapshot.child('technicians').forEach((technician) => {
-        prevTechnicianNames.push("ID " + technician.key + ": " + technician.val().name)
+        prevTechnicianNames.push(technician.val().name)
       })
       previousConcerts.push({
         name: vals.name,
@@ -43,6 +44,7 @@ export default class ConcertPage extends Component {
         technicianNames: prevTechnicianNames,
         technicalInfo: vals.technicalInfo,
         pic: vals.pic,
+        rider: vals.rider,
       })
       this.setState({
         concerts: previousConcerts,
@@ -53,7 +55,7 @@ export default class ConcertPage extends Component {
 
     database.ref(this.props.state.festival).child('technicians').orderByChild('ID').on('child_added', technicianSnapshot => {
       previousOpts.push(
-        <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {"ID "+technicianSnapshot.key+": " + technicianSnapshot.val().name} </option>
+        <option id="dropdownItem" onClick={this.handleChange} key={technicianSnapshot.key} value={technicianSnapshot.key+":"+technicianSnapshot.val().name}> {technicianSnapshot.val().name} </option>
       )
       this.setState({        
         opts: previousOpts,
@@ -61,15 +63,10 @@ export default class ConcertPage extends Component {
     })
   }
 
-
   handleChange(e) {
-    var previousConcerts = this.state.concerts;
-    var previousOpts = this.state.opts;
-
     this.setState({
-      concerts: previousConcerts,
-      opts: previousOpts,
-      selectedTech: e.target.value,
+      selectedTech: e.target.value.split(":")[0],
+      selectedTechName: e.target.value.split(":")[1],
     })
     console.log("Selected tech set to: " + e.target.value)
   }
@@ -82,10 +79,14 @@ export default class ConcertPage extends Component {
           <div className="container">
             <h1 className="jumbotron-heading">Konserter</h1>
             <p className="lead text-muted">Her kan man filtrere konsertene etter tekniker</p>
-            <p>
-              <a href="#" className="btn btn-primary">Dette kan være en dropdown</a>
-              <a href="#" className="btn btn-secondary">Dette kan være noe annet</a>
-            </p>
+            <div className="dropdown">
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {this.state.selectedTechName}
+            </button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {this.state.opts}
+            </div>
+            </div>
           </div>
         </section>    
 
@@ -125,7 +126,14 @@ export default class ConcertPage extends Component {
                     <div className="card-body">
                       <h6>{concert.day}</h6>
                       <img src={concert.pic ? concert.pic : template} className="rounded float-left" alt="Bilde av artist"/>
-                      <ul className="list-group float-right">
+                      <div className="float-center">
+                        <h2> Info </h2>
+                        <h6> Genre: {concert.genre} </h6>
+                        <h6> Scene: {concert.scene} </h6>
+                        <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
+                        <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
+                      </div>
+                      <ul className="list-group list-group-flush float-right">
                         <h6> Teknikere på denne konserten </h6>
                         {
                           concert.technicianNames.map(tech => {
