@@ -86,34 +86,46 @@ export default class BandBooking extends Component {
 
     //get artists from database
     database.ref(this.props.state.festival).child('artists').on('child_added', snap => {
-      var vals = snap.val();
+      let vals = snap.val();
+      let marker = "";
+      if(vals.status != "pending"){ //not able to send requests to artist that have a pending request
+          previousArtists.push({
+            id: snap.key,
+            name:vals.name,
+            followers:vals.followers,
+            popularity:vals.popularity,
+            genres:vals.genres,
+            reviews: vals.reviews, 
+            uri: vals.uri,
+            
+          })
+      
+          
+          if(vals.status === "declined"){marker = "**"}//mark artists that have declined a previous offer.
+          if(vals.status === "booked"){marker = "*"}//mark artists that are already booked for a concert.
 
-      previousArtists.push({
-        id: snap.key,
-        name:vals.name,
-        followers:vals.followers,
-        popularity:vals.popularity,
-        genres:vals.genres,
-        reviews: vals.reviews, 
-        uri: vals.uri,
+          //push artists into an array of options elements
+          previousArtistsOptions.push(
+            <option value={snap.key} key={snap.key}> {vals.name}{marker} </option>
+          )
+
+          this.setState({
+            artistOptions: previousArtistsOptions,
+            selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+          })
         
-      })
-
-      //push artists into an array of options elements
-      previousArtistsOptions.push(
-        <option value={snap.key} key={snap.key}> {vals.name} </option>
-      )
+      }
       
       //push name and key into a map
       previousArtistMap.set(snap.key, vals.name);
-      console.log(previousArtistMap);
+      
 
       this.setState({
         artists: previousArtists,
-        artistOptions: previousArtistsOptions,
         artistMap: previousArtistMap,
-        selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don't select before submitting
+        
       })
+    
     })
 
       //Create Scene Select Options 
@@ -311,11 +323,10 @@ export default class BandBooking extends Component {
     return (
       <div className="App">
         
-        
-        <h1>Book Artist</h1>
-        
-        {/*Sendes videre til bookingsjef for godkjenning.*/}
-        <h3> Her kan du sende tilbud til manager for et band om de vil spille. </h3>
+        <h3>Send Booking Request</h3>
+        <p>* artist already booked for a concert<br></br>
+          ** artist declined a previous offer to play
+        </p>
 
         <form>
           
@@ -392,7 +403,7 @@ export default class BandBooking extends Component {
           </table>
         
 
-          <h3>Declined by Bookingsjef</h3>
+          <h3>Declined Requests</h3>
           <table>
             <thead>
               <tr>
