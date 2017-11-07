@@ -5,6 +5,7 @@ import './style.css';
 
 import Technician from '../../components/technician/Technician'
 import Concert from '../../components/concert/Concert'
+import TechniciansList from '../../components/technicianslist/TechniciansList'
 
 //Firebase
 import database from '../../database'
@@ -160,8 +161,7 @@ export default class Technicians extends Component {
     this.isTechInConcert()
     .then(isInConcert => {
 
-      // Hvis ikke i konsert:
-      // TODO: Feedback til bruker
+     
       if (!isInConcert) {
         database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
           name: this.state.technicianMap.get(this.state.selectedTechnician),
@@ -175,6 +175,9 @@ export default class Technicians extends Component {
       }
     })
   }
+
+  
+
 
  
 
@@ -209,10 +212,34 @@ export default class Technicians extends Component {
       <div className="App">
 
         <form>
-          <h4> Add Technician</h4>
+          <h3> Add Technician</h3>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
           <button onClick={this.handleSubmitTech}>Add</button>
         </form>
+        <br></br>
+        
+        <table>
+          <thead>
+                <tr>
+                 <th>Technicians</th>
+                </tr>
+          </thead>
+          
+          <tbody>
+            <tr>
+              {this.state.technicians.map((tech) => {
+                      return(<TechniciansList
+                      name = {tech.name}
+                      />)
+                  })
+              }
+            </tr>
+
+
+          </tbody>
+        
+        </table>
+
         <br></br>
         <form>
           <h3> Assign to concert</h3>
