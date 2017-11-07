@@ -72,10 +72,8 @@ export default class Artists extends Component {
                   <th>Followers</th>
                   <th>Popularity (0-100)</th>
                   <th>Genres</th>
-                  <th>Reviews</th>
                   <th>Booked</th>
                   <th>Listen</th>
-                  <th>Edit</th>
               </tr>
             </thead>
             <tbody>

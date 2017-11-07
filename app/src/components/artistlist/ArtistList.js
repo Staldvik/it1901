@@ -19,18 +19,26 @@ export default class ArtistList extends Component {
             genres: props.genres,
             uri: props.uri,
             reviews: props.reviews,
-            status: props.status
+            status: props.status,
+
+            deleted: false,
         }
-        this.editArtist = this.editArtist.bind(this);
+        
     }
 
 
-    editArtist(key,name,followers,popularity,genres,uri){
-        console.log(key)
-        const data = {
-            //name: "nils",
-        }
-        database.ref(this.state.festival).child("artists").child(key).update(data)    
+    deleteArtist(key,status){
+        if(status == null || status == ""){ //only remove artists that have not concerts or are not in booking process
+            database.ref(this.state.festival).child("artists").child(key).remove() 
+            
+            this.setState({ //nice way to hide deleted elements
+                deleted: true,
+            })
+            }
+        
+        else(
+            alert("Cannot remove ", this.state.name)
+        )
     }
 
     setColorCode(status){
@@ -47,6 +55,32 @@ export default class ArtistList extends Component {
 
 
     render() {
+
+        if(this.state.deleted){ //nice way to hide deleted elements
+            return(null)
+         }
+
+        if(this.state.status == null || this.state.status ==="" || this.state.status ==="declined"){ //nice way to hide deleted elements
+            let colorCodedRow = this.setColorCode(this.state.status); //returns a css id
+            return (
+                <tr id = {colorCodedRow} >
+                    <td> {this.state.name} </td>
+                    <td> {this.state.followers} </td>
+                    <td> {this.state.popularity} </td>
+                    <td> {this.state.genres} </td>
+                    <td> {this.state.status} </td>
+                    <td> <a href={this.state.uri}><img  width="30" height="30" src={spotifyIcon}></img></a>
+                    </td>
+                    <td> <button className="removeX" onClick={() => this.deleteArtist(
+                            this.state.id,
+                            this.state.status,
+                        )}> X </button>
+                    </td>
+                </tr>
+    
+            )
+        }
+        
         let colorCodedRow = this.setColorCode(this.state.status); //returns a css id
         return (
             <tr id = {colorCodedRow} >
@@ -54,19 +88,10 @@ export default class ArtistList extends Component {
                 <td> {this.state.followers} </td>
                 <td> {this.state.popularity} </td>
                 <td> {this.state.genres} </td>
-                <td> {this.state.reviews} </td>
                 <td> {this.state.status} </td>
                 <td> <a href={this.state.uri}><img  width="30" height="30" src={spotifyIcon}></img></a>
                 </td>
-                <td> <button onClick={() => this.editArtist(
-                        this.state.id,
-                        this.state.name, 
-                        this.state.followers, 
-                        this.state.popularity,
-                        this.state.genres,
-                        this.state.uri,
-                    )}> Edit </button>
-                </td>
+
             </tr>
 
         )
