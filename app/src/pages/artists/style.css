@@ -1,9 +1,9 @@
 .declinedRequests{
-  background: rgb(209, 68, 68);
+  background: rgb(255, 97, 97);
 }
 
 .acceptedRequests{
-  background: rgb(36, 202, 36);
+  background: rgb(246, 255, 76);
 }
 
 table {
@@ -18,3 +18,4 @@ table, th, td {
   border: 1px solid black;
   padding: 15px;
 }
+
