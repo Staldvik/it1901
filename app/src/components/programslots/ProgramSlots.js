@@ -53,9 +53,7 @@ export default class ProgramSlots extends Component {
             {this.state.slots.map((slot) => {
                 return(
                 <div id="concertSlot">
-                    <ConcertProgram festival={this.state.festival} concert={slot.concert} />
-                    
-                    <div id="concertTime">{slot.start}-{slot.end}</div>
+                    <ConcertProgram festival={this.state.festival} concert={slot.concert} startTime={slot.start} endTime={slot.end} />
                 </div>)
             })
             }

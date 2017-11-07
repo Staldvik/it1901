@@ -37,11 +37,12 @@ export default class ManageRequest extends Component {
         );
       }
 
-    accept(artist, name, scene, date, time, price, key, technicalrequirements, rider) {
+    accept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider) {
         var data = {
           artist: artist,
           name: name,
           scene: scene,
+          sceneName: sceneDisplay,
           date: date,
           time: time,
           price: price,
@@ -89,6 +90,7 @@ export default class ManageRequest extends Component {
                         this.state.artist,
                         this.state.name,
                         this.state.scene,
+                        this.state.sceneDisplay,
                         this.state.date,
                         this.state.time,
                         this.state.price,

@@ -9,20 +9,32 @@ export default class ConcertProgram extends Component {
         super(props);
         
         this.state = { 
-            festival:props.festival,
+            festival: props.festival,
             concert: props.concert,
+            startTime: props.startTime,
+            endTime: props.endTime,
+            artist: "",
+            name:"",
+            scene: ""
         }
         
     }
 
     componentDidMount() {
-        if(this.state.concert != null){
+        if(this.state.concert != null){ //need to check if there is a concert on that timeslot
             database.ref(this.state.festival).child('concerts').child(this.state.concert).once('value', snap => {
               var vals = snap.val();
-              console.log(vals.name, "hehhhhhhhhhhhhhhhhhhhhhhhhhhh")
+              console.log(vals.artist, "hehhhhhhhhhhhhhhhhhhhhhhhhhhh")
              
+              this.setState({
+                artist: vals.artist,
+                name: vals.name,
+                scene: vals.sceneName
+              })
             })
+           
         }
+        
             
        
       }
@@ -37,8 +49,17 @@ export default class ConcertProgram extends Component {
 
 
     render() {
+        if(this.state.concert==null){
+            return(<div id="availableProgramSlot">Slot Available
+                <div id="">{this.state.startTime}-{this.state.endTime}</div>
+                </div>)
+        }
         return (
-            <div id="">{this.state.concert} {this.state.festival} bilde:</div>
+            <div id="bookedProgramSlot">
+                <div id="">{this.state.name}</div>
+                <div id="">{this.state.scene}</div>
+                <div id="">{this.state.startTime}-{this.state.endTime}</div>
+            </div>
         )
     }
 }
