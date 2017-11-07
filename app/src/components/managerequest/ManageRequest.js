@@ -49,10 +49,10 @@ export default class ManageRequest extends Component {
           requirements: technicalrequirements,
           rider: rider,
         }
-        database.ref(this.state.festival).child("concerts").push(data);
+        let concertKey = database.ref(this.state.festival).child("concerts").push(data).key;
         database.ref(this.state.festival).child("requests").child(key).remove(); //remove from requests
         database.ref(this.state.festival).child('artists').child(artist).update({status:"booked"}) //setter artist status til booked 
-        database.ref(this.state.festival).child('program').child(date).child('slots').child(time).update({concert: key}) //legger til konserten i slot
+        database.ref(this.state.festival).child('program').child(date).child('slots').child(time).update({concert: concertKey}) //legger til konserten i slot
         alert(this.state.name + " booked on " + this.state.sceneDisplay + "\n"
         + this.state.dateDisplay + " (" + this.state.timeDisplay + ")" + "\n"
         + "requirements: " + technicalrequirements + "\n"

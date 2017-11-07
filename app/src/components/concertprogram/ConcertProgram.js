@@ -14,8 +14,18 @@ export default class ConcertProgram extends Component {
         }
         
     }
-   
 
+    componentDidMount() {
+        if(this.state.concert != null){
+            database.ref(this.state.festival).child('concerts').child(this.state.concert).once('value', snap => {
+              var vals = snap.val();
+              console.log(vals.name, "hehhhhhhhhhhhhhhhhhhhhhhhhhhh")
+             
+            })
+        }
+            
+       
+      }
     
 
     handleChange(e) {
@@ -28,7 +38,7 @@ export default class ConcertProgram extends Component {
 
     render() {
         return (
-            <div id="">{this.state.concert} bilde:</div>
+            <div id="">{this.state.concert} {this.state.festival} bilde:</div>
         )
     }
 }
