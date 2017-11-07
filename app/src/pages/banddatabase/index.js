@@ -26,10 +26,17 @@ export default class BandDatabase extends Component {
       currentSearchInput: "",
     }
 
-
+    this.handleSearch = this.handleSearch.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  handleSearch(e) {
+    e.preventDefault();
+    this.setState({
+      currentSearchInput: e.target.value
+    })
+
+  }
 
   handleChange(e) {
     e.preventDefault();
@@ -67,7 +74,7 @@ export default class BandDatabase extends Component {
             var genre = concertSnapshot.val().genre
             if (!previousGenres.includes(genre)) {
               previousGenreOptions.push(
-                <option value={genre} onClick={this.handleChange} key={concertSnapshot.key}> {genre} </option>
+                <option id="dropdownItem" value={genre} onClick={this.handleChange} key={concertSnapshot.key}> {genre} </option>
               )
               previousGenres.push(genre)
             }
@@ -92,11 +99,11 @@ export default class BandDatabase extends Component {
         <section className="jumbotron text-center">
           <div className="container">
             <h1 className="jumbotron-heading">Concert Database</h1>
-            <p className="lead text-muted">These are all the concerts found in our database</p>
+            <p className="lead text-muted">These are all the old and new concerts found in our database</p>
             <p>
-              <a href="#" class="btn btn-primary">Main call to action</a>
+              <input type="text" class="form-control" value={this.state.currentSearchInput} onChange={this.handleSearch} placeholder="Search for Artist..." aria-label="Search for..."/>
             </p>
-            <div className="dropdown">
+            <div id="concertDatabaseDrop" className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {this.state.selectedGenre}
             </button>
@@ -116,7 +123,7 @@ export default class BandDatabase extends Component {
             let match = false;
 
               // Hvis valgt er Show All så "matcher" alle
-              if (this.state.selectedGenre === "ShowAll") {
+              if (this.state.selectedGenre === "All Genres") {
 
                 if (this.state.currentSearchInput === "") {
                   match = true
