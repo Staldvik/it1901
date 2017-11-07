@@ -15,7 +15,7 @@ export default class ConcertPage extends Component {
       concerts: [],
       opts: [],
       selectedTech: "showAll",
-      selectedTechName: "Show All",
+      selectedTechName: "All Technicians",
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -77,14 +77,14 @@ export default class ConcertPage extends Component {
 
         <section className="jumbotron text-center">
           <div className="container">
-            <h1 className="jumbotron-heading">Konserter</h1>
-            <p className="lead text-muted">Her kan man filtrere konsertene etter tekniker</p>
+            <h1 className="jumbotron-heading">Concerts</h1>
+            <p className="lead text-muted">Filter concerts by technician here</p>
             <div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {this.state.selectedTechName}
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <option id="dropdownItem" onClick={this.handleChange} value={"showAll:Show All"} key={"showAll"}> Show All </option>
+              <option id="dropdownItem" onClick={this.handleChange} value={"showAll:All Technicians"} key={"showAll"}> All Technicians </option>
               {this.state.opts}
             </div>
             </div>
@@ -135,7 +135,7 @@ export default class ConcertPage extends Component {
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>
                       <ul className="list-group list-group-flush float-right">
-                        <h6> Teknikere på denne konserten </h6>
+                        <h6> Technicians on this concert </h6>
                         {
                           concert.technicianNames.map(tech => {
                             console.log("Tech", tech)
