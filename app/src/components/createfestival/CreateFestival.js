@@ -33,8 +33,8 @@ export default class CreateFestival extends Component {
 
     render() {
     return(
-        <div>
-            <input type="text" name="name" placeholder="name" value={this.state.name} onChange={this.handleChange}/>
+        <div id="createNewFestival">
+            <input type="text" name="name" placeholder="UKA 2018" value={this.state.name} onChange={this.handleChange}/>
             <button type="button" onClick={() => this.createFestival(this.state.name)}> Create </button>
         </div>
     )
