@@ -1,8 +1,19 @@
-#availableProgramSlot{
-  padding:10px;
-  background: rgb(84, 248, 63);
+#smallArtistPicture{
+  width: 100%;
 }
-#bookedProgramSlot{
-  padding:10px;
-  background: rgb(255, 97, 97);
+
+#programArtistName{
+  font-size: 1.5em;
+}
+
+#availableProgramSlot{
+  color:gray;
+  border: solid;
+  border-color: white;
+}
+
+#concertTime{
+  padding-top: 5px;
+  font-size: 1.1em;
+  font-style: italic;
 }

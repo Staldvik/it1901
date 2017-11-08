@@ -2,6 +2,7 @@ import React, {Component } from 'react'
 
 import './concertprogram.css';
 import database from '../../database' //firebase
+import template from '../../static/img/defaultArtistPic.jpg'
 
 export default class ConcertProgram extends Component {
 
@@ -15,7 +16,8 @@ export default class ConcertProgram extends Component {
             endTime: props.endTime,
             artist: "",
             name:"",
-            scene: ""
+            scene: "",
+            pic:""
         }
         
     }
@@ -29,7 +31,9 @@ export default class ConcertProgram extends Component {
               this.setState({
                 artist: vals.artist,
                 name: vals.name,
-                scene: vals.sceneName
+                scene: vals.sceneName,
+                pic: vals.pic
+
               })
             })
            
@@ -50,15 +54,16 @@ export default class ConcertProgram extends Component {
 
     render() {
         if(this.state.concert==null){
-            return(<div id="availableProgramSlot">Slot Available
+            return(<div id="availableProgramSlot">
                 <div id="">{this.state.startTime}-{this.state.endTime}</div>
                 </div>)
         }
         return (
             <div id="bookedProgramSlot">
-                <div id="">{this.state.name}</div>
-                <div id="">{this.state.scene}</div>
-                <div id="">{this.state.startTime}-{this.state.endTime}</div>
+                <div id="programArtistName">{this.state.name}</div>
+                <img src={this.state.pic} id="smallArtistPicture"></img>
+                <div id="concertTime">{this.state.scene}</div>
+                <div id="concertTime">{this.state.startTime}-{this.state.endTime}</div>
             </div>
         )
     }

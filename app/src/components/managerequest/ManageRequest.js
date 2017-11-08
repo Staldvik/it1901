@@ -25,6 +25,7 @@ export default class ManageRequest extends Component {
             
         }
         this.handleChange = this.handleChange.bind(this);
+        this.checkAccept = this.checkAccept.bind(this);
         this.accept = this.accept.bind(this);
         this.decline = this.decline.bind(this);
         
@@ -36,8 +37,19 @@ export default class ManageRequest extends Component {
           }
         );
       }
+    
+    // checks if input fields are empty and asks for confirmation to submit empty rider and techSpecs.
+    checkAccept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider){
+        if(this.state.technicalrequirements =="" || this.state.rider ==""){
+            if(window.confirm("Are your sure you don't want to provide rider or technical requirements"))
+                {this.accept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider)}
+        }
+        else(this.accept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider))
+    }
+
 
     accept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider) {
+       
         var data = {
           artist: artist,
           name: name,
@@ -84,9 +96,11 @@ export default class ManageRequest extends Component {
                 </td>
             
                 
-                <td> <input name="technicalrequirements" type="text" size={50} value={this.state.technicalrequirements} onChange={this.handleChange}/></td>
-                <td> <input name="rider" type="text" value={this.state.rider} onChange={this.handleChange}/></td> 
-                <td> <button onClick={() => this.accept(
+                <td> <input name="technicalrequirements" type="text" placeholder="minimum eight microphones, large scene floor..."
+                 size={50} value={this.state.technicalrequirements} onChange={this.handleChange}/></td>
+                <td> <input name="rider" type="text" placeholder="64 ice cold beers, 128 Snickers bars"
+                value={this.state.rider} onChange={this.handleChange}/></td> 
+                <td> <button onClick={() => this.checkAccept(
                         this.state.artist,
                         this.state.name,
                         this.state.scene,
