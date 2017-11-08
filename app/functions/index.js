@@ -30,19 +30,13 @@ var spotifyToken = ""
 var expires = 0;
 app.use(cors);
 app.get('', (req, res) => {
-    // Kjøres nesten alltid, cloud functions holdes bare åpen i noen sekunder
-    if (spotifyToken !== "") {
-        spotifyApi.clientCredentialsGrant()
-        .then(data => {
-            console.log(data)
-            spotifyToken = data.body['access_token']
-            console.log("Sending", spotifyToken)
-            res.json({token: spotifyToken})
-        })
-    // Men hvis den fortsatt har token i minne, ikke spør om ny
-    } else {
+    spotifyApi.clientCredentialsGrant()
+    .then(data => {
+        console.log(data)
+        spotifyToken = data.body['access_token']
+        console.log("Sending", spotifyToken)
         res.json({token: spotifyToken})
-    }
+    })
 })
 exports.spotifyToken = functions.https.onRequest(app);
 // END OF SPOTIFY TOKEN //

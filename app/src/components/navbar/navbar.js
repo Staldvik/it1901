@@ -187,8 +187,7 @@ export default class NavComponent extends Component {
                             this.state.viewableLinks.map(link => {
                                 var navLinkCss = "nav-item"
                                 if (link.props.to === window.location.pathname) {
-                                    navLinkCss = "nav-item active"
-                                    
+                                    navLinkCss = "nav-item active"                                    
                                 }
                                 return (
                                     <li className={navLinkCss}>

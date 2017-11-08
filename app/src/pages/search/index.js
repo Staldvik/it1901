@@ -107,7 +107,7 @@ export default class Search extends Component {
         <h1> Search for an Artist here </h1>
 
         <form>
-          <input type="text" placeholder="Artist Name" name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
+          <input disabled={! this.state.hasToken} type="text" placeholder={this.state.hasToken ? "Artist Name" : "Waiting for Spotify Access"} name="currentSearchInput" value={this.state.currentSearchInput} onChange={this.handleChange}/>
         </form>
 
         <div className="Artists">
