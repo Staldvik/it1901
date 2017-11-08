@@ -212,7 +212,7 @@ export default class Technicians extends Component {
       <div className="App">
 
         <form>
-          <h3> Add Technician</h3>
+          <h2> Add Technician</h2>
           <input name="currentTechnicianNameInput" type="text" value={this.state.currentTechnicianNameInput} onChange={this.handleChange} placeholder="Technician Name" />
           <button onClick={this.handleSubmitTech}>Add</button>
         </form>
@@ -242,7 +242,7 @@ export default class Technicians extends Component {
 
         <br></br>
         <form>
-          <h3> Assign to concert</h3>
+          <h2>Assign to concert</h2>
           <select name="selectedTechnician" onChange={this.handleChange} value={this.state.selectedTechnician}>
             {this.state.technicianOptions}
           </select>

@@ -35,7 +35,7 @@ export default class FrontPage extends Component {
       <h2>Festival Organizer</h2>
       <CreateFestival create={this.create}/>
       
-      <h3>Existing Festivals</h3>
+      <h2>Existing Festivals</h2>
       <AllFestivals enter={this.enter}/>
 
 

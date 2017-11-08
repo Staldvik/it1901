@@ -15,7 +15,7 @@ export default class ArtistPR extends Component {
     render() {
         return (
             <div className = "artistDiv">
-                <h3> {this.state.name} </h3>
+                <h2> {this.state.name} </h2>
                 <p> contact_info: {this.state.contact_info} </p>
                 <p> sales_number: {this.state.sales_number} </p>
             </div>

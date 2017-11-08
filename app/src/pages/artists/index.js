@@ -61,7 +61,7 @@ export default class Artists extends Component {
       <div className="App">
         
         
-        <h1>My Artists</h1>
+        <h2>My Artists</h2>
         
         <div className="artistTable">
 

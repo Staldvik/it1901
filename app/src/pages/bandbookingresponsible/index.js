@@ -351,7 +351,7 @@ export default class BandBookingResponsible extends Component {
         {/*Liste med requests til Bookingsjef som kan godkjennes, eller ikke godkjennes.*/}
         <div className="requestsBody">
 
-        <h3>Active Bookings</h3>
+        <h2>Active Bookings</h2>
 
           <table>
             <thead>
@@ -401,7 +401,7 @@ export default class BandBookingResponsible extends Component {
           </table>
         
 
-          <h3>Declined Requests</h3>
+          <h2>Declined Requests</h2>
           <table>
             <thead>
               <tr>

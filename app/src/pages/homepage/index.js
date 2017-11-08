@@ -49,9 +49,9 @@ export default class HomePage extends Component {
     if (this.state.days.length === 0) {
       return (
         <div id="frontPage">
-          <h1>Program</h1>
+          <h2>Program</h2>
       
-          <p> Theres nothing to see here yet! </p>
+          <p> There is nothing to see here yet! </p>
           <p> Head over to Setup to configure this festival.</p>
         </div>
       )

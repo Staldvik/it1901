@@ -211,7 +211,7 @@ class Login extends Component {
         </form>
 
         <form>
-          <h3> Dropdown to select user </h3>
+          <h2> Dropdown to select user </h2>
           
           <select name="selectedLogin" value={this.state.selectedLogin} onChange={this.handleChange} >
             {this.state.loginOptions}

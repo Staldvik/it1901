@@ -92,7 +92,7 @@ export default class AdminPage extends Component {
        
 
         <form>
-          <h3> Give user permission </h3>
+          <h2> Give user permission </h2>
           <select name="selectedUser" onChange={this.handleChange} value={this.state.selectedUser}>
             {this.state.userOptions}
           </select>

@@ -327,7 +327,7 @@ export default class BandBooking extends Component {
     return (
       <div className="App">
         
-        <h3>Send Booking Request</h3>
+        <h2>Send Booking Request</h2>
         <p>* artist already booked for a concert<br></br>
           ** artist declined a previous offer to play
         </p>
@@ -353,7 +353,7 @@ export default class BandBooking extends Component {
         {/*Liste med requests til Bookingsjef som kan godkjennes, eller ikke godkjennes.*/}
         <div className="requestsBody">
 
-        <h3>Active Bookings</h3>
+        <h2>Active Bookings</h2>
 
           <table>
             <thead>
@@ -407,7 +407,7 @@ export default class BandBooking extends Component {
           </table>
         
 
-          <h3>Declined Requests</h3>
+          <h2>Declined Requests</h2>
           <table>
             <thead>
               <tr>
