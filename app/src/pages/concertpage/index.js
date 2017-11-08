@@ -89,7 +89,7 @@ export default class ConcertPage extends Component {
         <section className="jumbotron text-center">
           <div className="container">
             <h1 className="jumbotron-heading">Concerts</h1>
-            <p className="lead text-muted">Filter concerts by technician here</p>
+            <p className="lead text-muted">Filter concerts by technician</p>
             <div className="dropdown">
             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {this.state.selectedTechName}
