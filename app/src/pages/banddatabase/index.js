@@ -188,7 +188,7 @@ export default class BandDatabase extends Component {
                       <img src={concert.pic ? concert.pic : defaultArtistPic} className="rounded float-left" alt="Bilde av artist"/>
                       <div className="float-center">
                         <br></br>
-                        <h6> Genre: {concert.genres} </h6>
+                        <h6> Genres: {concert.genres} </h6>
                         <h6> Scene: {concert.sceneName} </h6>
                         <h6> Scene Capacity: {concert.sceneCapacity} </h6>
                         <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>

@@ -51,12 +51,14 @@ export default class NavComponent extends Component {
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
             <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
             <Link key="bandbookingresponsible" className="nav-link" to='/bandbookingresponsible'>Book Artist</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Previous Concerts</Link>,            
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
         this.bookingBossLinks = [
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
             <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Confirm Booking</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Previous Concerts</Link>,            
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
         ]
 
