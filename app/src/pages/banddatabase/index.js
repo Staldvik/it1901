@@ -119,7 +119,7 @@ export default class BandDatabase extends Component {
         <section className="jumbotron text-center">
           <div className="container">
             <h1 className="jumbotron-heading">Concert Database</h1>
-            <p className="lead text-muted">These are all the old and new concerts found in our database</p>
+            <p className="lead text-muted">all concerts from all festivals</p>
             <p>
               <input type="text" class="form-control" value={this.state.currentSearchInput} onChange={this.handleSearch} placeholder="Search for Artist..." aria-label="Search for..."/>
             </p>
