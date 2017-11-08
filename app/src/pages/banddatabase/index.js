@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import Concert from '../../components/concert/Concert'
-
 import './style.css';
 
 import database from '../../database';
@@ -51,10 +49,6 @@ export default class BandDatabase extends Component {
     var previousGenreOptions = this.state.genreOptions;
     var previousGenres = this.state.genres;
     var previousConcerts = this.state.concerts;
-    var previousSceneMap = this.state.sceneMap;
-    var previousScenes = this.state.scenes;
-    var previousSceneOptions = this.state.sceneOptions;
-
 
     // Gå gjennom hele databasen
     database.ref().once('value', snapshot => {
@@ -154,7 +148,7 @@ export default class BandDatabase extends Component {
 
               // Hvis ikke Show All, matcher valgt sjanger og konsertens sjanger?
               // Og matcher søket og navnet?
-              else if (this.state.selectedGenre == concert.genre) {
+              else if (this.state.selectedGenre === concert.genre) {
                 if (this.state.currentSearchInput === "") {
                   match = true
                 }

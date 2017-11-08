@@ -32,6 +32,7 @@ export default class Setup extends Component {
           prevDays.push({
             id: snap.key,
             date:vals.date,
+            key: snap.key
           })
     
           this.setState({
@@ -49,6 +50,7 @@ export default class Setup extends Component {
             name: vals.name,
             capacity: vals.capacity,
             cost: vals.cost,
+            key: snap.key
           })
     
           this.setState({
@@ -98,6 +100,7 @@ export default class Setup extends Component {
                     name={scene.name}
                     capacity={scene.capacity}
                     cost={scene.cost}
+                    key={scene.key}
                   />
                   )
                 })
@@ -120,6 +123,7 @@ export default class Setup extends Component {
                     festival={this.props.state.festival}
                     day={day.date}
                     id={day.id}
+                    key={day.key}
                   />
                   )
                 })

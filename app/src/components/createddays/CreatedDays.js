@@ -35,6 +35,7 @@ export default class CreatedDays extends Component {
                 id: snap.key,
                 start: vals.start,
                 end:vals.end,
+                key:snap.key
               })
         
               this.setState({
@@ -115,6 +116,7 @@ export default class CreatedDays extends Component {
                             id={slot.id}
                             start={slot.start}
                             end={slot.end}
+                            key={slot.key}
                             />
                         )
                         })

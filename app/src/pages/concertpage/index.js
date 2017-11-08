@@ -28,6 +28,7 @@ export default class ConcertPage extends Component {
     var previousSelectedTech = this.state.selectedTech;
     
     // Spagetti-kode
+    // TODO: Rydd opp så ting skjer i rekkefølge
     database.ref(this.props.state.festival).child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
       database.ref(this.props.state.festival).child("scenes").orderByKey().equalTo(concertSnapshot.val().scene).once("value", foundScenes => {
         
@@ -48,7 +49,7 @@ export default class ConcertPage extends Component {
           key: concertSnapshot.key,
           technicians: vals.technicians,
           technicianNames: prevTechnicianNames,
-          technicalInfo: vals.technicalInfo,
+          technicalInfo: vals.requirements,
           pic: vals.pic,
           rider: vals.rider,
           sceneName: sceneName,

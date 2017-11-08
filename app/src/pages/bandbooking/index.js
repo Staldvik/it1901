@@ -88,7 +88,7 @@ export default class BandBooking extends Component {
     database.ref(this.props.state.festival).child('artists').on('child_added', snap => {
       let vals = snap.val();
       let marker = "";
-      if(vals.status != "pending"){ //not able to send requests to artist that have a pending request
+      if(vals.status !== "pending"){ //not able to send requests to artist that have a pending request
           previousArtists.push({
             id: snap.key,
             name:vals.name,

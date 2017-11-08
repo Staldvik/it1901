@@ -88,6 +88,7 @@ export default class Artists extends Component {
                 status={artist.status}
                 uri={artist.uri}
                 id={artist.id} //kan ikke kalle den key fordi map har en egen key.
+                key={artist.id}
                />
               )
             })

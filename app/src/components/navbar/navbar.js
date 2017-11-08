@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
-import logo from '../../static/img/festival.png'
-
-import {Redirect} from 'react-router-dom';
 
 // Firebase
 import database, {firebaseApp} from '../../database';
@@ -51,10 +48,13 @@ export default class NavComponent extends Component {
             <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
         ]
         this.bookingResponsibleLinks = [
+            <Link key="concerts" className="nav-link" to='/concerts'>Concerts</Link>,
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
             <Link key="artists" className="nav-link" to='/artists'>My Artists</Link>,
             <Link key="bandbookingresponsible" className="nav-link" to='/bandbookingresponsible'>Book Artist</Link>,
+            <Link key="banddatabase" className="nav-link" to='/banddatabase'>Previous Concerts</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Ticket Price Calculator</Link>,
+            
         ]
         this.bookingBossLinks = [
             <Link key="search" className="nav-link" to='/search'>Artist Search</Link>,
@@ -163,7 +163,6 @@ export default class NavComponent extends Component {
       }
 
     render() {
-        var loggedInAs = "Not logged in"
         var festivalName = this.props.festivalName
 
         return(
@@ -184,7 +183,7 @@ export default class NavComponent extends Component {
                                     navLinkCss = "nav-item active"                                    
                                 }
                                 return (
-                                    <li className={navLinkCss}>
+                                    <li className={navLinkCss} key={"li"+link.key}>
                                         {link}
                                     </li>
                                 )
