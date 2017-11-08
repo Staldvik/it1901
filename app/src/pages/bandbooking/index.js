@@ -190,6 +190,10 @@ export default class BandBooking extends Component {
   }
 
   componentDidMount(){
+    if (! this.state.selectedDay) {
+      return
+    }
+
     let prevTimeOptions = [];
         //get times from database
         database.ref(this.props.state.festival).child('program').child(this.state.selectedDay).child("slots").on('child_added', snap => {

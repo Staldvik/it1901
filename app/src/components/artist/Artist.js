@@ -38,7 +38,7 @@ export default class Artist extends Component {
         this.setState({addButtonDisabled: true})
 
         database.ref(this.state.festival).child("artists").orderByChild("uri").equalTo(uri).once("value", artistEqualSnap => {
-            if (! artistEqualSnap.val()) {
+            if (! artistEqualSnap.exists()) {
                 const data = {
                     name: name,
                     followers: followers,
@@ -84,7 +84,7 @@ export default class Artist extends Component {
                         this.state.popularity,
                         genres,
                         this.state.uri,
-                        this.state.pic
+                        this.state.pic,
                     )}> Add </button>
                 </td>
             </tr>

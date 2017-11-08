@@ -66,12 +66,25 @@ export default class BandDatabase extends Component {
         if (festivalSnapshot.key !== "users" && festivalSnapshot.key !== "cloudFunctions") {
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
+            var concertVals = concertSnapshot.val();
+            
+            // Hent Scene etter key
+            // Her offloades en del arbeid til firebase siden den returnerer bare scenen som har rett key
+            // Mulig TODO: Gjør noe om ingen scene finnes (skal ikke skje, men lurt å kontrollere)
+            festivalSnapshot.child("scenes").ref.orderByKey().equalTo(concertSnapshot.val().scene).once("value", foundScenes => {
+              
+              //.equalTo returnerer en samling av dataSnapshots, enkleste måten er å kjøre child på den
+              // og keyen til childen vi er ute etter er keyen som ligger i concertSnapshotet
+              var sceneName = foundScenes.child(concertSnapshot.val().scene).val().name;
 
-            // Tar vare på alle konsertene man finner
-            previousConcerts.push(concertSnapshot);
+              // Tar vare på alle konsertene man finner
+              concertVals["sceneName"] = sceneName;
+              previousConcerts.push(concertVals);
+
+            })
 
             // Tar vare på alle sjangre man finner
-            var genre = concertSnapshot.val().genre
+            var genre = concertSnapshot.val().genres.split(",")[0]
             if (!previousGenres.includes(genre)) {
               previousGenreOptions.push(
                 <option id="dropdownItem" value={genre} onClick={this.handleChange} key={concertSnapshot.key}> {genre} </option>
@@ -129,19 +142,19 @@ export default class BandDatabase extends Component {
                   match = true
                 }
 
-                else if (concert.val().name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
+                else if (concert.name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
                   match = true
                 }
               }
 
               // Hvis ikke Show All, matcher valgt sjanger og konsertens sjanger?
               // Og matcher søket og navnet?
-              else if (this.state.selectedGenre == concert.val().genre) {
+              else if (this.state.selectedGenre == concert.genre) {
                 if (this.state.currentSearchInput === "") {
                   match = true
                 }
 
-                else if (concert.val().name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
+                else if (concert.name.toLowerCase().search(this.state.currentSearchInput.toLowerCase()) !== -1) {
                   match = true
                 }
               }
@@ -152,21 +165,21 @@ export default class BandDatabase extends Component {
                   <div className="card-header" role="tab" id={"heading"+concertNum}>
                     <h5 className="mb-0">
                       <a data-toggle="collapse" href={"#collapse"+concertNum} aria-expanded="false" aria-controls={"collapse"+concertNum}>
-                        {concert.val().name}
+                        {concert.name}
                       </a>
                     </h5>
                   </div>
               
                   <div id={"collapse"+concertNum} className="collapse" role="tabpanel" aria-labelledby={"heading"+concertNum}>
                     <div className="card-body">
-                      <h6>{concert.val().day}</h6>
-                      <img src={concert.val().pic ? concert.val().pic : defaultArtistPic} className="rounded float-left" alt="Bilde av artist"/>
+                      <h6>{concert.day}</h6>
+                      <img src={concert.pic ? concert.pic : defaultArtistPic} className="rounded float-left" alt="Bilde av artist"/>
                       <div className="float-center">
                         <h2> Info </h2>
-                        <h6> Genre: {concert.val().genre} </h6>
-                        <h6> SceneID(TEMP): {concert.val().scene} </h6>
-                        <h6> Technical Requirements : {concert.val().technicalInfo ? concert.val().technicalInfo : "None"} </h6>
-                        <h6> Rider: {concert.val().rider ? concert.val().rider : "None"} </h6>
+                        <h6> Genre: {concert.genres} </h6>
+                        <h6> Scene: {concert.sceneName} </h6>
+                        <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
+                        <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>
                     </div>
                   </div>

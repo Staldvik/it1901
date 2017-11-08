@@ -108,14 +108,17 @@ exports.addNewUser = functions.auth.user().onCreate(event => {
 
 exports.addArtistPic = functions.database.ref("{festival}/concerts/{concert}").onCreate(event => {
     var artistPic = "";
-    var artistKey = event.data.val().artist
+    var genres = "";
+    var artistKey = event.data.val().artist;
     
     admin.database().ref(event.params.festival).child('artists').child(artistKey).once("value", artistSnap => {
         artistPic = artistSnap.val().pic
+        genres = artistSnap.val().genres
     })
     .then(() => {
         admin.database().ref(event.params.festival).child('concerts').child(event.params.concert).update({
-            pic: artistPic
+            pic: artistPic,
+            genres: genres
         })
     })
 })
