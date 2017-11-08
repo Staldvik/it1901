@@ -60,28 +60,19 @@ export default class BandDatabase extends Component {
     database.ref().once('value', snapshot => {
       snapshot.forEach(festivalSnapshot => {
 
-        // TODO: Hvis festival, altså pushet inn og ikke custom key. Denne kan brukes når vi sletter hele databasen før release.
-        //if (festivalSnapshot.key.startsWith("-")) {
-
-        if (festivalSnapshot.key !== "users" && festivalSnapshot.key !== "cloudFunctions") {
+        if (festivalSnapshot.key.startsWith("-")) {
           // For hver konsert
           festivalSnapshot.child('concerts').forEach(concertSnapshot => {
             var concertVals = concertSnapshot.val();
             
             // Hent Scene etter key
-            // Her offloades en del arbeid til firebase siden den returnerer bare scenen som har rett key
-            // Mulig TODO: Gjør noe om ingen scene finnes (skal ikke skje, men lurt å kontrollere)
-            festivalSnapshot.child("scenes").ref.orderByKey().equalTo(concertSnapshot.val().scene).once("value", foundScenes => {
-              
-              //.equalTo returnerer en samling av dataSnapshots, enkleste måten er å kjøre child på den
-              // og keyen til childen vi er ute etter er keyen som ligger i concertSnapshotet
-              var sceneName = foundScenes.child(concertSnapshot.val().scene).val().name;
+            festivalSnapshot.ref.child("scenes").child(concertSnapshot.val().scene).once("value", foundScene => {
+              var sceneName = foundScene.val().name;
               var genre = concertSnapshot.val().genres.split(",")[0]
 
-              // Tar vare på alle konsertene man finner
               concertVals["sceneName"] = sceneName;
               concertVals["genre"] = genre;
-              previousConcerts.push(concertVals);
+              concertVals["festivalName"] = festivalSnapshot.val().name;
 
               // Tar vare på alle sjangre man finner
               if (!previousGenres.includes(genre)) {
@@ -91,8 +82,20 @@ export default class BandDatabase extends Component {
                 previousGenres.push(genre)
               }
             })
+            .then(() => {
+              festivalSnapshot.ref.child("program").child(concertSnapshot.val().date).once("value", programSnap => {
+                programSnap.ref.child("slots").child(concertSnapshot.val().time).once("value", slotSnap => {
+                  if (slotSnap.exists()) {
+                    concertVals["startTime"] = slotSnap.val().start
+                    concertVals["endTime"] = slotSnap.val().end
+                    concertVals["dateVal"] = programSnap.val().date
+                  }
+                })
+              
+              })
+            })
 
-            
+            previousConcerts.push(concertVals);
           })
         }
       })
@@ -167,7 +170,12 @@ export default class BandDatabase extends Component {
                   <div className="card-header" role="tab" id={"heading"+concertNum}>
                     <h5 className="mb-0">
                       <a data-toggle="collapse" href={"#collapse"+concertNum} aria-expanded="false" aria-controls={"collapse"+concertNum}>
-                        {concert.name}
+                        <span>
+                          <p> {concert.festivalName} - {concert.dateVal} </p>
+                          <p> {concert.name} </p>
+                          <p>  </p>  
+                        </span>
+                        
                       </a>
                     </h5>
                   </div>

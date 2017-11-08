@@ -26,7 +26,11 @@ export default class CreateDay extends Component {
       }
 
     create(date) {
-        // TODO: Validate
+        // Ikke push en tom date
+        if (! date) {
+            alert("Date is empty!")
+            return
+        }
 
         var data = {
           date: date,
@@ -35,13 +39,13 @@ export default class CreateDay extends Component {
 
         this.setState({
             date: "",
-           
         })
       }
 
     render() {
         var dateToday = new Date().toLocaleDateString();
 
+        // Burde ikke input være type="date"?
         return (
             <tr>
                 <td> <input name="date" placeholder={dateToday} type="text" value={this.state.date} onChange={this.handleChange}/></td>
