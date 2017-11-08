@@ -27,25 +27,32 @@ export default class ConcertPage extends Component {
     var previousOpts = this.state.opts;
     var previousSelectedTech = this.state.selectedTech;
     
-
+    // Spagetti-kode
     database.ref(this.props.state.festival).child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
-      var vals = concertSnapshot.val();
-      var prevTechnicianNames = [];
-      concertSnapshot.child('technicians').forEach((technician) => {
-        prevTechnicianNames.push(technician.val().name)
-      })
-      previousConcerts.push({
-        name: vals.name,
-        genre: vals.genre,
-        price: vals.price,
-        day: vals.day,
-        key: concertSnapshot.key,
-        technicians: vals.technicians,
-        technicianNames: prevTechnicianNames,
-        technicalInfo: vals.technicalInfo,
-        pic: vals.pic,
-        rider: vals.rider,
-      })
+      database.ref(this.props.state.festival).child("scenes").orderByKey().equalTo(concertSnapshot.val().scene).once("value", foundScenes => {
+        
+        //.equalTo returnerer en samling av dataSnapshots, enkleste måten er å kjøre child på den
+        // og keyen til childen vi er ute etter er keyen som ligger i concertSnapshotet
+        var sceneName = foundScenes.child(concertSnapshot.val().scene).val().name;
+
+        var vals = concertSnapshot.val();
+        var prevTechnicianNames = [];
+        concertSnapshot.child('technicians').forEach((technician) => {
+          prevTechnicianNames.push(technician.val().name)
+        })
+        previousConcerts.push({
+          name: vals.name,
+          genres: vals.genres,
+          price: vals.price,
+          day: vals.day,
+          key: concertSnapshot.key,
+          technicians: vals.technicians,
+          technicianNames: prevTechnicianNames,
+          technicalInfo: vals.technicalInfo,
+          pic: vals.pic,
+          rider: vals.rider,
+          sceneName: sceneName,
+        })
       this.setState({
         concerts: previousConcerts,
         selectedTech: previousSelectedTech,
@@ -61,7 +68,8 @@ export default class ConcertPage extends Component {
         opts: previousOpts,
       })
     })
-  }
+  })
+}
 
   handleChange(e) {
     this.setState({
@@ -129,8 +137,8 @@ export default class ConcertPage extends Component {
                       <img src={concert.pic ? concert.pic : template} className="rounded float-left" alt="Bilde av artist"/>
                       <div className="float-center">
                         <h2> Info </h2>
-                        <h6> Genre: {concert.genre} </h6>
-                        <h6> Scene: {concert.scene} </h6>
+                        <h6> Genres: {concert.genres} </h6>
+                        <h6> Scene: {concert.sceneName} </h6>
                         <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>

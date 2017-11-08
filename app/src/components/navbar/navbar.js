@@ -17,7 +17,6 @@ export default class NavComponent extends Component {
             username: props.username,
             viewableLinks: [],
             loginOptions: [],
-            activeLink: window.location.pathname,
         }
 
         // TODO: fikse linker til å stemme med navn/funksjon
@@ -167,8 +166,6 @@ export default class NavComponent extends Component {
       }
 
     render() {
-        console.log("Navbar rerender currentloc in state:", this.state.activeLink)
-
         var loggedInAs = "Not logged in"
         var festivalName = this.props.festivalName
 
