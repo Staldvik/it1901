@@ -76,21 +76,23 @@ export default class BandDatabase extends Component {
               //.equalTo returnerer en samling av dataSnapshots, enkleste måten er å kjøre child på den
               // og keyen til childen vi er ute etter er keyen som ligger i concertSnapshotet
               var sceneName = foundScenes.child(concertSnapshot.val().scene).val().name;
+              var genre = concertSnapshot.val().genres.split(",")[0]
 
               // Tar vare på alle konsertene man finner
               concertVals["sceneName"] = sceneName;
+              concertVals["genre"] = genre;
               previousConcerts.push(concertVals);
 
+              // Tar vare på alle sjangre man finner
+              if (!previousGenres.includes(genre)) {
+                previousGenreOptions.push(
+                  <option id="dropdownItem" value={genre} onClick={this.handleChange} key={concertSnapshot.key}> {genre} </option>
+                )
+                previousGenres.push(genre)
+              }
             })
 
-            // Tar vare på alle sjangre man finner
-            var genre = concertSnapshot.val().genres.split(",")[0]
-            if (!previousGenres.includes(genre)) {
-              previousGenreOptions.push(
-                <option id="dropdownItem" value={genre} onClick={this.handleChange} key={concertSnapshot.key}> {genre} </option>
-              )
-              previousGenres.push(genre)
-            }
+            
           })
         }
       })
