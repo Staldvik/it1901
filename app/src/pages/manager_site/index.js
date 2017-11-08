@@ -127,7 +127,6 @@ render() {
 
     <div className = "managerRequestsBody">
       <h2>Concert Offers</h2>
-      <p>(hver mananger skal kun se requests for de artistene han er manager for)</p>
 
       <table>
               <thead>
