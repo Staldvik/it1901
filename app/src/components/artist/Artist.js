@@ -18,12 +18,13 @@ export default class Artist extends Component {
             followers: props.followers, //Int
             genres: props.genres,
             uri: props.uri,
-            pic: props.pic
+            pic: props.pic,
             /* earlierConcerts: props.earlierConcerts, //List
             concertNeeds: props.concertNeeds, // String //kanskje cost hentes herifra. Også ting som antall mikrofoner og instrumenter
             cost: props.cost, // Int
             approved: false, // Boolean
             booked: false, // Boolean */
+            addButtonDisabled: false
         }
     }
 
@@ -34,17 +35,29 @@ export default class Artist extends Component {
     }
 
     addArtist(name,followers,popularity,genres,uri,pic){
-        console.log()
-        console.log(genres)
-        const data = {
-            name: name,
-            followers: followers,
-            popularity: popularity, 
-            genres: genres,
-            uri: uri,
-            pic: pic,
-        }
-        database.ref(this.state.festival).child("artists").push(data)    
+        this.setState({addButtonDisabled: true})
+
+        database.ref(this.state.festival).child("artists").orderByChild("uri").equalTo(uri).once("value", artistEqualSnap => {
+            if (! artistEqualSnap.val()) {
+                const data = {
+                    name: name,
+                    followers: followers,
+                    popularity: popularity, 
+                    genres: genres,
+                    uri: uri,
+                    pic: pic,
+                }
+                database.ref(this.state.festival).child("artists").push(data)
+                alert(name + " is now added to database");
+            } else {
+                alert(name + " is already in database")
+            }
+        })
+        .then(() => {
+            this.setState({addButtonDisabled: false})
+        }) 
+
+           
     }
 
 
@@ -65,7 +78,7 @@ export default class Artist extends Component {
                 <td> {genres} </td>
                 <td> <a href={this.state.uri}><img  width="30" height="30" src={spotifyIcon}></img></a>
                 </td>
-                <td> <button onClick={() => this.addArtist(
+                <td> <button disabled={this.state.addButtonDisabled} onClick={() => this.addArtist(
                         this.state.name, 
                         this.state.followers, 
                         this.state.popularity,
