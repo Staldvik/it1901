@@ -44,9 +44,9 @@ export default class HomePage extends Component {
   render() {
     return (
       <div id="frontPage">
-        <h1>Program</h1>
+  
         
-        <table>
+        <table className="programTable">
           <thead>
                 <tr>
                   {this.state.days.map((day) => {

@@ -6,3 +6,13 @@
   vertical-align: top;
 }
 
+
+
+
+.programTable table, td {
+  border: 1px solid white;
+  padding: 10px;
+}
+
+
+

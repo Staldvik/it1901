@@ -54,7 +54,7 @@ export default class ConcertProgram extends Component {
 
     render() {
         if(this.state.concert==null){
-            return(<div id="availableProgramSlot">Slot Available
+            return(<div id="availableProgramSlot">
                 <div id="">{this.state.startTime}-{this.state.endTime}</div>
                 </div>)
         }
