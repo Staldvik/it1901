@@ -178,7 +178,6 @@ export default class AdminPage extends Component {
     .then(isInConcert => {
 
       // Hvis ikke i konsert:
-      // TODO: Feedback til bruker
       if (!isInConcert) {
         database.ref(this.props.state.festival).child('concerts').child(this.state.selectedConcert).child('technicians').child(this.state.selectedTechnician).set({
           name: this.state.technicianMap.get(this.state.selectedTechnician),

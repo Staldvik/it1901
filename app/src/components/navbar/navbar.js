@@ -19,7 +19,6 @@ export default class NavComponent extends Component {
             loginOptions: [],
         }
 
-        // TODO: fikse linker til å stemme med navn/funksjon
         this.adminLinks = [
             <Link key="setup" className="nav-link" to='/setup'>Setup</Link>,
             <Link key="technicians" className="nav-link" to='/technicians'>Technicians</Link>,
@@ -29,8 +28,6 @@ export default class NavComponent extends Component {
             <Link key="bandbooking" className="nav-link" to='/bandbooking'>Confirm Booking</Link>,
             <Link key="banddatabase" className="nav-link" to='/banddatabase'>Previous Concerts</Link>,
             <Link key="pricecalculator" className="nav-link" to='/pricecalculator'>Price Calculator</Link>,
-
-            // TODO: Kanskje ha "Min side" eller noe
             <Link key="admin" className="nav-link" to='/admin'>Admin</Link>,
             <Link key="manager" className="nav-link" to='/manager'>Manager</Link>,
             <Link key="pr" className="nav-link" to='/pr'>PR</Link>,
