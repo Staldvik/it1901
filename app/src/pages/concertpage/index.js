@@ -15,7 +15,7 @@ export default class ConcertPage extends Component {
       concerts: [],
       opts: [],
       selectedTech: "showAll",
-      selectedTechName: "All Technicians",
+      selectedTechName: "All Concerts",
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -34,6 +34,8 @@ export default class ConcertPage extends Component {
         //.equalTo returnerer en samling av dataSnapshots, enkleste måten er å kjøre child på den
         // og keyen til childen vi er ute etter er keyen som ligger i concertSnapshotet
         var sceneName = foundScenes.child(concertSnapshot.val().scene).val().name;
+        var sceneCapacity = foundScenes.child(concertSnapshot.val().scene).val().capacity;
+        
 
         var vals = concertSnapshot.val();
         var prevTechnicianNames = [];
@@ -52,6 +54,7 @@ export default class ConcertPage extends Component {
           pic: vals.pic,
           rider: vals.rider,
           sceneName: sceneName,
+          sceneCapacity: sceneCapacity,
         })
       this.setState({
         concerts: previousConcerts,
@@ -92,7 +95,7 @@ export default class ConcertPage extends Component {
               {this.state.selectedTechName}
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <option id="dropdownItem" onClick={this.handleChange} value={"showAll:All Technicians"} key={"showAll"}> All Technicians </option>
+              <option id="dropdownItem" onClick={this.handleChange} value={"showAll:All Concerts"} key={"showAll"}> All Concerts </option>
               {this.state.opts}
             </div>
             </div>
@@ -136,9 +139,11 @@ export default class ConcertPage extends Component {
                       <h6>{concert.day}</h6>
                       <img src={concert.pic ? concert.pic : template} className="rounded float-left" alt="Bilde av artist"/>
                       <div className="float-center">
-                        <h2> Info </h2>
+                        <br></br>
                         <h6> Genres: {concert.genres} </h6>
                         <h6> Scene: {concert.sceneName} </h6>
+                        <h6> SceneCapacity: {concert.sceneCapacity} </h6>
+                        <br></br>
                         <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>
