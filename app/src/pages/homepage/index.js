@@ -59,7 +59,7 @@ export default class HomePage extends Component {
           <tbody>
             <tr>
                   {this.state.days.map((day) => {
-                        return(<td> 
+                        return(<td id="programRow"> 
                           <ProgramSlots festival={this.props.state.festival} date={day.id}/>
                           </td>  )
                       })
