@@ -7,6 +7,9 @@ import ProgramSlots from '../../components/programslots/ProgramSlots'
 //firebase
 import database from '../../database'
 
+// React Router
+import {Redirect} from 'react-router-dom';
+
 export default class HomePage extends Component {
   // static propTypes = {}
   // static defaultProps = {}
@@ -42,6 +45,19 @@ export default class HomePage extends Component {
   }
 
   render() {
+
+    if (this.state.days.length === 0) {
+      return (
+        <div id="frontPage">
+          <h1>Program</h1>
+      
+          <p> Theres nothing to see here yet! </p>
+          <p> Head over to Setup to configure this festival.</p>
+        </div>
+      )
+    }
+
+
     return (
       <div id="frontPage">
         <h1>Program</h1>

@@ -17,6 +17,8 @@ export default class CreateDay extends Component {
     }
 
     handleChange(e) {
+        e.preventDefault();
+
         this.setState({
             [e.target.name]: e.target.value
           }
@@ -24,6 +26,8 @@ export default class CreateDay extends Component {
       }
 
     create(date) {
+        // TODO: Validate
+
         var data = {
           date: date,
         }
@@ -36,9 +40,11 @@ export default class CreateDay extends Component {
       }
 
     render() {
+        var dateToday = new Date().toLocaleDateString();
+
         return (
             <tr>
-                <td> <input name="date" placeholder="02.11.2017" type="text" value={this.state.date} onChange={this.handleChange}/></td>
+                <td> <input name="date" placeholder={dateToday} type="text" value={this.state.date} onChange={this.handleChange}/></td>
                 <td> <button onClick={() => this.create(
                         this.state.date,
                     )}> Add Day</button>
