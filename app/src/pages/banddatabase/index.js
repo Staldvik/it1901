@@ -68,9 +68,11 @@ export default class BandDatabase extends Component {
             // Hent Scene etter key
             festivalSnapshot.ref.child("scenes").child(concertSnapshot.val().scene).once("value", foundScene => {
               var sceneName = foundScene.val().name;
+              var sceneCapacity = foundScene.val().capacity;
               var genre = concertSnapshot.val().genres.split(",")[0]
 
               concertVals["sceneName"] = sceneName;
+              concertVals["sceneCapacity"] = sceneCapacity;
               concertVals["genre"] = genre;
               concertVals["festivalName"] = festivalSnapshot.val().name;
 
@@ -185,9 +187,10 @@ export default class BandDatabase extends Component {
                       <h6>{concert.day}</h6>
                       <img src={concert.pic ? concert.pic : defaultArtistPic} className="rounded float-left" alt="Bilde av artist"/>
                       <div className="float-center">
-                        <h2> Info </h2>
+                        <br></br>
                         <h6> Genre: {concert.genres} </h6>
                         <h6> Scene: {concert.sceneName} </h6>
+                        <h6> Scene Capacity: {concert.sceneCapacity} </h6>
                         <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>

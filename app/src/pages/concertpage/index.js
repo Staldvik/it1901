@@ -142,8 +142,7 @@ export default class ConcertPage extends Component {
                         <br></br>
                         <h6> Genres: {concert.genres} </h6>
                         <h6> Scene: {concert.sceneName} </h6>
-                        <h6> SceneCapacity: {concert.sceneCapacity} </h6>
-                        <br></br>
+                        <h6> Scene Capacity: {concert.sceneCapacity} </h6>
                         <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>
