@@ -50,7 +50,7 @@ export default class ConcertPage extends Component {
           key: concertSnapshot.key,
           technicians: vals.technicians,
           technicianNames: prevTechnicianNames,
-          technicalInfo: vals.technicalInfo,
+          requirements: vals.requirements,
           pic: vals.pic,
           rider: vals.rider,
           sceneName: sceneName,
@@ -143,7 +143,7 @@ export default class ConcertPage extends Component {
                         <h6> Genres: {concert.genres} </h6>
                         <h6> Scene: {concert.sceneName} </h6>
                         <h6> Scene Capacity: {concert.sceneCapacity} </h6>
-                        <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
+                        <h6> Technical Requirements : {concert.requirements ? concert.requirements : "None"} </h6>
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>
                       <ul className="list-group list-group-flush float-right">

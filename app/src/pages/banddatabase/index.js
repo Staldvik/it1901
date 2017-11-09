@@ -191,7 +191,7 @@ export default class BandDatabase extends Component {
                         <h6> Genres: {concert.genres} </h6>
                         <h6> Scene: {concert.sceneName} </h6>
                         <h6> Scene Capacity: {concert.sceneCapacity} </h6>
-                        <h6> Technical Requirements : {concert.technicalInfo ? concert.technicalInfo : "None"} </h6>
+                        <h6> Technical Requirements : {concert.requirements ? concert.requirements : "None"} </h6>
                         <h6> Rider: {concert.rider ? concert.rider : "None"} </h6>
                       </div>
                     </div>
