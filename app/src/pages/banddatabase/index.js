@@ -67,15 +67,17 @@ export default class BandDatabase extends Component {
             
             // Hent Scene etter key
             festivalSnapshot.ref.child("scenes").child(concertSnapshot.val().scene).once("value", foundScene => {
-              var sceneName = foundScene.val().name;
-              var sceneCapacity = foundScene.val().capacity;
-              var genre = concertSnapshot.val().genres.split(",")[0]
-
-              concertVals["sceneName"] = sceneName;
-              concertVals["sceneCapacity"] = sceneCapacity;
-              concertVals["genre"] = genre;
-              concertVals["festivalName"] = festivalSnapshot.val().name;
-
+              if (foundScene.exists()) {
+                var sceneName = foundScene.val().name;
+                var sceneCapacity = foundScene.val().capacity;
+                var genre = concertSnapshot.val().genres.split(",")[0]
+  
+                concertVals["sceneName"] = sceneName;
+                concertVals["sceneCapacity"] = sceneCapacity;
+                concertVals["genre"] = genre;
+                concertVals["festivalName"] = festivalSnapshot.val().name;
+              }
+            
               // Tar vare på alle sjangre man finner
               if (!previousGenres.includes(genre)) {
                 previousGenreOptions.push(
