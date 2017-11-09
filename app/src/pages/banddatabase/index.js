@@ -75,9 +75,9 @@ export default class BandDatabase extends Component {
                 concertVals["sceneName"] = sceneName;
                 concertVals["sceneCapacity"] = sceneCapacity;
                 concertVals["genre"] = genre;
-                concertVals["festivalName"] = festivalSnapshot.val().name;
               }
-            
+              
+              concertVals["festivalName"] = festivalSnapshot.val().name;
               // Tar vare på alle sjangre man finner
               if (!previousGenres.includes(genre)) {
                 previousGenreOptions.push(
