@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import './style.css';
 import database from '../../database'
 
+/**
+ * Slightly modified BandBooking, used to hide some controls from Booking Responsible
+ */
 export default class BandBookingResponsible extends Component {
   // static propTypes = {}
   // static defaultProps = {}
   // state = {}
-
+  
   constructor(props) {
     super(props);
     let artistMap = new Map();
@@ -56,6 +59,9 @@ export default class BandBookingResponsible extends Component {
   }
 
   //kjøres når siden/komponenten lastes
+  /**
+   * Pulls required information from the database
+   */
   componentWillMount() {
     var previousRequests = this.state.requests;
     console.log(previousRequests);
@@ -189,6 +195,9 @@ export default class BandBookingResponsible extends Component {
    
   }
 
+  /**
+   * Gets times from database based on selected festival and day
+   */
   componentDidMount(){
     let prevTimeOptions = [];
         //get times from database
@@ -209,7 +218,10 @@ export default class BandBookingResponsible extends Component {
 
   }
   
-
+  /**
+   * Keeps the state updated
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -221,6 +233,10 @@ export default class BandBookingResponsible extends Component {
   //since state is not not necessarily a synchronous operation
   //see: https://stackoverflow.com/questions/41043419/reactjs-onclick-state-change-one-step-behind
   //I solved it by getting the selectedDay variable directly and not depend on the state. Took some time to figure out...!
+  /**
+   * Handles change in day on dropdown
+   * @param {event} e 
+   */
   handleChangeDay(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -253,7 +269,10 @@ export default class BandBookingResponsible extends Component {
   
 
   
-
+  /**
+   * See method in bandbooking
+   * @param {event} e 
+   */
   handleSubmitRequest(e) {
     e.preventDefault(); //prevents page from reloading
 
@@ -272,6 +291,10 @@ export default class BandBookingResponsible extends Component {
     console.log(this.state.requests);
   }
 
+  /**
+   * See method in bandbooking
+   * @param {request} request 
+   */
   handleAccept(request) {
     database.ref(this.props.state.festival).child("requests").child(request.key).update({status: "accepted"});
 
@@ -287,6 +310,10 @@ export default class BandBookingResponsible extends Component {
     })
   }
 
+  /**
+   * See method in bandbooking
+   * @param {request} request 
+   */
   handleDecline(request) {
     database.ref(this.props.state.festival).child("requests").child(request.key).update({status: "declined"});
     database.ref(this.props.state.festival).child("artists").child(request.artist).update({status: ""});
@@ -303,6 +330,10 @@ export default class BandBookingResponsible extends Component {
     })
   }
   
+  /**
+   * See method in bandbooking
+   * @param {request} request 
+   */
   handleDelete(request) {
     database.ref(this.props.state.festival).child("requests").child(request.key).remove();
     this.setState({
@@ -312,6 +343,10 @@ export default class BandBookingResponsible extends Component {
     })
   }
 
+  /**
+   * See method in bandbooking
+   * @param {event} e 
+   */
   handleCopyEmail(e) {
     e.preventDefault();
     var copyText = this.state.email;
@@ -319,6 +354,9 @@ export default class BandBookingResponsible extends Component {
     document.execCommand("Copy");
   }
 
+  /**
+   * See function in bandbooking
+   */
   render() {
     return (
       <div className="App">

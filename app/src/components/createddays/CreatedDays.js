@@ -5,6 +5,9 @@ import database from '../../database' //firebase
 
 import Slots from '../slots/Slots'
 
+/**
+ * Component that is used to display day with slots found in database
+ */
 export default class CreatedDays extends Component {
 
     constructor(props) {
@@ -25,6 +28,9 @@ export default class CreatedDays extends Component {
         
     }
 
+    /**
+     * Here used to pull slots from database
+     */
     componentWillMount() {
         let prevSlots = this.state.slots
         
@@ -44,6 +50,11 @@ export default class CreatedDays extends Component {
        
       }
 
+    /**
+     * Adds a slot in the database
+     * @param {String} start 
+     * @param {String} end 
+     */
     addSlot(start,end){
         if(start ==="" || end ===""){
             alert("please input start and end time")
@@ -57,6 +68,10 @@ export default class CreatedDays extends Component {
         }
     }
 
+    /**
+     * Hides deleted days
+     * @param {firebase.database.Reference.key} key 
+     */
     removeDay(key){
         if(window.confirm("Are you sure you want to remove the day?\n\nRemoving a day from a festival will affect all concerts on that day")){
         database.ref(this.state.festival).child('program').child(key).remove()
@@ -68,7 +83,10 @@ export default class CreatedDays extends Component {
     }
 
     
-
+    /**
+     * Keeps state updated accordingly
+     * @param {event} e 
+     */
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -76,7 +94,9 @@ export default class CreatedDays extends Component {
         );
       }
 
-
+    /**
+     * Renders a table with day
+     */
     render() {
 
         if(this.state.deleted){ //nice way to hide deleted elements

@@ -8,8 +8,15 @@ import {Redirect} from 'react-router-dom';
 // Firebase
 import database, {firebaseApp} from '../../database';
 
+/**
+ * Component used to show Navbar
+ */
 export default class NavComponent extends Component {
 
+    /**
+     * Initializes state and which links belong to which role
+     * @param {props} props 
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -66,6 +73,10 @@ export default class NavComponent extends Component {
         this.exit = this.exit.bind(this) //exit and go to festival selection page        
     }
 
+    /**
+     * React method that fires when the component is rendered.
+     * Here used to get login options from database and call this.getCorrectNav()
+     */
     componentDidMount() {
         var previousLoginOptions = this.state.loginOptions
         database.ref('users').orderByChild('displayName').once('value', usersSnapshot => {
@@ -82,6 +93,11 @@ export default class NavComponent extends Component {
           })
     }
 
+    /**
+     * Here used to be certain certain fields are updated when receiving new props.
+     * For some reason this is needed here. 
+     * @param {props} nextProps 
+     */
     componentWillReceiveProps(nextProps) {
 
         this.setState({
@@ -93,6 +109,11 @@ export default class NavComponent extends Component {
     }
 
     // Om den ikke mottar user, bruk this.state.user
+    /**
+     * Sets viewable links based on role passed into the method.
+     * If no role passed, try to use the one in current state
+     * @param {*} user 
+     */
     getCorrectNav(user = this.state.user) {
         if (user !== null) {
             var previousViewableLinks = this.state.viewableLinks;
@@ -134,10 +155,17 @@ export default class NavComponent extends Component {
         }
     }
 
+    /**
+     * Calls function one layer up
+     */
     exit(){
         this.props.exit();
     }
 
+    /**
+     * Changes user based on event.target.value.
+     * Called from dropdown menu.
+     */
     changeUser = event => {
         event.preventDefault();
     
@@ -157,6 +185,9 @@ export default class NavComponent extends Component {
     
       }
 
+    /**
+     * Renders the navbar with current festival, viewable links, login options, and exit button
+     */
     render() {
         var loggedInAs = "Not logged in"
         var festivalName = this.props.festivalName

@@ -9,7 +9,9 @@ import database from '../../database';
 import defaultArtistPic from '../../static/img/defaultArtistPic.jpg';
 
 
-
+/**
+ * Component used to render BandDatabase page
+ */
 export default class BandDatabase extends Component {
 
   constructor() {
@@ -30,6 +32,10 @@ export default class BandDatabase extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  /**
+   * Handles change in search, keeping state updated with the field
+   * @param {event} e 
+   */
   handleSearch(e) {
     e.preventDefault();
     this.setState({
@@ -38,6 +44,10 @@ export default class BandDatabase extends Component {
 
   }
 
+  /**
+   * Keeps the state updated
+   * @param {event} e 
+   */
   handleChange(e) {
     e.preventDefault();
     this.setState({
@@ -46,6 +56,9 @@ export default class BandDatabase extends Component {
     
   }
 
+  /**
+   * Pulls information from database
+   */
   componentWillMount() {
     // Tar vare på current state
     var previousGenreOptions = this.state.genreOptions;
@@ -113,6 +126,9 @@ export default class BandDatabase extends Component {
     })
   }
 
+  /**
+   * Renders the banddatabase page
+   */
   render() {
     return (
 

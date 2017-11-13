@@ -9,7 +9,9 @@ import CreateDay from '../../components/createday/CreateDay'
 import CreatedDays from '../../components/createddays/CreatedDays'
 import SceneList from '../../components/scenelist/SceneList'
 
-
+/**
+ * Component that renders the Setup page
+ */
 export default class Setup extends Component {
 
   constructor(props) {
@@ -22,6 +24,9 @@ export default class Setup extends Component {
 
   }
 
+  /**
+   * Pulls information from the database
+   */
   componentWillMount() {
     var prevDays = this.state.days;
     
@@ -58,7 +63,9 @@ export default class Setup extends Component {
    
   }
 
-
+  /**
+   * Renders the page
+   */
   render() {
       return(
         <div id="setupPage">

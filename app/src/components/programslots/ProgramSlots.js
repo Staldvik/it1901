@@ -4,6 +4,9 @@ import './programslots.css';
 import database from '../../database' //firebase
 import ConcertProgram from '../concertprogram/ConcertProgram'
 
+/**
+ * Component used to show concert program
+ */
 export default class ProgramSlots extends Component {
 
     constructor(props) {
@@ -17,6 +20,9 @@ export default class ProgramSlots extends Component {
         
     }
 
+    /**
+     * Pulls program from database based on current festival and date.
+     */
     componentWillMount() {
         let prevSlots = this.state.slots
         
@@ -38,6 +44,10 @@ export default class ProgramSlots extends Component {
        
       }
 
+    /**
+     * Keeps state updated
+     * @param {event} e 
+     */
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -45,7 +55,10 @@ export default class ProgramSlots extends Component {
         );
       }
 
-
+    
+    /**
+     * Renders concert program for each slot
+     */
     render() {
         return (
             <div>

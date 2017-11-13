@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/pages/bandbooking/index.js | app</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/App.js~App.html">App</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-register">register</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unregister">unregister</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-database">database</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-firebaseApp">firebaseApp</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-allfestivals">components/allfestivals</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/allfestivals/AllFestivals.js~AllFestivals.html">AllFestivals</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-artist">components/artist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/artist/Artist.js~Artist.html">Artist</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-artist-pr">components/artist_pr</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/artist_pr/ArtistPR.js~ArtistPR.html">ArtistPR</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-artistlist">components/artistlist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/artistlist/ArtistList.js~ArtistList.html">ArtistList</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-concertprogram">components/concertprogram</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/concertprogram/ConcertProgram.js~ConcertProgram.html">ConcertProgram</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createday">components/createday</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createday/CreateDay.js~CreateDay.html">CreateDay</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createddays">components/createddays</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createddays/CreatedDays.js~CreatedDays.html">CreatedDays</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createfestival">components/createfestival</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createfestival/CreateFestival.js~CreateFestival.html">CreateFestival</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createscene">components/createscene</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createscene/CreateScene.js~CreateScene.html">CreateScene</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-festival">components/festival</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/festival/Festival.js~Festival.html">Festival</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-managerequest">components/managerequest</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/managerequest/ManageRequest.js~ManageRequest.html">ManageRequest</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-navbar">components/navbar</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/navbar/navbar.js~NavComponent.html">NavComponent</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-programdays">components/programdays</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/programdays/ProgramDays.js~ProgramDays.html">ProgramDays</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-programslots">components/programslots</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/programslots/ProgramSlots.js~ProgramSlots.html">ProgramSlots</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-scenelist">components/scenelist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/scenelist/SceneList.js~SceneList.html">SceneList</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-slots">components/slots</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/slots/Slots.js~Slots.html">Slots</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-technicianslist">components/technicianslist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/technicianslist/TechniciansList.js~TechniciansList.html">TechniciansList</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-adminpage">pages/adminpage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/adminpage/index.js~AdminPage.html">AdminPage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-artists">pages/artists</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/artists/index.js~Artists.html">Artists</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-bandbooking">pages/bandbooking</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/bandbooking/index.js~BandBooking.html">BandBooking</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-bandbookingresponsible">pages/bandbookingresponsible</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/bandbookingresponsible/index.js~BandBookingResponsible.html">BandBookingResponsible</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-banddatabase">pages/banddatabase</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/banddatabase/index.js~BandDatabase.html">BandDatabase</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-concertpage">pages/concertpage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/concertpage/index.js~ConcertPage.html">ConcertPage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-frontpage">pages/frontpage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/frontpage/index.js~FrontPage.html">FrontPage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-homepage">pages/homepage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/homepage/index.js~HomePage.html">HomePage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-login">pages/login</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/login/index.js~Login.html">Login</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-manager-site">pages/manager_site</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/manager_site/index.js~ManagerSite.html">ManagerSite</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-pr-site">pages/pr_site</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/pr_site/index.js~PrSite.html">PrSite</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-pricecalculator">pages/pricecalculator</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/pricecalculator/index.js~PriceCalculator.html">PriceCalculator</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-search">pages/search</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/search/index.js~Search.html">Search</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-setup">pages/setup</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/setup/index.js~Setup.html">Setup</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-technicians">pages/technicians</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/technicians/index.js~Technicians.html">Technicians</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/pages/bandbooking/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React, { Component } from &apos;react&apos;;
+
+import &apos;./style.css&apos;;
+import database from &apos;../../database&apos;
+
+/**
+ * Component used to render Band booking site for booking boss
+ */
+export default class BandBooking extends Component {
+  // static propTypes = {}
+  // static defaultProps = {}
+  // state = {}
+
+  constructor(props) {
+    super(props);
+    let artistMap = new Map();
+    let sceneMap = new Map();
+    let dateMap = new Map();
+    let timeMap = new Map();
+    this.state = {
+
+      artists: [],
+      artistOptions: [],
+      selectedArtist:&quot;&quot;,
+      artistMap: artistMap, //for keeping name of artist and be able to get it by key
+
+      currentArtistNameInput: &quot;&quot;,
+      currentPriceInput: &quot;&quot;,
+      
+      
+      sceneOptions: [],
+      selectedScene:&quot;&quot;,
+
+      dayOptions: [],
+      selectedDay:&quot;&quot;,
+
+      timeOptions: [],
+      selectedTime:&quot;&quot;,
+
+      sceneMap: sceneMap, //to get name of scenes by key
+      dateMap: dateMap, //to get date/day by key
+      timeMap: timeMap, //to get time by key
+      
+
+      requests: [],
+      currentArtistAccepted: &quot;ARTISTACCEPTED&quot;,
+      currentPriceAccepted: &quot;&quot;,
+      currentConcertDayAccepted: &quot;day1&quot;,
+      email: &quot;Hei &lt;name&gt;!\nVi vil gjerne invitere &lt;artist&gt; til &#xE5; spille p&#xE5; festival17 p&#xE5; &lt;dag&gt;.\nPris: &lt;pris&gt;.\n\nMvh\n   bookingansvarlig&quot;
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmitRequest = this.handleSubmitRequest.bind(this);
+    this.handleAccept = this.handleAccept.bind(this);
+    this.handleDecline = this.handleDecline.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleChangeDay = this.handleChangeDay.bind(this);
+    
+  }
+
+  /**
+   * Pulls requests, scenes and artists from database based on current festival
+   */
+  componentWillMount() {
+    var previousRequests = this.state.requests;
+    console.log(previousRequests);
+
+    //get requests from database
+    database.ref(this.props.state.festival).child(&apos;requests&apos;).on(&apos;child_added&apos;, requestSnapshot =&gt; {
+      var vals = requestSnapshot.val();
+      previousRequests.push({
+        artist:vals.artist,
+        price:vals.price,
+        scene:vals.scene,
+        date:vals.date,
+        time:vals.time,
+        status:vals.status, //Kan ha tre tilstander: pending, accepted eller declined.
+        key: requestSnapshot.key
+      })
+      this.setState({
+        requests: previousRequests,
+      })
+    })
+
+    let previousArtistMap = this.state.artistMap;
+    
+
+    let previousArtists = this.state.artists;
+
+    let previousArtistsOptions = this.state.artistOptions;
+
+    //get artists from database
+    database.ref(this.props.state.festival).child(&apos;artists&apos;).on(&apos;child_added&apos;, snap =&gt; {
+      let vals = snap.val();
+      let marker = &quot;&quot;;
+      if(vals.status != &quot;pending&quot;){ //not able to send requests to artist that have a pending request
+          previousArtists.push({
+            id: snap.key,
+            name:vals.name,
+            followers:vals.followers,
+            popularity:vals.popularity,
+            genres:vals.genres,
+            reviews: vals.reviews, 
+            uri: vals.uri,
+            
+          })
+      
+          
+          if(vals.status === &quot;declined&quot;){marker = &quot;**&quot;}//mark artists that have declined a previous offer.
+          if(vals.status === &quot;booked&quot;){marker = &quot;*&quot;}//mark artists that are already booked for a concert.
+
+          //push artists into an array of options elements
+          previousArtistsOptions.push(
+            &lt;option value={snap.key} key={snap.key}&gt; {vals.name}{marker} &lt;/option&gt;
+          )
+
+          this.setState({
+            artistOptions: previousArtistsOptions,
+            selectedArtist: previousArtistsOptions[0].key, //sets the dropdown automatically to the first element, in case you don&apos;t select before submitting
+          })
+        
+      }
+      
+      //push name and key into a map
+      previousArtistMap.set(snap.key, vals.name);
+      
+
+      this.setState({
+        artists: previousArtists,
+        artistMap: previousArtistMap,
+        
+      })
+    
+    })
+
+      //Create Scene Select Options 
+    let prevSceneOptions = this.state.sceneOptions;
+    let prevSceneMap = this.state.sceneMap;
+      
+        //get scenes from database
+        database.ref(this.props.state.festival).child(&apos;scenes&apos;).on(&apos;child_added&apos;, snap =&gt; {
+            var vals = snap.val();
+            
+            prevSceneMap.set(snap.key, vals.name) //map to get name of scene from key
+      
+            prevSceneOptions.push(
+              &lt;option value={snap.key} key={snap.key}&gt; {vals.name} ({vals.capacity}) &lt;/option&gt;
+            )
+            this.setState({
+              sceneOptions: prevSceneOptions,
+              selectedScene: prevSceneOptions[0].key, //sets the dropdown automatically to the first element, in case you don&apos;t select before submitting
+              sceneMap: prevSceneMap,
+            })
+        })
+      
+      let prevDayOptions = this.state.dayOptions;
+      let prevDateMap = this.state.dateMap;
+      let prevTimeMap = this.state.timeMap;
+        
+          //get days from database
+          database.ref(this.props.state.festival).child(&apos;program&apos;).on(&apos;child_added&apos;, snap =&gt; {
+              
+              //Add the times to the times map to get them by key
+                database.ref(this.props.state.festival).child(&apos;program&apos;).child(snap.key).child(&quot;slots&quot;).on(&apos;child_added&apos;, time =&gt; {
+                      prevTimeMap.set(time.key, time.val().start + &quot;-&quot; + time.val().end)
+                      console.log(time.val().start)
+                      this.setState({
+                        timeMap: prevTimeMap
+                      })
+                  })
+              
+              var vals = snap.val();
+
+              prevDateMap.set(snap.key, vals.date) //map to get dates by key
+
+              prevDayOptions.push(
+                &lt;option value={snap.key} key={snap.key}&gt; {vals.date} &lt;/option&gt;
+              )
+              this.setState({
+                dayOptions: prevDayOptions,
+                selectedDay: prevDayOptions[0].key, //sets the dropdown automatically to the first element, in case you don&apos;t select before submitting
+                dateMap: prevDateMap,
+              })
+
+
+              
+
+          })
+
+          
+
+      
+      
+   
+  }
+
+  /**
+   * Pulls available timeslots from database
+   */
+  componentDidMount(){
+    if (! this.state.selectedDay) {
+      return
+    }
+
+    let prevTimeOptions = [];
+        //get times from database
+        database.ref(this.props.state.festival).child(&apos;program&apos;).child(this.state.selectedDay).child(&quot;slots&quot;).on(&apos;child_added&apos;, snap =&gt; {
+            var vals = snap.val();
+
+           
+      
+            prevTimeOptions.push(
+              &lt;option value={snap.key} key={snap.key}&gt;{vals.start}-{vals.end}&lt;/option&gt;
+            )
+            this.setState({
+              timeOptions: prevTimeOptions,
+              selectedTime: prevTimeOptions[0].key, //sets the dropdown automatically to the first element, in case you don&apos;t select before submitting
+            })
+        })
+    
+
+  }
+  
+  /**
+   * Keeps state updated
+   * @param {event} e 
+   */
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+
+  //We need a seperate function when a state change is dependent on another state change,
+  //since state is not not necessarily a synchronous operation
+  //see: https://stackoverflow.com/questions/41043419/reactjs-onclick-state-change-one-step-behind
+  //I solved it by getting the selectedDay variable directly and not depend on the state. Took some time to figure out...!
+  /**
+   * Handles change in day selected
+   * @param {event} e 
+   */
+  handleChangeDay(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+
+    let selectedDay = e.target.value //note that this is not the state, because the state is not set so we can not depend on it when accessing the database
+
+    let prevTimeOptions = [];
+    
+            //get times from database
+            database.ref(this.props.state.festival).child(&apos;program&apos;).child(selectedDay).child(&quot;slots&quot;).on(&apos;child_added&apos;, snap =&gt; {
+                var vals = snap.val();
+                console.log(vals.start, &quot;-&quot;, vals.end)
+          
+                prevTimeOptions.push(
+                  &lt;option value={snap.key} key={snap.key}&gt;{vals.start}-{vals.end}&lt;/option&gt;
+                )
+
+                this.setState({
+                  selectedTime: prevTimeOptions[0].key, //sets the dropdown automatically to the first element, in case you don&apos;t select before submitting
+                  //Cannot be set outside the callback in case a scene has no timeslot. 
+                  })
+               
+            })
+            this.setState({
+              timeOptions: prevTimeOptions, //must be set outside the snap callback in case a scene has no timeslots.
+            })
+            
+  }
+  
+
+  
+  /**
+   * Submits request, in other words pushing it into the database
+   * @param {event} e 
+   */
+  handleSubmitRequest(e) {
+    e.preventDefault(); //prevents page from reloading
+
+    var data = {
+      artist: this.state.selectedArtist, //key of artist in firebase
+      price: this.state.currentPriceInput,
+      scene: this.state.selectedScene,
+      date: this.state.selectedDay,
+      time: this.state.selectedTime,
+      status: &quot;pending&quot;,
+    }
+
+    //Push requesten inn i databasen
+    database.ref(this.props.state.festival).child(&quot;requests&quot;).push(data)
+    database.ref(this.props.state.festival).child(&quot;artists&quot;).child(this.state.selectedArtist).update({status: &quot;pending&quot;});
+    console.log(this.state.requests);
+  }
+
+  /**
+   * Sets the request in database as accepted.
+   * @param {request} request 
+   */
+  handleAccept(request) {
+    database.ref(this.props.state.festival).child(&quot;requests&quot;).child(request.key).update({status: &quot;accepted&quot;});
+
+    // Kan dette gj&#xF8;res bedre?
+    var previousRequests = this.state.requests;
+    previousRequests.map(item =&gt; {
+      if (item === request) {
+        item.status = &quot;accepted&quot;
+      }
+    })
+    this.setState({
+      requests: previousRequests
+    })
+  }
+
+  /**
+   * Sets the request in database as declined
+   * @param {request} request 
+   */
+  handleDecline(request) {
+    database.ref(this.props.state.festival).child(&quot;requests&quot;).child(request.key).update({status: &quot;declined&quot;});
+    database.ref(this.props.state.festival).child(&quot;artists&quot;).child(request.artist).update({status: &quot;&quot;});
+
+    // Kan dette gj&#xF8;res bedre?
+    var previousRequests = this.state.requests;
+    previousRequests.map(item =&gt; {
+      if (item === request) {
+        item.status = &quot;declined&quot;
+      }
+    })
+    this.setState({
+      requests: previousRequests
+    })
+  }
+  
+  /**
+   * Removes the request from the database
+   * @param {request} request 
+   */
+  handleDelete(request) {
+    database.ref(this.props.state.festival).child(&quot;requests&quot;).child(request.key).remove();
+    this.setState({
+      // Fjerner request fra this.state.requests og rendrer tabellen p&#xE5; nytt. 
+      // Dermed slipper vi &#xE5; force page refresh
+      requests: this.state.requests.filter(item =&gt; item !== request)
+    })
+  }
+
+  /**
+   * Placeholder function; not used.
+   * @param {event} e 
+   */
+  handleCopyEmail(e) {
+    e.preventDefault();
+    var copyText = this.state.email;
+    copyText.select();
+    document.execCommand(&quot;Copy&quot;);
+  }
+
+  /**
+   * Renders the Band booking page
+   */
+  render() {
+    return (
+      &lt;div className=&quot;App&quot;&gt;
+        
+        &lt;h2&gt;Send Booking Request&lt;/h2&gt;
+        &lt;p&gt;* artist already booked for a concert&lt;br&gt;&lt;/br&gt;
+          ** artist declined a previous offer to play
+        &lt;/p&gt;
+
+        &lt;form&gt;
+          
+          &lt;select name=&quot;selectedArtist&quot; onChange={this.handleChange} value={this.state.selectedArtist}&gt;
+            {this.state.artistOptions}
+          &lt;/select&gt;
+          &lt;input name=&quot;currentPriceInput&quot; type=&quot;number&quot; value={this.state.currentPriceInput} onChange={this.handleChange} placeholder=&quot;Price offer&quot; /&gt;
+          &lt;select name=&quot;selectedScene&quot; value={this.state.selectedScene} onChange={this.handleChange}&gt;
+              {this.state.sceneOptions}
+          &lt;/select&gt;
+          &lt;select name=&quot;selectedDay&quot; value={this.state.selectedDay} onChange={this.handleChangeDay}&gt;
+              {this.state.dayOptions}
+          &lt;/select&gt;
+          &lt;select name=&quot;selectedTime&quot; value={this.state.selectedTime} onChange={this.handleChange} &gt;
+              {this.state.timeOptions}
+          &lt;/select&gt;
+          &lt;button onClick={this.handleSubmitRequest}&gt;Submit&lt;/button&gt;
+        &lt;/form&gt;
+
+        {/*Liste med requests til Bookingsjef som kan godkjennes, eller ikke godkjennes.*/}
+        &lt;div className=&quot;requestsBody&quot;&gt;
+
+        &lt;h2&gt;Active Bookings&lt;/h2&gt;
+
+          &lt;table&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                  &lt;th&gt;Artist&lt;/th&gt;
+                  &lt;th&gt;Price&lt;/th&gt;
+                  &lt;th&gt;Scene&lt;/th&gt;
+                  &lt;th&gt;Date&lt;/th&gt;
+                  &lt;th&gt;Status&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+              {this.state.requests.map((request) =&gt; {
+                if (request.status === &quot;pending&quot;) {
+                    return(
+                    &lt;tr className=&quot;pendingRequests&quot;&gt;
+                      &lt;td&gt;{this.state.artistMap.get(request.artist)}&lt;/td&gt;
+                      &lt;td&gt;{request.price}&lt;/td&gt;
+                      &lt;td&gt;{this.state.sceneMap.get(request.scene)}&lt;/td&gt;
+                      &lt;td&gt;{this.state.dateMap.get(request.date)} 
+                          {&quot; &quot;}
+                          ({this.state.timeMap.get(request.time)})
+                      &lt;/td&gt;
+                      &lt;td&gt;{request.status}&lt;/td&gt;
+                      &lt;td&gt;
+                        &lt;button onClick={() =&gt;this.handleAccept(request)}&gt; Accept &lt;/button&gt;
+                        &lt;button onClick={() =&gt;this.handleDecline(request)}&gt; Reject &lt;/button&gt;
+                      &lt;/td&gt;
+                    &lt;/tr&gt;
+                    )
+                  }
+                if (request.status === &quot;accepted&quot;) {
+                  return(
+                  &lt;tr className=&quot;acceptedRequests&quot;&gt;
+                   &lt;td&gt;{this.state.artistMap.get(request.artist)}&lt;/td&gt;
+                   &lt;td&gt;{request.price}&lt;/td&gt;
+                   &lt;td&gt;{this.state.sceneMap.get(request.scene)}&lt;/td&gt;
+                   &lt;td&gt;{this.state.dateMap.get(request.date)} 
+                       {&quot; &quot;}
+                       ({this.state.timeMap.get(request.time)})
+                   &lt;/td&gt;
+                   &lt;td&gt;{request.status}&lt;/td&gt;
+                   
+                 &lt;/tr&gt;
+                 )
+                }
+              })
+
+              }
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+        
+
+          &lt;h2&gt;Declined Requests&lt;/h2&gt;
+          &lt;table&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                  &lt;th&gt;Artist&lt;/th&gt;
+                  &lt;th&gt;Price&lt;/th&gt;
+                  &lt;th&gt;Scene&lt;/th&gt;
+                  &lt;th&gt;Date&lt;/th&gt;
+                  &lt;th&gt;Status&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody className=&quot;declinedRequests&quot;&gt;
+              {this.state.requests.map((request) =&gt; {
+                if (request.status === &quot;declined&quot;) {
+                    return(
+                    &lt;tr&gt;
+                      &lt;td&gt;{this.state.artistMap.get(request.artist)}&lt;/td&gt;
+                      &lt;td&gt;{request.price}&lt;/td&gt;
+                      &lt;td&gt;{this.state.sceneMap.get(request.scene)}&lt;/td&gt;
+                      &lt;td&gt;{this.state.dateMap.get(request.date)} 
+                          {&quot; &quot;}
+                          ({this.state.timeMap.get(request.time)})
+                      &lt;/td&gt;
+                      &lt;td&gt;{request.status}&lt;/td&gt;
+                      &lt;td&gt;&lt;button onClick={() =&gt;this.handleDelete(request)}&gt; Delete &lt;/button&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                    )
+                  }
+                })
+
+              }
+            &lt;/tbody&gt;
+          &lt;/table&gt;
+
+          {/*For senere om en skal legge til email funksjon.
+          &lt;div&gt;
+          &lt;h1&gt; Generated email: &lt;/h1&gt;
+          &lt;textarea name=&quot;email&quot; value={this.state.email} onChange={this.handleChange} rows=&quot;10&quot; cols=&quot;60&quot;&gt;&lt;/textarea&gt;
+          &lt;button onClick={this.handleCopyEmail}&gt;Copy Email&lt;/button&gt;
+          &lt;/div&gt; */}
+
+        &lt;/div&gt;
+      &lt;/div&gt;
+      
+    );
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">src/components/artist/Artist.js | app</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/App.js~App.html">App</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-register">register</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unregister">unregister</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-database">database</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-firebaseApp">firebaseApp</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-allfestivals">components/allfestivals</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/allfestivals/AllFestivals.js~AllFestivals.html">AllFestivals</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-artist">components/artist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/artist/Artist.js~Artist.html">Artist</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-artist-pr">components/artist_pr</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/artist_pr/ArtistPR.js~ArtistPR.html">ArtistPR</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-artistlist">components/artistlist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/artistlist/ArtistList.js~ArtistList.html">ArtistList</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-concertprogram">components/concertprogram</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/concertprogram/ConcertProgram.js~ConcertProgram.html">ConcertProgram</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createday">components/createday</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createday/CreateDay.js~CreateDay.html">CreateDay</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createddays">components/createddays</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createddays/CreatedDays.js~CreatedDays.html">CreatedDays</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createfestival">components/createfestival</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createfestival/CreateFestival.js~CreateFestival.html">CreateFestival</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-createscene">components/createscene</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/createscene/CreateScene.js~CreateScene.html">CreateScene</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-festival">components/festival</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/festival/Festival.js~Festival.html">Festival</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-managerequest">components/managerequest</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/managerequest/ManageRequest.js~ManageRequest.html">ManageRequest</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-navbar">components/navbar</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/navbar/navbar.js~NavComponent.html">NavComponent</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-programdays">components/programdays</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/programdays/ProgramDays.js~ProgramDays.html">ProgramDays</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-programslots">components/programslots</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/programslots/ProgramSlots.js~ProgramSlots.html">ProgramSlots</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-scenelist">components/scenelist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/scenelist/SceneList.js~SceneList.html">SceneList</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-slots">components/slots</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/slots/Slots.js~Slots.html">Slots</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-technicianslist">components/technicianslist</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/components/technicianslist/TechniciansList.js~TechniciansList.html">TechniciansList</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-adminpage">pages/adminpage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/adminpage/index.js~AdminPage.html">AdminPage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-artists">pages/artists</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/artists/index.js~Artists.html">Artists</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-bandbooking">pages/bandbooking</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/bandbooking/index.js~BandBooking.html">BandBooking</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-bandbookingresponsible">pages/bandbookingresponsible</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/bandbookingresponsible/index.js~BandBookingResponsible.html">BandBookingResponsible</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-banddatabase">pages/banddatabase</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/banddatabase/index.js~BandDatabase.html">BandDatabase</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-concertpage">pages/concertpage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/concertpage/index.js~ConcertPage.html">ConcertPage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-frontpage">pages/frontpage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/frontpage/index.js~FrontPage.html">FrontPage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-homepage">pages/homepage</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/homepage/index.js~HomePage.html">HomePage</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-login">pages/login</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/login/index.js~Login.html">Login</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-manager-site">pages/manager_site</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/manager_site/index.js~ManagerSite.html">ManagerSite</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-pr-site">pages/pr_site</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/pr_site/index.js~PrSite.html">PrSite</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-pricecalculator">pages/pricecalculator</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/pricecalculator/index.js~PriceCalculator.html">PriceCalculator</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-search">pages/search</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/search/index.js~Search.html">Search</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-setup">pages/setup</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/setup/index.js~Setup.html">Setup</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pages-technicians">pages/technicians</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/pages/technicians/index.js~Technicians.html">Technicians</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/components/artist/Artist.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React, {Component } from &apos;react&apos;
+import &apos;./artist.css&apos;;
+
+import database from &apos;../../database&apos; //firebase
+
+import spotifyIcon from &apos;../../static/img/spotify.png&apos;
+
+/**
+ * Component used to render an entry in the table in /search
+ */
+export default class Artist extends Component {
+
+    /**
+     * Initializes state
+     * @param {props} props 
+     */
+    constructor(props) {
+        super(props);
+        this.state = { 
+            festival:props.festival,
+            name: props.name, //String
+            info: props.info, //String
+            popularity: props.popularity, //Int
+            followers: props.followers, //Int
+            genres: props.genres,
+            uri: props.uri,
+            pic: props.pic,
+            /* earlierConcerts: props.earlierConcerts, //List
+            concertNeeds: props.concertNeeds, // String //kanskje cost hentes herifra. Ogs&#xE5; ting som antall mikrofoner og instrumenter
+            cost: props.cost, // Int
+            approved: false, // Boolean
+            booked: false, // Boolean */
+            addButtonDisabled: false
+        }
+    }
+
+    /**
+     * Decides if component should update state based on props
+     * @param {props} nextProps 
+     */
+    componentWillReceiveProps(nextProps) {
+        if (this.props.info != nextProps.info) {
+            this.setState({info: nextProps.info})
+        }
+    }
+
+    /**
+     * This method tries to add an Artist to the database.
+     * If there&apos;s an Artist with the same Spotify URI already in the database, it alerts the user.
+     * @param {String} name 
+     * @param {Integer} followers 
+     * @param {Integer} popularity 
+     * @param {Array&lt;String&gt;} genres 
+     * @param {String} uri 
+     * @param {String} pic 
+     */
+    addArtist(name,followers,popularity,genres,uri,pic){
+        this.setState({addButtonDisabled: true})
+
+        database.ref(this.state.festival).child(&quot;artists&quot;).orderByChild(&quot;uri&quot;).equalTo(uri).once(&quot;value&quot;, artistEqualSnap =&gt; {
+            if (! artistEqualSnap.exists()) {
+                const data = {
+                    name: name,
+                    followers: followers,
+                    popularity: popularity, 
+                    genres: genres,
+                    uri: uri,
+                    pic: pic,
+                }
+                database.ref(this.state.festival).child(&quot;artists&quot;).push(data)
+                alert(name + &quot; is now added to database&quot;);
+            } else {
+                alert(name + &quot; is already in database&quot;)
+            }
+        })
+        .then(() =&gt; {
+            this.setState({addButtonDisabled: false})
+        }) 
+
+           
+    }
+
+    /**
+     * Returns a table row with the information gotten from props
+     */
+    render() {
+
+        let genres = &quot;&quot;
+        if (this.state.genres !== undefined) {
+            genres = this.state.genres.slice(0,2).join(&quot;, &quot;)
+        } else {
+            genres = &quot;None provided&quot;
+        }
+
+        return (
+            &lt;tr className = &quot;artistTable&quot;&gt;
+                &lt;td&gt; {this.state.name} &lt;/td&gt;
+                &lt;td&gt; {this.state.followers} &lt;/td&gt;
+                &lt;td&gt; {this.state.popularity} &lt;/td&gt;
+                &lt;td&gt; {genres} &lt;/td&gt;
+                &lt;td&gt; &lt;a href={this.state.uri}&gt;&lt;img  width=&quot;30&quot; height=&quot;30&quot; src={spotifyIcon}&gt;&lt;/img&gt;&lt;/a&gt;
+                &lt;/td&gt;
+                &lt;td&gt; &lt;button disabled={this.state.addButtonDisabled} onClick={() =&gt; this.addArtist(
+                        this.state.name, 
+                        this.state.followers, 
+                        this.state.popularity,
+                        genres,
+                        this.state.uri,
+                        this.state.pic,
+                    )}&gt; Add &lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+
+        )
+    }
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

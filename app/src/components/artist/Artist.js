@@ -5,13 +5,19 @@ import database from '../../database' //firebase
 
 import spotifyIcon from '../../static/img/spotify.png'
 
+/**
+ * Component used to render an entry in the table in /search
+ */
 export default class Artist extends Component {
 
+    /**
+     * Initializes state
+     * @param {props} props 
+     */
     constructor(props) {
         super(props);
         this.state = { 
             festival:props.festival,
-            
             name: props.name, //String
             info: props.info, //String
             popularity: props.popularity, //Int
@@ -28,12 +34,26 @@ export default class Artist extends Component {
         }
     }
 
+    /**
+     * Decides if component should update state based on props
+     * @param {props} nextProps 
+     */
     componentWillReceiveProps(nextProps) {
         if (this.props.info != nextProps.info) {
             this.setState({info: nextProps.info})
         }
     }
 
+    /**
+     * This method tries to add an Artist to the database.
+     * If there's an Artist with the same Spotify URI already in the database, it alerts the user.
+     * @param {String} name 
+     * @param {Integer} followers 
+     * @param {Integer} popularity 
+     * @param {Array<String>} genres 
+     * @param {String} uri 
+     * @param {String} pic 
+     */
     addArtist(name,followers,popularity,genres,uri,pic){
         this.setState({addButtonDisabled: true})
 
@@ -60,7 +80,9 @@ export default class Artist extends Component {
            
     }
 
-
+    /**
+     * Returns a table row with the information gotten from props
+     */
     render() {
 
         let genres = ""

@@ -3,6 +3,9 @@ import React, {Component } from 'react'
 
 import database from '../../database' //firebase
 
+/**
+ * Component used to create a day
+ */
 export default class CreateDay extends Component {
 
     constructor(props) {
@@ -16,6 +19,10 @@ export default class CreateDay extends Component {
         
     }
 
+    /**
+     * Keeps state updated according to the different input fields that may change
+     * @param {event} e 
+     */
     handleChange(e) {
         e.preventDefault();
 
@@ -25,6 +32,10 @@ export default class CreateDay extends Component {
         );
       }
 
+    /**
+     * Pushes a new date to the database
+     * @param {String} date 
+     */
     create(date) {
         // Ikke push en tom date
         if (! date) {
@@ -42,6 +53,9 @@ export default class CreateDay extends Component {
         })
       }
 
+    /**
+     * Renders a table row that may be used to create days
+     */
     render() {
         var dateToday = new Date().toLocaleDateString();
 

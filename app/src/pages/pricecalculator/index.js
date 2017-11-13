@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import database from '../../database'
 import './style.css';
 
+/**
+ * Component used to render the Price Calculator page
+ */
 export default class PriceCalculator extends Component {
 
   constructor(props) {
@@ -32,6 +35,9 @@ export default class PriceCalculator extends Component {
     this.calculateTotalCost = this.calculateTotalCost.bind(this);
   }
 
+  /**
+   * Fetches scenes from the database
+   */
   componentWillMount(){
     let prevSceneOptions = this.state.sceneOptions;
     let prevSceneCost = this.state.sceneCost;
@@ -59,7 +65,10 @@ export default class PriceCalculator extends Component {
 
   }
 
-
+    /**
+     * Keeps state synced with fields
+     * @param {event} e 
+     */
     handleChange(e) {
    
         this.setState({
@@ -69,6 +78,9 @@ export default class PriceCalculator extends Component {
   
     }
 
+    /**
+     * Calculates percentage of sold capacity
+     */
     calculateCapacitySold(){
       let sceneCapacity = parseInt(this.state.sceneCapacity.get(this.state.selectedScene))
       let ticketSales = parseInt(this.state.ticketSales)
@@ -78,6 +90,9 @@ export default class PriceCalculator extends Component {
       return Math.floor((ticketSales/sceneCapacity)*100) + " % of capacity"
     }
 
+    /**
+     * Calculates the total cost of the concert
+     */
     calculateTotalCost(){
       let artistCost = parseInt(this.state.artistCost)
       let sceneCost = parseInt(this.state.sceneCost.get(this.state.selectedScene))
@@ -86,6 +101,9 @@ export default class PriceCalculator extends Component {
       return totalCost
     }
 
+    /**
+     * Calculates ticket price
+     */
     calculatePrice(){
       let sceneCapacity = parseInt(this.state.sceneCapacity.get(this.state.selectedScene))
       let ticketSales = parseInt(this.state.ticketSales)
@@ -101,6 +119,9 @@ export default class PriceCalculator extends Component {
       
     }
 
+    /**
+     * Styles the result based on valid ratio between ticket sales and scene capacity
+     */
     styleResult(){
       let sceneCapacity = parseInt(this.state.sceneCapacity.get(this.state.selectedScene))
       let ticketSales = parseInt(this.state.ticketSales)
@@ -120,8 +141,10 @@ export default class PriceCalculator extends Component {
 
 
 
-      
-
+    
+  /**
+   * Renders the page
+   */
   render() {
     let ticketPrice = this.calculatePrice();
     let divStyle = this.styleResult();

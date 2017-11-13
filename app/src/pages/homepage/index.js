@@ -10,6 +10,9 @@ import database from '../../database'
 // React Router
 import {Redirect} from 'react-router-dom';
 
+/**
+ * Component used to render the Home Page
+ */
 export default class HomePage extends Component {
   // static propTypes = {}
   // static defaultProps = {}
@@ -23,6 +26,9 @@ export default class HomePage extends Component {
     }
   }
 
+  /**
+   * Pulls the program from the database
+   */
   componentWillMount() {
     var prevDays = this.state.days;
     
@@ -44,6 +50,9 @@ export default class HomePage extends Component {
 
   }
 
+  /**
+   * Renders the page
+   */
   render() {
 
     if (this.state.days.length === 0) {

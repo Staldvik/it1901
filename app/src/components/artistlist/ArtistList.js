@@ -5,8 +5,15 @@ import database from '../../database' //firebase
 
 import spotifyIcon from '../../static/img/spotify.png'
 
+/**
+ * Component determines style of and returns an entry in the list of artists on the artists page. 
+ */
 export default class ArtistList extends Component {
 
+    /**
+     * 
+     * @param {props} props 
+     */
     constructor(props) {
         super(props);
         this.state = { 
@@ -26,7 +33,11 @@ export default class ArtistList extends Component {
         
     }
 
-
+    /**
+     * Deletes an Artist if it doesn't have any concerts or are not in the process of getting booked.
+     * @param {firebase.database.Reference.key} key 
+     * @param {String} status 
+     */
     deleteArtist(key,status){
         if(status == null || status == ""){ //only remove artists that have not concerts or are not in booking process
             database.ref(this.state.festival).child("artists").child(key).remove() 
@@ -41,6 +52,10 @@ export default class ArtistList extends Component {
         )
     }
 
+    /**
+     * Returns an ID that makes CSS style it accordingly to status
+     * @param {String} status 
+     */
     setColorCode(status){
         switch(status){
             case("booked"):
@@ -53,7 +68,9 @@ export default class ArtistList extends Component {
 
     }
 
-
+    /**
+     * Renders a row in a table based on status
+     */
     render() {
 
         if(this.state.deleted){ //nice way to hide deleted elements

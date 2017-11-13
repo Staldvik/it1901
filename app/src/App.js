@@ -27,6 +27,10 @@ import HomePage from './pages/homepage';
 import Setup from './pages/setup';
 import Technicians from './pages/technicians';
 
+/**
+ * This is the "Root" or top level. Our web app is really only a single page,
+ * but lets you navigate through different pages using React Roter V4.
+ */
 class App extends Component {
 
   constructor(props) {
@@ -45,6 +49,10 @@ class App extends Component {
 
   // Callback kalles som en funksjon når database-søket er ferdig.
   // Dermed kan man sende inn en funksjon som skal kjøres når updateRoleMap blir ferdig.
+  /**
+   * Updates the rolemap
+   * @param {*} callback 
+   */
   updateRoleMap(callback) {
     database.ref('users').once("value", users => {
       users.forEach(user => {
@@ -57,6 +65,9 @@ class App extends Component {
     )
   }
 
+  /**
+   * Gets current user and user info from auth and database respectively
+   */
   componentWillMount() {
     // Get user from firebase Auth
     console.log("Running auth")
@@ -97,17 +108,29 @@ class App extends Component {
     console.log(this.state.isFestivalSelected)
   }
 
+  /**
+   * Does nothing
+   */
   componentDidMount() {
     
   }
 
+  /**
+   * Sets isFestivalSelected to False and thereby "exiting" the
+   * festival. When false you are redirected to FrontPage
+   */
   exit(){
     console.log("exited festival")
     this.setState({
       isFestivalSelected: false,
     })
   }
-
+  
+  /**
+   * Sets festival and festivalName
+   * @param {key} festival 
+   * @param {String} name 
+   */
   enter(festival,name){
     console.log("switched to festival", name, "with key:",festival)
     this.setState({
@@ -117,6 +140,9 @@ class App extends Component {
     })
   }
 
+  /**
+   * Checks if current user is allowed to acess path
+   */
   isCorrectRole = path => {
     if (this.state.user === null) {return false}
 
@@ -183,7 +209,10 @@ class App extends Component {
   }
 
 
-
+  /**
+   * Renders the page, which consists of a navbar and a Switch,
+   * which renders a component based on path
+   */
   render() {
     console.log("Displayname:", this.state.username)
 

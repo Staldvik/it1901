@@ -3,7 +3,9 @@ import './createfestival.css';
 
 import database from '../../database' //firebase
 
-
+/**
+ * Component used to create festival
+ */
 export default class CreateFestival extends Component {
 
     constructor(props) {
@@ -16,6 +18,10 @@ export default class CreateFestival extends Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    /**
+     * Keeps state updated
+     * @param {event} e 
+     */
     handleChange(e) {
         this.setState({
           [e.target.name]: e.target.value
@@ -23,14 +29,18 @@ export default class CreateFestival extends Component {
       }
 
 
-
+    /**
+     * Passes desired festival name one layer up
+     * @param {String} name 
+     */
     createFestival(name){
        this.props.create(name);
     }
 
-  
 
-
+    /**
+     * Renders a input form to make a new festival
+     */
     render() {
     return(
         <div id="createNewFestival">

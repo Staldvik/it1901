@@ -5,7 +5,9 @@ import ArtistPR from '../../components/artist_pr/ArtistPR';
 //firebase
 import database from '../../database';
 
-
+/**
+ * Component used to render the PR Site
+ */
 export default class PrSite extends Component {
 
   constructor(props) {
@@ -19,6 +21,9 @@ export default class PrSite extends Component {
     this.database = database;
  }
 
+ /**
+  * Fetches artist info from the database based on current festival
+  */
  componentWillMount() {
    var previousArtists = this.state.artists;
 
@@ -37,7 +42,9 @@ export default class PrSite extends Component {
 
  }
 
-
+/**
+ * Renders the page
+ */
 render() {
   return (
     <div className="App">

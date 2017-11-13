@@ -4,8 +4,15 @@ import './concertprogram.css';
 import database from '../../database' //firebase
 import template from '../../static/img/defaultArtistPic.jpg'
 
+/**
+ * Component that fetches info for concert from database
+ */
 export default class ConcertProgram extends Component {
 
+    /**
+     * Here used to set current festival and concert
+     * @param {props} props 
+     */
     constructor(props) {
         super(props);
         
@@ -22,6 +29,9 @@ export default class ConcertProgram extends Component {
         
     }
 
+    /**
+     * Here used to pull info for concert from database. 
+     */
     componentDidMount() {
         if(this.state.concert != null){ //need to check if there is a concert on that timeslot
             database.ref(this.state.festival).child('concerts').child(this.state.concert).once('value', snap => {
@@ -43,7 +53,11 @@ export default class ConcertProgram extends Component {
        
       }
     
-
+    /**
+     * Updates target state based on event value.
+     * This way the state always reflects value in different inputs
+     * @param {event} e 
+     */
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -51,7 +65,9 @@ export default class ConcertProgram extends Component {
         );
       }
 
-
+    /**
+     * Renders a slot based on if there is a concert or not. 
+     */
     render() {
         if(this.state.concert==null){
             return(<div id="availableProgramSlot">

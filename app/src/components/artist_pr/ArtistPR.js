@@ -1,8 +1,16 @@
 import React, {Component } from 'react'
 import './artist.css';
 
+/**
+ * Component that renders a div with contact information.
+ * This information is passed into it with props.
+ */
 export default class ArtistPR extends Component {
 
+    /**
+     * Initializes State
+     * @param {props} props 
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -12,6 +20,9 @@ export default class ArtistPR extends Component {
         }
     }
 
+    /**
+     * Renders a div with concat information
+     */
     render() {
         return (
             <div className = "artistDiv">

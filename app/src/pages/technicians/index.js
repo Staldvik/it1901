@@ -10,6 +10,9 @@ import TechniciansList from '../../components/technicianslist/TechniciansList'
 //Firebase
 import database from '../../database'
 //region
+/**
+ * Component that renders the technicians page 
+ */
 export default class Technicians extends Component {
 //endregion
   constructor(props) {
@@ -51,6 +54,9 @@ export default class Technicians extends Component {
     this.isTechInConcert = this.isTechInConcert.bind(this);
   }
 
+  /**
+   * Pulls information from the database
+   */
   componentWillMount() {
     var previousTechnicians = this.state.technicians;
     var previousConcertOptions = this.state.concertOptions;
@@ -123,6 +129,10 @@ export default class Technicians extends Component {
    
   }
 
+  /**
+   * Keeps the state synced with fields
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -130,7 +140,9 @@ export default class Technicians extends Component {
   }
 
 
-
+  /**
+   * Checks if technician is in concert
+   */
   isTechInConcert() { 
     console.log("Running check: is tech already in concert?");
     console.log("Festivalkey:", this.props.state.festival, "Selected concert:", this.state.selectedConcert)
@@ -152,6 +164,10 @@ export default class Technicians extends Component {
     })
   }
 
+  /**
+   * Pushes technician into concert
+   * @param {event} e 
+   */
   pushTech(e) {
     e.preventDefault();
 
@@ -180,7 +196,10 @@ export default class Technicians extends Component {
 
 
  
-
+  /**
+   * Pushes a new technician into the database
+   * @param {event} e 
+   */
   handleSubmitTech(e) {
     e.preventDefault();
 
@@ -194,7 +213,11 @@ export default class Technicians extends Component {
 
   
 
-
+  /**
+   * Generic function that searches concert query for value and sets this.match to concert that matches
+   * @param {String} query 
+   * @param {String} value 
+   */
   searchConcertsFor(query, value) {
     return database.ref(this.props.state.festival).child('concerts').once('value').then(concertsSnapshot => {
       return concertsSnapshot.forEach(concertSnapshot => {
@@ -206,7 +229,9 @@ export default class Technicians extends Component {
     })
   }
 
-
+  /**
+   * Renders the page
+   */
   render() {
     return (
       <div className="App">

@@ -7,6 +7,9 @@ import './style.css';
 //Firebase
 import database from '../../database'
 //region
+/**
+ * Component used to render the admin page.
+ */
 export default class AdminPage extends Component {
 //endregion
   constructor(props) {
@@ -39,6 +42,9 @@ export default class AdminPage extends Component {
     this.pushRole = this.pushRole.bind(this);
   }
 
+  /**
+   * Here used to pull users from database and create options for each.
+   */
   componentWillMount() {
     var previousUserOptions = this.state.userOptions;
 
@@ -52,6 +58,10 @@ export default class AdminPage extends Component {
     })
   }
 
+  /**
+   * Keeps state updated
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -63,7 +73,10 @@ export default class AdminPage extends Component {
  
 
   
-
+  /**
+   * Sets chosen role to chosen user. Does not remove old role(e)
+   * @param {event} e 
+   */
   pushRole(e) {
     e.preventDefault();
 
@@ -84,7 +97,9 @@ export default class AdminPage extends Component {
 
 
 
-
+  /**
+   * Renders a page with form to push selected role to a selected user. 
+   */
   render() {
     return (
       <div className="App">

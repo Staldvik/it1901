@@ -1,0 +1,114 @@
+{
+  "type": "File",
+  "start": 0,
+  "end": 3923,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 150,
+      "column": 38
+    }
+  },
+  "program": {
+    "type": "Program",
+    "start": 0,
+    "end": 3923,
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 0
+      },
+      "end": {
+        "line": 150,
+        "column": 38
+      }
+    },
+    "sourceType": "module",
+    "body": [],
+    "directives": [],
+    "leadingComments": null,
+    "innerComments": [
+      {
+        "type": "CommentBlock",
+        "value": " import React from 'react'\r\n\r\n//Firebase\r\nimport database, {firebaseApp} from './database';\r\n\r\n// Denne filen hjelper react router samt forskjellige sider\r\n// med hvem som er innlogget\r\n\r\n\r\nconst auth = {\r\n    user: null,\r\n    authenticate(callback) {\r\n      firebaseApp.auth().onAuthStateChanged(user => {\r\n          if (user) {\r\n            //TODO check if correct role\r\n            this.user = user\r\n            callback(user);\r\n          } else {\r\n\r\n            this.user = null\r\n            callback();\r\n          }\r\n        })\r\n    },\r\n    \r\n    roleMap: new Map(),\r\n    fetchRoles(callback) {\r\n        database.ref('users').once(\"value\", users => {\r\n            users.forEach(user => {\r\n                console.log(user.val().displayName)\r\n                this.roleMap.set(user.key, user.val().roles)\r\n            })\r\n        }).then(() => {\r\n            callback();\r\n        })\r\n    },\r\n\r\n    isCorrectRole(path) {\r\n      console.log(\"TESTING PATH\")\r\n      console.log(\"running fetchroles\")\r\n      this.fetchRoles(() => {\r\n\r\n        console.log(\"This user\",this.user)\r\n        if (this.user === null) {return false}\r\n        \r\n        var rolesForUser = this.roleMap.get(this.user.uid)\r\n\r\n        if (rolesForUser === undefined) {return false}\r\n    \r\n        // Admin har tilgang til alt\r\n        console.log(\"Roles for user\",rolesForUser)\r\n        if (rolesForUser.admin === true) {return true}\r\n        switch(path) {\r\n    \r\n            case \"/bandbooking\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/banddatabase\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/pricecalculator\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/calendar\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/concerts\":\r\n                return rolesForUser.technician == true || rolesForUser.booking == true\r\n\r\n            case \"/artists\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/search\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/manager\":\r\n                return rolesForUser.manager == true\r\n                \r\n            default:\r\n                return false\r\n\r\n        }\r\n\r\n\r\n\r\n      })\r\n      \r\n    }\r\n  }\r\n  \r\n  const isCorrectRole = (path, rolesForUser) => {\r\n    if (rolesForUser === undefined) {return false}\r\n\r\n    // Admin har tilgang til alt\r\n    console.log(\"Roles for user\",rolesForUser)\r\n    if (rolesForUser.admin === true) {return true}\r\n    switch(path) {\r\n\r\n        case \"/bandbooking\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/banddatabase\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/pricecalculator\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/calendar\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/concerts\":\r\n            return rolesForUser.technician == true || rolesForUser.booking == true\r\n\r\n        case \"/artists\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/search\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/manager\":\r\n            return rolesForUser.manager == true\r\n            \r\n        default:\r\n            return false\r\n\r\n    }\r\n  }\r\n  \r\n  // Tanken er user som key og roles som value\r\n  const roles = {\r\n      roleMap: new Map(),\r\n      fetchRoles(callback) {\r\n          database.ref('users').once(\"value\", users => {\r\n              users.forEach(user => {\r\n                  console.log(user.val().displayName)\r\n                  this.roleMap.set(user.key, user.val().roles)\r\n              })\r\n          }).then(() => {\r\n              callback();\r\n          })\r\n      }\r\n  }\r\n\r\nexport {auth, roles, isCorrectRole} ",
+        "start": 0,
+        "end": 3923,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 150,
+            "column": 38
+          }
+        }
+      }
+    ]
+  },
+  "comments": [
+    {
+      "type": "CommentBlock",
+      "value": " import React from 'react'\r\n\r\n//Firebase\r\nimport database, {firebaseApp} from './database';\r\n\r\n// Denne filen hjelper react router samt forskjellige sider\r\n// med hvem som er innlogget\r\n\r\n\r\nconst auth = {\r\n    user: null,\r\n    authenticate(callback) {\r\n      firebaseApp.auth().onAuthStateChanged(user => {\r\n          if (user) {\r\n            //TODO check if correct role\r\n            this.user = user\r\n            callback(user);\r\n          } else {\r\n\r\n            this.user = null\r\n            callback();\r\n          }\r\n        })\r\n    },\r\n    \r\n    roleMap: new Map(),\r\n    fetchRoles(callback) {\r\n        database.ref('users').once(\"value\", users => {\r\n            users.forEach(user => {\r\n                console.log(user.val().displayName)\r\n                this.roleMap.set(user.key, user.val().roles)\r\n            })\r\n        }).then(() => {\r\n            callback();\r\n        })\r\n    },\r\n\r\n    isCorrectRole(path) {\r\n      console.log(\"TESTING PATH\")\r\n      console.log(\"running fetchroles\")\r\n      this.fetchRoles(() => {\r\n\r\n        console.log(\"This user\",this.user)\r\n        if (this.user === null) {return false}\r\n        \r\n        var rolesForUser = this.roleMap.get(this.user.uid)\r\n\r\n        if (rolesForUser === undefined) {return false}\r\n    \r\n        // Admin har tilgang til alt\r\n        console.log(\"Roles for user\",rolesForUser)\r\n        if (rolesForUser.admin === true) {return true}\r\n        switch(path) {\r\n    \r\n            case \"/bandbooking\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/banddatabase\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/pricecalculator\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/calendar\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/concerts\":\r\n                return rolesForUser.technician == true || rolesForUser.booking == true\r\n\r\n            case \"/artists\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/search\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/manager\":\r\n                return rolesForUser.manager == true\r\n                \r\n            default:\r\n                return false\r\n\r\n        }\r\n\r\n\r\n\r\n      })\r\n      \r\n    }\r\n  }\r\n  \r\n  const isCorrectRole = (path, rolesForUser) => {\r\n    if (rolesForUser === undefined) {return false}\r\n\r\n    // Admin har tilgang til alt\r\n    console.log(\"Roles for user\",rolesForUser)\r\n    if (rolesForUser.admin === true) {return true}\r\n    switch(path) {\r\n\r\n        case \"/bandbooking\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/banddatabase\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/pricecalculator\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/calendar\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/concerts\":\r\n            return rolesForUser.technician == true || rolesForUser.booking == true\r\n\r\n        case \"/artists\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/search\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/manager\":\r\n            return rolesForUser.manager == true\r\n            \r\n        default:\r\n            return false\r\n\r\n    }\r\n  }\r\n  \r\n  // Tanken er user som key og roles som value\r\n  const roles = {\r\n      roleMap: new Map(),\r\n      fetchRoles(callback) {\r\n          database.ref('users').once(\"value\", users => {\r\n              users.forEach(user => {\r\n                  console.log(user.val().displayName)\r\n                  this.roleMap.set(user.key, user.val().roles)\r\n              })\r\n          }).then(() => {\r\n              callback();\r\n          })\r\n      }\r\n  }\r\n\r\nexport {auth, roles, isCorrectRole} ",
+      "start": 0,
+      "end": 3923,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 150,
+          "column": 38
+        }
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "type": "CommentBlock",
+      "value": " import React from 'react'\r\n\r\n//Firebase\r\nimport database, {firebaseApp} from './database';\r\n\r\n// Denne filen hjelper react router samt forskjellige sider\r\n// med hvem som er innlogget\r\n\r\n\r\nconst auth = {\r\n    user: null,\r\n    authenticate(callback) {\r\n      firebaseApp.auth().onAuthStateChanged(user => {\r\n          if (user) {\r\n            //TODO check if correct role\r\n            this.user = user\r\n            callback(user);\r\n          } else {\r\n\r\n            this.user = null\r\n            callback();\r\n          }\r\n        })\r\n    },\r\n    \r\n    roleMap: new Map(),\r\n    fetchRoles(callback) {\r\n        database.ref('users').once(\"value\", users => {\r\n            users.forEach(user => {\r\n                console.log(user.val().displayName)\r\n                this.roleMap.set(user.key, user.val().roles)\r\n            })\r\n        }).then(() => {\r\n            callback();\r\n        })\r\n    },\r\n\r\n    isCorrectRole(path) {\r\n      console.log(\"TESTING PATH\")\r\n      console.log(\"running fetchroles\")\r\n      this.fetchRoles(() => {\r\n\r\n        console.log(\"This user\",this.user)\r\n        if (this.user === null) {return false}\r\n        \r\n        var rolesForUser = this.roleMap.get(this.user.uid)\r\n\r\n        if (rolesForUser === undefined) {return false}\r\n    \r\n        // Admin har tilgang til alt\r\n        console.log(\"Roles for user\",rolesForUser)\r\n        if (rolesForUser.admin === true) {return true}\r\n        switch(path) {\r\n    \r\n            case \"/bandbooking\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/banddatabase\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/pricecalculator\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/calendar\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/concerts\":\r\n                return rolesForUser.technician == true || rolesForUser.booking == true\r\n\r\n            case \"/artists\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/search\":\r\n                return rolesForUser.booking == true\r\n\r\n            case \"/manager\":\r\n                return rolesForUser.manager == true\r\n                \r\n            default:\r\n                return false\r\n\r\n        }\r\n\r\n\r\n\r\n      })\r\n      \r\n    }\r\n  }\r\n  \r\n  const isCorrectRole = (path, rolesForUser) => {\r\n    if (rolesForUser === undefined) {return false}\r\n\r\n    // Admin har tilgang til alt\r\n    console.log(\"Roles for user\",rolesForUser)\r\n    if (rolesForUser.admin === true) {return true}\r\n    switch(path) {\r\n\r\n        case \"/bandbooking\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/banddatabase\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/pricecalculator\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/calendar\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/concerts\":\r\n            return rolesForUser.technician == true || rolesForUser.booking == true\r\n\r\n        case \"/artists\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/search\":\r\n            return rolesForUser.booking == true\r\n\r\n        case \"/manager\":\r\n            return rolesForUser.manager == true\r\n            \r\n        default:\r\n            return false\r\n\r\n    }\r\n  }\r\n  \r\n  // Tanken er user som key og roles som value\r\n  const roles = {\r\n      roleMap: new Map(),\r\n      fetchRoles(callback) {\r\n          database.ref('users').once(\"value\", users => {\r\n              users.forEach(user => {\r\n                  console.log(user.val().displayName)\r\n                  this.roleMap.set(user.key, user.val().roles)\r\n              })\r\n          }).then(() => {\r\n              callback();\r\n          })\r\n      }\r\n  }\r\n\r\nexport {auth, roles, isCorrectRole} ",
+      "start": 0,
+      "end": 3923,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 150,
+          "column": 38
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "eof",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 3923,
+      "end": 3923,
+      "loc": {
+        "start": {
+          "line": 150,
+          "column": 38
+        },
+        "end": {
+          "line": 150,
+          "column": 38
+        }
+      }
+    }
+  ]
+}

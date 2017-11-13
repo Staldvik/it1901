@@ -5,6 +5,9 @@ import database from '../../database'
 
 import ArtistList from '../../components/artistlist/ArtistList'
 
+/**
+ * Component used to render the Artists page
+ */
 export default class Artists extends Component {
   // static propTypes = {}
   // static defaultProps = {}
@@ -21,7 +24,9 @@ export default class Artists extends Component {
 
   }
 
-  //kjøres når siden/komponenten lastes
+  /**
+   * Here used to pull all artists in current festival from database
+   */
   componentWillMount() {
     var previousArtists = this.state.artists;
 
@@ -48,6 +53,10 @@ export default class Artists extends Component {
 
   }
 
+  /**
+   * Keeps state updated
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -55,7 +64,9 @@ export default class Artists extends Component {
   }
 
 
-  
+  /**
+   * Renders a page with all the artists found in current festival.
+   */
   render() {
     return (
       <div className="App">

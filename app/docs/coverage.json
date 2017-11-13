@@ -1,0 +1,289 @@
+{
+  "coverage": "70.91%",
+  "expectCount": 251,
+  "actualCount": 178,
+  "files": {
+    "src/App.js": {
+      "expectCount": 11,
+      "actualCount": 8,
+      "undocumentLines": [
+        36,
+        39,
+        47
+      ]
+    },
+    "src/components/allfestivals/AllFestivals.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        18
+      ]
+    },
+    "src/components/artist/Artist.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/components/artistlist/ArtistList.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/components/artist_pr/ArtistPR.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        16
+      ]
+    },
+    "src/components/concertprogram/ConcertProgram.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/components/createday/CreateDay.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        11,
+        13
+      ]
+    },
+    "src/components/createddays/CreatedDays.js": {
+      "expectCount": 8,
+      "actualCount": 6,
+      "undocumentLines": [
+        13,
+        15
+      ]
+    },
+    "src/components/createfestival/CreateFestival.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        11,
+        13
+      ]
+    },
+    "src/components/createscene/CreateScene.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        11,
+        13
+      ]
+    },
+    "src/components/festival/Festival.js": {
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        11,
+        13
+      ]
+    },
+    "src/components/managerequest/ManageRequest.js": {
+      "expectCount": 8,
+      "actualCount": 6,
+      "undocumentLines": [
+        11,
+        13
+      ]
+    },
+    "src/components/navbar/navbar.js": {
+      "expectCount": 15,
+      "actualCount": 8,
+      "undocumentLines": [
+        22,
+        29,
+        43,
+        50,
+        54,
+        57,
+        64
+      ]
+    },
+    "src/components/programdays/ProgramDays.js": {
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        11,
+        14
+      ]
+    },
+    "src/components/programslots/ProgramSlots.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        12,
+        15
+      ]
+    },
+    "src/components/scenelist/SceneList.js": {
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        11,
+        13
+      ]
+    },
+    "src/components/slots/Slots.js": {
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        13,
+        15
+      ]
+    },
+    "src/components/technicianslist/TechniciansList.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/database.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        18
+      ]
+    },
+    "src/pages/adminpage/index.js": {
+      "expectCount": 8,
+      "actualCount": 5,
+      "undocumentLines": [
+        15,
+        19,
+        39
+      ]
+    },
+    "src/pages/artists/index.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        16,
+        19
+      ]
+    },
+    "src/pages/bandbooking/index.js": {
+      "expectCount": 13,
+      "actualCount": 11,
+      "undocumentLines": [
+        14,
+        20
+      ]
+    },
+    "src/pages/bandbookingresponsible/index.js": {
+      "expectCount": 13,
+      "actualCount": 11,
+      "undocumentLines": [
+        14,
+        20
+      ]
+    },
+    "src/pages/banddatabase/index.js": {
+      "expectCount": 7,
+      "actualCount": 5,
+      "undocumentLines": [
+        17,
+        20
+      ]
+    },
+    "src/pages/concertpage/index.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        14,
+        17
+      ]
+    },
+    "src/pages/frontpage/index.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        15,
+        17
+      ]
+    },
+    "src/pages/homepage/index.js": {
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        20,
+        24
+      ]
+    },
+    "src/pages/login/index.js": {
+      "expectCount": 13,
+      "actualCount": 11,
+      "undocumentLines": [
+        20,
+        23
+      ]
+    },
+    "src/pages/manager_site/index.js": {
+      "expectCount": 7,
+      "actualCount": 4,
+      "undocumentLines": [
+        14,
+        22,
+        33
+      ]
+    },
+    "src/pages/pricecalculator/index.js": {
+      "expectCount": 10,
+      "actualCount": 8,
+      "undocumentLines": [
+        10,
+        15
+      ]
+    },
+    "src/pages/pr_site/index.js": {
+      "expectCount": 6,
+      "actualCount": 3,
+      "undocumentLines": [
+        13,
+        15,
+        21
+      ]
+    },
+    "src/pages/search/index.js": {
+      "expectCount": 9,
+      "actualCount": 5,
+      "undocumentLines": [
+        27,
+        29,
+        38,
+        42
+      ]
+    },
+    "src/pages/setup/index.js": {
+      "expectCount": 5,
+      "actualCount": 3,
+      "undocumentLines": [
+        17,
+        20
+      ]
+    },
+    "src/pages/technicians/index.js": {
+      "expectCount": 11,
+      "actualCount": 8,
+      "undocumentLines": [
+        18,
+        22,
+        49
+      ]
+    },
+    "src/registerServiceWorker.js": {
+      "expectCount": 5,
+      "actualCount": 5,
+      "undocumentLines": []
+    }
+  }
+}

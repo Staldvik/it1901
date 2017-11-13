@@ -3,6 +3,9 @@ import React, {Component } from 'react'
 
 import database from '../../database' //firebase
 
+/**
+ * Component used to show a request to manager
+ */
 export default class ManageRequest extends Component {
 
     constructor(props) {
@@ -30,7 +33,11 @@ export default class ManageRequest extends Component {
         this.decline = this.decline.bind(this);
         
     }
-
+    
+    /**
+     * Keeps state updated
+     * @param {event} e 
+     */
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -38,7 +45,21 @@ export default class ManageRequest extends Component {
         );
       }
     
-    // checks if input fields are empty and asks for confirmation to submit empty rider and techSpecs.
+
+    /**
+     * Checks if input fields are empty and asks for confirmation to submute empty rider and techSpecs.
+     * Then passes information on to this.accept()
+     * @param {*} artist 
+     * @param {*} name 
+     * @param {*} scene 
+     * @param {*} sceneDisplay 
+     * @param {*} date 
+     * @param {*} time 
+     * @param {*} price 
+     * @param {*} key 
+     * @param {*} technicalrequirements 
+     * @param {*} rider 
+     */
     checkAccept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider){
         if(this.state.technicalrequirements =="" || this.state.rider ==""){
             if(window.confirm("Are your sure you don't want to provide rider or technical requirements"))
@@ -47,7 +68,19 @@ export default class ManageRequest extends Component {
         else(this.accept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider))
     }
 
-
+    /**
+     * Updates database according to accept
+     * @param {*} artist 
+     * @param {*} name 
+     * @param {*} scene 
+     * @param {*} sceneDisplay 
+     * @param {*} date 
+     * @param {*} time 
+     * @param {*} price 
+     * @param {*} key 
+     * @param {*} technicalrequirements 
+     * @param {*} rider 
+     */
     accept(artist, name, scene, sceneDisplay, date, time, price, key, technicalrequirements, rider) {
        
         var data = {
@@ -72,6 +105,11 @@ export default class ManageRequest extends Component {
         + "rider: " + rider);
         }
 
+      /**
+       * Updates database according to decline
+       * @param {*} artist 
+       * @param {*} key 
+       */
       decline(artist,key) {
         database.ref(this.state.festival).child("requests").child(key).remove();
         database.ref(this.state.festival).child('artists').child(artist).update({status:"declined"})
@@ -83,7 +121,9 @@ export default class ManageRequest extends Component {
 
 
 
-
+    /**
+     * Renders a table row with request info
+     */
     render() {
         return (
             <tr>

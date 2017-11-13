@@ -5,8 +5,14 @@ import database from '../../database' //firebase
 
 import Festival from '../../components/festival/Festival'
 
+/**
+ * Component used to load all festivals from database
+ */
 export default class AllFestivals extends Component {
 
+    /**
+     * Initializes state
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -17,11 +23,19 @@ export default class AllFestivals extends Component {
         this.enter = this.enter.bind(this)
     }
 
+    /**
+     * 
+     * @param {firebase.database.Reference.key} festival 
+     * @param {String} name 
+     */
     enter(festival,name){
         this.props.enter(festival,name)
     }
 
-
+    /**
+     * Standard React function, runs before component renders.
+     * Using componentDidMount() instead is recommended.
+     */
     componentWillMount(){
         let previousFestivals = this.state.festivals;
 
@@ -39,7 +53,9 @@ export default class AllFestivals extends Component {
         })
     }
 
-
+    /**
+     * Renders list of festivals found in database
+     */
     render() {
         return (
             <div id="festivalButtons">

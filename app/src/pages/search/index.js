@@ -20,7 +20,9 @@ import * as SpotifyWebApi from 'spotify-web-api-node';
 /* import * as LastfmWebApi from 'lastfmapi'; */
 import * as Lastfm from 'simple-lastfm';
 
-
+/**
+ * Component used to render the Search page
+ */
 export default class Search extends Component {
   constructor() {
     super();
@@ -46,10 +48,16 @@ export default class Search extends Component {
     });
   }
 
+  /**
+   * Used to run this.fetchToken() when the page loads
+   */
   componentWillMount() {
     this.fetchToken();
   }
   
+  /**
+   * Fetches Spotify Token from our cloud function in firebase. 
+   */
   fetchToken() {
     var myHeaders = new Headers();
     var myInit = { method: 'GET',
@@ -70,7 +78,10 @@ export default class Search extends Component {
     })
   }
 
-
+  /**
+   * Keeps state synced with fields and sends new query to Spotify API when it changes 
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -98,6 +109,9 @@ export default class Search extends Component {
     })
   }
 
+  /**
+   * Renders the page
+   */
   render(){
     
     return(

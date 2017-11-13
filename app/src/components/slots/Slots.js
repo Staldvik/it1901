@@ -5,6 +5,9 @@ import database from '../../database' //firebase
 
 import './slots.css';
 
+/**
+ * Component used to show a slot
+ */
 export default class Slots extends Component {
 
     constructor(props) {
@@ -22,6 +25,10 @@ export default class Slots extends Component {
         this.removeSlot = this.removeSlot.bind(this)
     }
 
+    /**
+     * Removes a slot from the database
+     * @param {firebase.database.Reference.key} key 
+     */
     removeSlot(key){
         if(window.confirm("Are you sure you want to remove this timeslot?\n\nRemoving a timeslot from a festival will affect all concerts on that timeslot")){
         database.ref(this.state.festival).child('program').child(this.state.dayKey).child("slots").child(key).remove()
@@ -34,7 +41,9 @@ export default class Slots extends Component {
 
 
 
-
+    /**
+     * Renders a table row showing a slot 
+     */
     render() {
 
         if(this.state.deleted){ //nice way to hide deleted elements

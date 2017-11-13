@@ -3,7 +3,6 @@ import './style.css';
 import Artist from '../../components/artist/Artist'
 import Concert from '../../components/concert/Concert'
 import Technician from '../../components/technician/Technician'
-import Scene from '../../components/scene/Scene'
 
 // Firebase
 import database, {firebaseApp} from '../../database';
@@ -14,7 +13,9 @@ import {Redirect} from 'react-router-dom';
 
 
 
-
+/**
+ * Unused Component to render the Login page
+ */
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +36,9 @@ class Login extends Component {
 
   }
 
+  /**
+   * Pulls the users and useroptions from the database
+   */
   componentDidMount() {
     var previousLoginOptions = this.state.loginOptions
     var previousUser = this.state.user
@@ -59,10 +63,16 @@ class Login extends Component {
     })
   }
 
+  /**
+   * Validates email and password
+   */
   validateForm() {
     return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
+  /**
+   * Keeps state synced with fields
+   */
   handleChange = event => {
     console.log("changing", event.target.name, "to", event.target.value)
     this.setState({
@@ -70,6 +80,9 @@ class Login extends Component {
     });
   }
 
+  /**
+   * Signs up with email and password using firebase Auth
+   */
   handleSignup = event => {
     event.preventDefault();
 
@@ -82,6 +95,9 @@ class Login extends Component {
     })
   }
 
+  /**
+   * Signs in with email and password using firebase Auth
+   */
   handleSignin = event => {
     event.preventDefault();
 
@@ -99,6 +115,9 @@ class Login extends Component {
     })
   }
 
+  /**
+   * Signs out from firebase auth
+   */
   handleSignout = event => {
     event.preventDefault();
 
@@ -112,6 +131,9 @@ class Login extends Component {
     }) 
   }
   
+  /**
+   * Handles error. Sets state to reflect error and resets fields
+   */
   handleError = error => {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -124,6 +146,9 @@ class Login extends Component {
     })
   }
 
+  /**
+   * Changes user to the selected user, NOTE: Needs the password to be festival
+   */
   changeUser = event => {
     event.preventDefault();
 
@@ -144,12 +169,18 @@ class Login extends Component {
 
   }
 
+  /**
+   * Handles dropdown action, sets state to reflect chosen field
+   */
   handleDropDown = (event, index, value) => {
     this.setState({
       selectedLogin: value
     })
   }
 
+  /**
+   * Renders the page
+   */
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } }
 

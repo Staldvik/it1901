@@ -6,6 +6,9 @@ import template from '../../static/img/defaultArtistPic.jpg'
 //firebase
 import database from '../../database'
 
+/**
+ * Component used to render the concerts page 
+ */
 export default class ConcertPage extends Component {
   
   constructor() {
@@ -22,6 +25,9 @@ export default class ConcertPage extends Component {
 
   }
 
+  /**
+   * Pulls information from database
+   */
   componentWillMount() {
     var previousConcerts = this.state.concerts;
     var previousOpts = this.state.opts;
@@ -74,6 +80,10 @@ export default class ConcertPage extends Component {
   })
 }
 
+  /**
+   * Keeps state synced to fields
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       selectedTech: e.target.value.split(":")[0],
@@ -82,6 +92,9 @@ export default class ConcertPage extends Component {
     console.log("Selected tech set to: " + e.target.value)
   }
 
+  /**
+   * Renders the page
+   */
   render() {
     return (
       <div className="container">

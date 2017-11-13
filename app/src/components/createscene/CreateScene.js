@@ -3,6 +3,9 @@ import React, {Component } from 'react'
 
 import database from '../../database' //firebase
 
+/**
+ * Component that can be used to create a scene
+ */
 export default class CreateScene extends Component {
 
     constructor(props) {
@@ -18,6 +21,10 @@ export default class CreateScene extends Component {
         
     }
 
+    /**
+     * Keeps state updated
+     * @param {event} e 
+     */
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -25,6 +32,12 @@ export default class CreateScene extends Component {
         );
       }
 
+    /**
+     * Creates a new scene in the database and resets state
+     * @param {String} name 
+     * @param {Integer} capacity 
+     * @param {Integer} cost 
+     */
     create(name, capacity, cost) {
         var data = {
           name: name,
@@ -40,6 +53,9 @@ export default class CreateScene extends Component {
         })
       }
 
+    /**
+     * Renders a table row used to create a new scene
+     */
     render() {
         return (
             <tr>

@@ -3,7 +3,9 @@ import './scenelist.css';
 
 import database from '../../database' //firebase
 
-
+/**
+ * Component used to show a scene in a table row
+ */
 export default class SceneList extends Component {
 
     constructor(props) {
@@ -18,7 +20,10 @@ export default class SceneList extends Component {
         }
     }
 
-
+    /**
+     * Deletes a scene from the database
+     * @param {firebase.database.Reference.key} key 
+     */
     delete(key){
         if(window.confirm("Are you sure you want to remove the scene?\n\nRemoving a scene from a festival will affect all concerts on that day")){
             database.ref(this.state.festival).child('scenes').child(key).remove()
@@ -28,7 +33,9 @@ export default class SceneList extends Component {
         }
     }
 
-
+    /**
+     * Renders a table row containing scene information
+     */
     render() {
 
         if(this.state.deleted){ //nice way to hide deleted elements

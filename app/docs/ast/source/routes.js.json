@@ -1,0 +1,114 @@
+{
+  "type": "File",
+  "start": 0,
+  "end": 2051,
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 61,
+      "column": 0
+    }
+  },
+  "program": {
+    "type": "Program",
+    "start": 0,
+    "end": 2051,
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 0
+      },
+      "end": {
+        "line": 61,
+        "column": 0
+      }
+    },
+    "sourceType": "module",
+    "body": [],
+    "directives": [],
+    "leadingComments": null,
+    "innerComments": [
+      {
+        "type": "CommentBlock",
+        "value": " import React from 'react';\r\nimport { Switch, Route } from 'react-router-dom';\r\nimport {\r\n    BrowserRouter as Router,\r\n    Link,\r\n    Redirect,\r\n    withRouter\r\n  } from 'react-router-dom';\r\n\r\n//Roles\r\nimport {roles, auth} from './roles';\r\n\r\n//Pages\r\nimport App from './App';\r\nimport BandBooking from './pages/bandbooking';\r\nimport  from './pages/';\r\nimport BandDatabase from './pages/banddatabase';\r\nimport PriceCalculator from './pages/pricecalculator';\r\nimport BookingCalendar from './pages/bookingcalendar';\r\nimport ConcertPage from './pages/concertpage';\r\nimport Artists from './pages/artists';\r\nimport ManagerSite from './pages/manager_site'\r\nimport AdminPage from './pages/adminpage';\r\nimport Search from './pages/search';\r\nimport Login from './pages/login';\r\nimport PrSite from './pages/pr_site'\r\n\r\nconst PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (\r\n    <Route {...rest} render={props => (\r\n      auth.isCorrectRole(pathname) ? (\r\n        <Component {...props}/>\r\n      ) : (\r\n        <Redirect to={{\r\n          pathname: '/login',\r\n          state: { from: props.location }\r\n        }}/>\r\n      )\r\n    )}/>\r\n  )\r\n\r\nconst Routes = () => (\r\n    <Switch>\r\n        <Route exact path=\"/\" component={App}/>\r\n        <Route path=\"/login\" component={Login}/>\r\n        \r\n        <PrivateRoute path=\"/bandbooking\" component={BandBooking}/>\r\n        <PrivateRoute path=\"/\" component={}/>\r\n        <PrivateRoute path=\"/banddatabase\" component={BandDatabase}/>\r\n        <PrivateRoute path=\"/pricecalculator\" component={PriceCalculator}/>\r\n        <PrivateRoute path=\"/calendar\" component={BookingCalendar}/>\r\n        <PrivateRoute path=\"/concerts\" component={ConcertPage}/>\r\n        <PrivateRoute path=\"/artists\" component={Artists}/>\r\n        <PrivateRoute path=\"/search\" component={Search}/>\r\n        <PrivateRoute path=\"/pr\" component={PrSite}/>\r\n        <PrivateRoute path=\"/admin\" component={AdminPage}/>\r\n        <PrivateRoute path=\"/manager\" component={ManagerSite}/>\r\n    </Switch>\r\n);\r\n\r\nexport default Routes; ",
+        "start": 0,
+        "end": 2049,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 60,
+            "column": 25
+          }
+        }
+      }
+    ]
+  },
+  "comments": [
+    {
+      "type": "CommentBlock",
+      "value": " import React from 'react';\r\nimport { Switch, Route } from 'react-router-dom';\r\nimport {\r\n    BrowserRouter as Router,\r\n    Link,\r\n    Redirect,\r\n    withRouter\r\n  } from 'react-router-dom';\r\n\r\n//Roles\r\nimport {roles, auth} from './roles';\r\n\r\n//Pages\r\nimport App from './App';\r\nimport BandBooking from './pages/bandbooking';\r\nimport  from './pages/';\r\nimport BandDatabase from './pages/banddatabase';\r\nimport PriceCalculator from './pages/pricecalculator';\r\nimport BookingCalendar from './pages/bookingcalendar';\r\nimport ConcertPage from './pages/concertpage';\r\nimport Artists from './pages/artists';\r\nimport ManagerSite from './pages/manager_site'\r\nimport AdminPage from './pages/adminpage';\r\nimport Search from './pages/search';\r\nimport Login from './pages/login';\r\nimport PrSite from './pages/pr_site'\r\n\r\nconst PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (\r\n    <Route {...rest} render={props => (\r\n      auth.isCorrectRole(pathname) ? (\r\n        <Component {...props}/>\r\n      ) : (\r\n        <Redirect to={{\r\n          pathname: '/login',\r\n          state: { from: props.location }\r\n        }}/>\r\n      )\r\n    )}/>\r\n  )\r\n\r\nconst Routes = () => (\r\n    <Switch>\r\n        <Route exact path=\"/\" component={App}/>\r\n        <Route path=\"/login\" component={Login}/>\r\n        \r\n        <PrivateRoute path=\"/bandbooking\" component={BandBooking}/>\r\n        <PrivateRoute path=\"/\" component={}/>\r\n        <PrivateRoute path=\"/banddatabase\" component={BandDatabase}/>\r\n        <PrivateRoute path=\"/pricecalculator\" component={PriceCalculator}/>\r\n        <PrivateRoute path=\"/calendar\" component={BookingCalendar}/>\r\n        <PrivateRoute path=\"/concerts\" component={ConcertPage}/>\r\n        <PrivateRoute path=\"/artists\" component={Artists}/>\r\n        <PrivateRoute path=\"/search\" component={Search}/>\r\n        <PrivateRoute path=\"/pr\" component={PrSite}/>\r\n        <PrivateRoute path=\"/admin\" component={AdminPage}/>\r\n        <PrivateRoute path=\"/manager\" component={ManagerSite}/>\r\n    </Switch>\r\n);\r\n\r\nexport default Routes; ",
+      "start": 0,
+      "end": 2049,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 60,
+          "column": 25
+        }
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "type": "CommentBlock",
+      "value": " import React from 'react';\r\nimport { Switch, Route } from 'react-router-dom';\r\nimport {\r\n    BrowserRouter as Router,\r\n    Link,\r\n    Redirect,\r\n    withRouter\r\n  } from 'react-router-dom';\r\n\r\n//Roles\r\nimport {roles, auth} from './roles';\r\n\r\n//Pages\r\nimport App from './App';\r\nimport BandBooking from './pages/bandbooking';\r\nimport  from './pages/';\r\nimport BandDatabase from './pages/banddatabase';\r\nimport PriceCalculator from './pages/pricecalculator';\r\nimport BookingCalendar from './pages/bookingcalendar';\r\nimport ConcertPage from './pages/concertpage';\r\nimport Artists from './pages/artists';\r\nimport ManagerSite from './pages/manager_site'\r\nimport AdminPage from './pages/adminpage';\r\nimport Search from './pages/search';\r\nimport Login from './pages/login';\r\nimport PrSite from './pages/pr_site'\r\n\r\nconst PrivateRoute = ({ component: Component, path: pathname, ...rest }) => (\r\n    <Route {...rest} render={props => (\r\n      auth.isCorrectRole(pathname) ? (\r\n        <Component {...props}/>\r\n      ) : (\r\n        <Redirect to={{\r\n          pathname: '/login',\r\n          state: { from: props.location }\r\n        }}/>\r\n      )\r\n    )}/>\r\n  )\r\n\r\nconst Routes = () => (\r\n    <Switch>\r\n        <Route exact path=\"/\" component={App}/>\r\n        <Route path=\"/login\" component={Login}/>\r\n        \r\n        <PrivateRoute path=\"/bandbooking\" component={BandBooking}/>\r\n        <PrivateRoute path=\"/\" component={}/>\r\n        <PrivateRoute path=\"/banddatabase\" component={BandDatabase}/>\r\n        <PrivateRoute path=\"/pricecalculator\" component={PriceCalculator}/>\r\n        <PrivateRoute path=\"/calendar\" component={BookingCalendar}/>\r\n        <PrivateRoute path=\"/concerts\" component={ConcertPage}/>\r\n        <PrivateRoute path=\"/artists\" component={Artists}/>\r\n        <PrivateRoute path=\"/search\" component={Search}/>\r\n        <PrivateRoute path=\"/pr\" component={PrSite}/>\r\n        <PrivateRoute path=\"/admin\" component={AdminPage}/>\r\n        <PrivateRoute path=\"/manager\" component={ManagerSite}/>\r\n    </Switch>\r\n);\r\n\r\nexport default Routes; ",
+      "start": 0,
+      "end": 2049,
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 60,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "eof",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 2051,
+      "end": 2051,
+      "loc": {
+        "start": {
+          "line": 61,
+          "column": 0
+        },
+        "end": {
+          "line": 61,
+          "column": 0
+        }
+      }
+    }
+  ]
+}

@@ -6,6 +6,9 @@ import database from '../../database';
 
 import ManageRequest from '../../components/managerequest/ManageRequest'
 
+/**
+ * Component used to render the Manager Site
+ */
 export default class ManagerSite extends Component {
 
   constructor(props) {
@@ -30,6 +33,9 @@ export default class ManagerSite extends Component {
     this.database = database;
  }
 
+ /**
+  * Pulls information from database
+  */
  componentWillMount() {
 
   let previousArtistMap = this.state.artistMap; //map to get name of artist from key
@@ -109,6 +115,10 @@ export default class ManagerSite extends Component {
 
  }
 
+/**
+ * Keeps state synced with fields
+ * @param {event} e 
+ */
 handleChange(e) {
   this.setState({
       [e.target.name]: e.target.value
@@ -120,7 +130,9 @@ handleChange(e) {
 
 
 
-
+/**
+ * Renders the page
+ */
 render() {
   return (
     <div className="App">

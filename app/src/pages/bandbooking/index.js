@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import './style.css';
 import database from '../../database'
 
+/**
+ * Component used to render Band booking site for booking boss
+ */
 export default class BandBooking extends Component {
   // static propTypes = {}
   // static defaultProps = {}
@@ -55,7 +58,9 @@ export default class BandBooking extends Component {
     
   }
 
-  //kjøres når siden/komponenten lastes
+  /**
+   * Pulls requests, scenes and artists from database based on current festival
+   */
   componentWillMount() {
     var previousRequests = this.state.requests;
     console.log(previousRequests);
@@ -189,6 +194,9 @@ export default class BandBooking extends Component {
    
   }
 
+  /**
+   * Pulls available timeslots from database
+   */
   componentDidMount(){
     if (! this.state.selectedDay) {
       return
@@ -213,7 +221,10 @@ export default class BandBooking extends Component {
 
   }
   
-
+  /**
+   * Keeps state updated
+   * @param {event} e 
+   */
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -225,6 +236,10 @@ export default class BandBooking extends Component {
   //since state is not not necessarily a synchronous operation
   //see: https://stackoverflow.com/questions/41043419/reactjs-onclick-state-change-one-step-behind
   //I solved it by getting the selectedDay variable directly and not depend on the state. Took some time to figure out...!
+  /**
+   * Handles change in day selected
+   * @param {event} e 
+   */
   handleChangeDay(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -257,7 +272,10 @@ export default class BandBooking extends Component {
   
 
   
-
+  /**
+   * Submits request, in other words pushing it into the database
+   * @param {event} e 
+   */
   handleSubmitRequest(e) {
     e.preventDefault(); //prevents page from reloading
 
@@ -276,6 +294,10 @@ export default class BandBooking extends Component {
     console.log(this.state.requests);
   }
 
+  /**
+   * Sets the request in database as accepted.
+   * @param {request} request 
+   */
   handleAccept(request) {
     database.ref(this.props.state.festival).child("requests").child(request.key).update({status: "accepted"});
 
@@ -291,6 +313,10 @@ export default class BandBooking extends Component {
     })
   }
 
+  /**
+   * Sets the request in database as declined
+   * @param {request} request 
+   */
   handleDecline(request) {
     database.ref(this.props.state.festival).child("requests").child(request.key).update({status: "declined"});
     database.ref(this.props.state.festival).child("artists").child(request.artist).update({status: ""});
@@ -307,6 +333,10 @@ export default class BandBooking extends Component {
     })
   }
   
+  /**
+   * Removes the request from the database
+   * @param {request} request 
+   */
   handleDelete(request) {
     database.ref(this.props.state.festival).child("requests").child(request.key).remove();
     this.setState({
@@ -316,6 +346,10 @@ export default class BandBooking extends Component {
     })
   }
 
+  /**
+   * Placeholder function; not used.
+   * @param {event} e 
+   */
   handleCopyEmail(e) {
     e.preventDefault();
     var copyText = this.state.email;
@@ -323,6 +357,9 @@ export default class BandBooking extends Component {
     document.execCommand("Copy");
   }
 
+  /**
+   * Renders the Band booking page
+   */
   render() {
     return (
       <div className="App">
