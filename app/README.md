@@ -21,8 +21,7 @@ Then, if it doesn't open automatically, open [http://localhost:3000/](http://loc
  
 ## Deployment
 
-We're going to cover deployment to Firebase Hosting (And maybe Hiroko?).
-For this you're going to need npm installed. 
+We're going to cover deployment to Firebase Hosting (And maybe Hiroko?). For this you're going to need npm installed. Testing writing for longer than github can display
  
 ### Installation
  
