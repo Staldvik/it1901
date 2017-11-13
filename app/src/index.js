@@ -2,15 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import App from './App';
 
 // Prøver ut React-Router (V4)
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes';
+
+// Material UI
+import {MuiThemeProvider} from 'material-ui';
+
+
 import './index.css';
+
+
 
 ReactDOM.render(
     <BrowserRouter>
-        <Routes />
+        <MuiThemeProvider>
+            <App/>
+        </MuiThemeProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );

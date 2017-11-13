@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 
 import './style.css';
 
@@ -93,7 +93,7 @@ export default class PriceCalculator extends Component {
 
     return (
       <div className="App">
-        <NavComponent />
+        
         
         <h1>
           Ticket Price Estimation:

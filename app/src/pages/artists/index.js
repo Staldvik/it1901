@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import database from '../../database'
 
@@ -26,7 +26,7 @@ export default class Artists extends Component {
     var previousArtists = this.state.artists;
 
 
-    database.ref('festival17').child('artists').on('child_added', snap => {
+    database.ref(this.props.state.festival).child('artists').on('child_added', snap => {
       var vals = snap.val();
 
       previousArtists.push({
@@ -59,7 +59,7 @@ export default class Artists extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
+        
         
         <h1>My Artists</h1>
         
@@ -80,7 +80,8 @@ export default class Artists extends Component {
             </thead>
             <tbody>
             {this.state.artists.map((artist) => {
-              return(<ArtistList 
+              return(<ArtistList
+                festival={this.props.state.festival}
                 name={artist.name}
                 followers={artist.followers}
                 popularity={artist.popularity}

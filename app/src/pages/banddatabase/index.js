@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import Concert from '../../components/concert/Concert'
 
 import './style.css';
@@ -97,7 +97,6 @@ export default class BandDatabase extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
         <h1>
           Band Database
         </h1>

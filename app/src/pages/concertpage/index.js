@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import Concert from '../../components/concert/Concert'
 
@@ -28,7 +28,7 @@ export default class ConcertPage extends Component {
     var previousOpts = this.state.opts;
     var previousSelectedTech = this.state.selectedTech;
 
-    database.ref('festival17').child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
+    database.ref(this.props.state.festival).child('concerts').orderByChild('day').on('child_added', concertSnapshot => {
       var vals = concertSnapshot.val();
       var prevTechnicianNames = [];
       concertSnapshot.child('technicians').forEach((technician) => {
@@ -46,7 +46,7 @@ export default class ConcertPage extends Component {
       })
     })
 
-    database.ref('festival17').child('technicians').orderByChild('ID').on('child_added', technicianSnapshot => {
+    database.ref(this.props.state.festival).child('technicians').orderByChild('ID').on('child_added', technicianSnapshot => {
       previousOpts.push(
         <option key={technicianSnapshot.key} value={technicianSnapshot.key}> {"ID "+technicianSnapshot.key+": " + technicianSnapshot.val().name} </option>
       )
@@ -74,7 +74,6 @@ export default class ConcertPage extends Component {
   render() {
     return (
       <div className="App">
-        <NavComponent />
         <h1>
           Concerts
         </h1>

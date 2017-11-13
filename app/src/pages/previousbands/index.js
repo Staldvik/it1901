@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavComponent from '../../components/navbar/navbar'
+
 import './style.css';
 import database from '../../database';
 import Concert from '../../components/concert/Concert';
@@ -17,7 +17,7 @@ export default class PreviousBands extends Component {
   componentWillMount() {
     var previousTechnicians = this.state.technicians;
 
-    database.ref('festival17').child('technicians').on('child_added', technicianSnapshot => {
+    database.ref(this.props.state.festival).child('technicians').on('child_added', technicianSnapshot => {
       var vals = technicianSnapshot.val();
       previousTechnicians.push ({
         name:vals.name,
@@ -32,7 +32,7 @@ export default class PreviousBands extends Component {
     render(){
       return(
         <div className="App">
-          <NavComponent/>
+          
 
           <h1> Teknikere </h1>
 
