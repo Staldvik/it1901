@@ -74,8 +74,7 @@
 It&apos;s hosted at Firebase, <a href="https://festival-180609.firebaseapp.com/">here!</a></p>
 <ul>
 <li><a href="#run-locally">Run Locally</a> &#x2013; How to run locally. </li>
-<li><a href="#deployment">Deployment</a> &#x2013; How to deploy the app to a server.</li>
-<li><a href="#">How it&apos;s built</a> &#x2013; What tools were used.</li>
+<li><a href="#how-it&apos;s-built">How it&apos;s built</a> &#x2013; What tools were used.</li>
 </ul>
 <h2 id="run-locally">Run Locally</h2><p>You&apos;ll need to have npm installed. One of the easiest ways is to
 install <a href="https://nodejs.org/en/">Node.js</a></p>
@@ -84,24 +83,15 @@ npm install
 npm start</code>
 </code></pre>
 <p>Then, if it doesn&apos;t open automatically, open <a href="http://localhost:3000/">http://localhost:3000/</a> to see the app.<br></p>
-<h2 id="deployment">Deployment</h2><p>We&apos;re going to cover deployment to Firebase Hosting (And maybe Hiroko?).
-For this you&apos;re going to need npm installed. </p>
-<h3 id="installation">Installation</h3><p>Install all dependencies:</p>
-<pre><code class="lang-sh"><code class="source-code prettyprint">cd app
-npm install
-cd functions
-npm install
-cd ..</code>
-</code></pre>
-<h3 id="firebase">Firebase</h3><p>For this you&apos;ll need to set up a Firebase project, you can do that <a href="console.firebase.google.com">here</a>. <br>
-Then go to Develop -&gt; Hosting. Press Get started there and follow instructions until you get to <br>
-firebase deploy. Now you&apos;ll want to run this in the app folder:</p>
-<pre><code class="lang-sh"><code class="source-code prettyprint">npm run build
-firebase deploy</code>
-</code></pre>
-<p>If you then go back to Firebase, you&apos;ll see an entry in the hosting dashboard. </p>
-<h2 id="how-it--39-s-built">How It&apos;s Built</h2><p>Lorem Ipsum</p>
-<h3 id="file-tree">File Tree</h3><p>These are the essential files, the rest are generated</p>
+<h2 id="how-it--39-s-built">How It&apos;s Built</h2><h3 id="create-react-app">create-react-app</h3><p>To start off we used a tool (built by developers at Facebook) called create-react-app <a href="https://github.com/facebookincubator/create-react-app">github</a>.
+This skips a lot of configuration which would have slowed down our development. It essentially gives you a huge head start when building
+React apps. It&apos;s simply run one command and you&apos;re ready to start your React project. One downside to this maight be that we&apos;re not very
+familiar with all the tools used, and while this never really became a problem in our project, it might&apos;ve caused problems in another.</p>
+<h3 id="firebase">Firebase</h3><p>Firebase became our entire back-end, providing us with database, hosting and &quot;back-end logic&quot;.</p>
+<h4 id="database">Database</h4><p>One of the biggest reasons for us using Firebase for database is that it&apos;s real time. This makes it a perfect match with React which keeps the view up to date with the &quot;state&quot; within the React App. So when the database updates, React is immediately notified and updates the view.</p>
+<h4 id="hosting">Hosting</h4><p>Our reasoning for using Firebase to host our project (when not using our local webpack dev server) was that it was easy - when already using their database you only have to run a single line to deploy.</p>
+<h4 id="back-end-logic">Back-end logic</h4><p>We needed to contact the Spotify API for some of implementations to work. This was not possible to do from the client side because of security concerns. Our solution became Firebase Cloud functions. Here you can configure different functions to fire on different events - like a database change or a GET-request to a specific URL.</p>
+<h3 id="file-tree">File Tree</h3><h4 id="code">Code</h4><p>These are the essential files, the rest are generated</p>
 <pre><code><code class="source-code prettyprint">app
 &#x2502;   .firebaserc
 &#x2502;   .gitignore
@@ -268,7 +258,9 @@ firebase deploy</code>
                 logo.svg
                 spotify.png
                 uka.png</code>
-</code></pre></div>
+</code></pre><h4 id="database">Database</h4><p>And this is a snippet to give an idea of how our database is structured</p>
+<p><img src="https://i.imgur.com/iaBXOro.png" width="600"></p>
+</div>
 </div>
 
 <footer class="footer">
